@@ -5,7 +5,7 @@ Skład zespołu D:
   # 
   # 
   # 
-  # 
+  # Łukasz Draba
 
 Zadaniem zespołu D jest stworzenie części aplikacji odpowiedzialnej za dostarczanie informacji o aktualnym stanie użytkownika. Informacja ta jest potrzebna, aby można znaleźć reguły mówiące o tym, w jaki sposób aktywność użytkownika wpływa na jego stan (czym zajmują się już inne zespoły). Przez stan użytkownika rozumiemy jego sprawność intelektualną, fizyczną oraz samopoczucie. Aspekty te opiszemy szczegółowo poniżej.
 
