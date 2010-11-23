@@ -1,0 +1,93 @@
+#summary Opis zadań zespołu D.
+
+Zadaniem zespołu D jest stworzenie części aplikacji odpowiedzialnej za dostarczanie informacji o aktualnym stanie użytkownika. Informacja ta jest potrzebna, aby można znaleźć reguły mówiące o tym, w jaki sposób aktywność użytkownika wpływa na jego stan (czym zajmują się już inne zespoły). Przez stan użytkownika rozumiemy jego sprawność intelektualną, fizyczną oraz samopoczucie. Aspekty te opiszemy szczegółowo poniżej.
+
+
+== Sprawność intelektualna ==
+
+Sprawność intelektualna jest terminem ogólnym obejmującym wiele rodzajów aktywności umysłowej, takich jak inteligencja, pamięć, koncentracja czy szybkość reakcji. Dlatego sądzimy, że właściwym podejściem do problemu jej mierzenia będzie utworzenie kilku rodzajów testów, z których każdy będzie dostosowany do konkretnego aspektu kompetencji umysłowej.
+
+Propozycje testów do mierzenia sprawności intelektualnej:
+
+  * Zapamiętywanie liczb
+    Zadaniem użytkownika jest zapamiętanie ciągu losowo wybranych liczb i powtórzenie ich na zawołanie. Po udzieleniu prawidłowej odpowiedzi, ilość cyfr do zapamiętania zwiększy się, w przeciwnym przypadku zmniejszy. Przeciętny człowiek jest w stanie zapamiętać około 6 lub 7 cyfr.
+    <p>Celem tego ćwiczenia jest zmierzenie tzw. werbalnej pamięci operacyjnej, której często używamy na co dzień do analizowania zdań lub zapamiętywania numerów telefonów. Ten rodzaj pamięci ma związek z inteligencją, dlatego podobne testy są często stosowane w testach na inteligencję.
+  * Zapamiętywanie położenia obiektów
+    W tym teście obiekty ukrywane są za kilkunastoma oknami, które co jakiś czas otwierają się, pokazując obiekt jaki jest w nich umieszczony. Zadaniem użytkownika jest zidentyfikowanie obiektu znajdującego się za zamkniętym oknem, kiedy zostanie o to poproszony.
+    <p>Ten rodzaj testu mierzy tzw. pamięć epizodyczną. Jest to rodzaj pamięci odgrywający bardzo ważną rolę w codziennym życiu; pamięci epizodycznej używamy np. do zapamiętania, w którym miejscu zaparkowaliśmy samochód.
+  * Szybka ocena zdań na temat pokazanego obiektu
+    Ten test pokazuje użytkownikowi rysunek (zawierający np. koło i kwadrat) oraz zdanie go opisujące (np. "Koło nie jest większe od kwadratu"). Użytkownik ma za zadanie określić czy zdanie jest prawdziwe czy fałszywe. Przy ocenie wyniku brana jest pod uwagę szybkość z jaką udzielane są odpowiedzi.
+    <p>Ten test jest oparty na teście rozumowania gramatycznego, które jest związane z ogólną inteligencją. Mierzy on ogólną zdolność rozumowania. Zadania tego rodzaju angażują płaty czołowe mózgu.
+  * Test na szybkość reakcji
+    Ten test może być prostym testem sprawdzającym szybkość reakcji na bodziec, np. wciśnięcie klawisza w reakcji na zmianę koloru obiektu na ekranie, bądź też prostą grą w stylu Tetris, Space Invaders itp. Ta druga opcja może być warta rozważenia ze względu na fakt, że tego rodzaju gra/ćwiczenie byłaby dla użytkownika bardziej interesująca i angażująca.
+
+Proponowane przez nas rodzaje testów są wzorowane na testach używanych do oceniania wyników programu "Brain Test Britain". "Brain Test Britain" to interesujący eksperyment, który wykazał, że wbrew często powtarzanym opiniom, ćwiczenia umysłowe nie mają wpływu na
+zwiększenie wydajności umysłowej. Testy z tego eksperymentu dobrze nadają się do naszych celów, ponieważ wiele testów na kompetencję umysłową znanych w psychologii dostosowanych jest do diagnozowania sytuacji patologicznych, nie do mierzenia kompetencji osób zdrowych.
+
+W "Brain Test Britain" wykazano, że ćwiczenia nie polepszają ogólnej sprawności intelektualnej, ale tylko zwiększają kompetencję w konkretnym ćwiczeniu (potwierdzając jedynie przysłowie "praktyka czyni mistrza"). Fakt ten może sprawić problemy podczas oceny wyników, ponieważ późniejsze wyniki użytkownika mogą być lepsze po prostu ze względu na to, że osiągnął on większą wprawę, przez co ich porównywanie jest trudniejsze. Możliwymi rozwiązaniami tego problemu mogą być: oszczędne dawkowanie ćwiczeń i krótki czas ich trwania, oraz normalizacja wyników, aby zrekompensować efekt osiągania wprawy w konkretnym ćwiczeniu.
+
+
+== Samopoczucie - odczuwany stan psychiczny i fizyczny ==
+
+Termin "zdrowie psychiczne" odnosi się do dobrego samopoczucia psychicznego i emocjonalnego. Merriam-Webster definiuje zdrowie psychiczne jako stan dobrego samopoczucia psychicznego i emocjonalnego; człowiek jest w stanie używać jego zdolności poznawczych i emocji, funkcjonować w społeczeństwie oraz sprostać wymogom życia codziennego.
+
+Ogólnie bardzo trudno jest zdefiniować i obiektywnie określać samopoczucie. Poza najprostszą opcją w której użytkownik będzie określał samopoczucie na jakieś skali np. Od 1 do 10, można pokusić się o stworzenie coś ala psychotestu, wzorowanego na:
+http://www.nowoczesnymenedzer.pl/content/test-samopoczucia
+
+Jest to miara ogólnego samopoczucia, można to przerobić na taki codzienny test. Dodatkowo można pokazywać użytkownikowi paletę kolorów i na podstawie wybranego koloru również dodawać czy odejmować punkty do skali ogólnego samopoczucia.
+
+Docelowo miarą samopoczucia była by funkcja składająca się z trzech zmiennych - subiektywnej oceny użytkownika i 2 wyników testów. Oczywiście funkcja jak i testy powinny powstawać pod okiem eksperta - w tym wypadku psychologa.
+
+Początkowo mógłby to być taki dosyć prosty i w miarę oczywisty test, a z czasem i w miarę możliwości - udoskonalany.
+
+Wydaje nam się że gra jest warta świeczki, gdyż każdy dąży do dobrego samopoczucia. Reguły dające w miarę prawdziwe i sensowne odpowiedzi na to, co ma wpływ na samopoczucie, byłyby cenne dla użytkownika.
+
+
+== Sprawność fizyczna ==
+
+W tym projekcie ważne jest aby użytkownik mógł zbadać sprawność fizyczną jak najmniejszym wysiłkiem. Dokonywanie pomiarów nie powinno pochłaniać wiele czasu i wymagać od badanego specjalnych umiejętności. Przez wysiłek rozumiemy tu:
+  * dodatkowe przeliczenia (w formie pisemnej bądź "w myślach")
+  * używaniu dodatkowych narzędzi
+  * pomoc osoby trzeciej podczas ustalania sprawności fizycznej
+
+Idealne rozwiązanie polegało by na uruchomieniu swojego rodzaju analizatora, który w bliżej jeszcze nieokreślony sposób dokonywał potrzebnych pomiarów i bez dodatkowych czynności ze strony użytkownika, był wstanie określić (po przez wartość liczbową) aktualną formę fizyczną.
+
+Każdy dobry test do oceny sprawności fizycznej powinien być trafny i rzetelny. Pod pojęciem trafności testu rozumie się, czy test zmierzył to, co chcieliśmy zbadać. Rzetelnością natomiast nazywamy zgodność wyników uzyskanych przez tych samych badanych w testowaniu dokonanym w różnym czasie. Co do rzetelności, wyniki możemy spróbować porównać z danymi statystycznymi zaimplementowanymi w naszym programie jako dane startowe.
+
+Jeśli natomiast mówimy o trafności to problem jest trochę bardziej złożony. W ostatnich latach dokonano klasyfikacji ogółu zdolności fizycznych dzieląc je na dwie podstawowe grupy, to jest na zdolności kondycyjne i zdolności koordynacyjne.
+
+Do grupy zdolności kondycyjnych zalicza się:
+  * siłę,
+  * szybkość,
+  * wytrzymałość,
+Do grupy zdolności koordynacyjnych zalicza się:
+  * zwinność,
+  * zdolność orientacji,
+  * szybkość reakcji,
+  * zdolność różnicowania ruchu,
+  * równowagę,
+  * poczucie rytmu,
+  * zdolność łączenia ruchu,
+  * zdolność dostosowania i przestawienia ruchowego.
+
+Przykładem testu badającego większość cech podanych powyżej może być
+Międzynarodowy Test Sprawności Fizycznej, zalecany dla osób w wieku
+od 6 do 32 lat.
+Test zawiera 8 następujących prób:
+  # Bieg na dystansie 50m ze startu wysokiego
+  # Skok w dal z miejsca
+  # Bieg na dystansie:
+    * 600m - chłopcy i dziewczęta poniżej 12 lat
+    * 800m - dziewczęta w wieku 12 lat i powyżej
+    * 1000m - chłopcy w wieku 12 lat i powyżej
+  # Pomiar siły dłoni za pomocą dynamometru.
+  # Pomiar siły ramion
+    * podciąganie się na drążku: mężczyźni i chłopcy w wieku 12 lat i powyżej
+    * zwis na ugiętych ramionach: dziewczęta i chłopcy w wieku do 11 lat
+  # Bieg wahadłowy 4x10m
+  # Skłony tułowia w dół
+
+Jest zalecane aby próby 1, 2, 3 przeprowadzać w pierwszego dnia, pozostałe drugiego dnia.
+Użycie takiego testu w naszym projekcie jest kiepskim pomysłem w związku z wymogiem łatwości przeprowadzanego badania. Dlatego właśnie w tym miejscu kłócą się ze sobą zasady trafności i łatwości. Trafność wymagała by kilku testów, z kolei łatwość dąży do jak najmniejszej ich liczby.
+
+Rozsądnym podejściem może być wykonanie trzech prostych testów badających kolejno: siłę, szybkość i wytrzymałość. Pytanie o dokładny rodzaj testów otwiera szeroką dyskusję i wymaga więcej czasu na wczytanie się w fachową literaturę.
