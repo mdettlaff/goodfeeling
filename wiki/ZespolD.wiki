@@ -38,16 +38,40 @@ W "Brain Test Britain" wykazano, że ćwiczenia nie polepszają ogólnej sprawno
 
 Termin "zdrowie psychiczne" odnosi się do dobrego samopoczucia psychicznego i emocjonalnego. Merriam-Webster definiuje zdrowie psychiczne jako stan dobrego samopoczucia psychicznego i emocjonalnego; człowiek jest w stanie używać jego zdolności poznawczych i emocji, funkcjonować w społeczeństwie oraz sprostać wymogom życia codziennego.
 
-Ogólnie bardzo trudno jest zdefiniować i obiektywnie określać samopoczucie. Poza najprostszą opcją w której użytkownik będzie określał samopoczucie na jakieś skali np. Od 1 do 10, można pokusić się o stworzenie coś ala psychotestu, wzorowanego na:
-http://www.nowoczesnymenedzer.pl/content/test-samopoczucia
+Proponujemy przedstawić użytkownikowi, krótki test, zawierający kilka
+pytań i suwak, na którym będzie mógł zaznaczyć stopień prawdziwości
+danego stwierdzenia. Dzięki suwakowi użytkownik nie będzie musiał
+podejmować kolejnych decyzji (chodzi tu o testy wartościujące: zgadzam
+się/trochę się zgadzam/zupełnie się nie zgadzam itp.), tylko będzie
+zaznaczał "intuicyjnie". Poniższa lista pytań jest dość długa i
+oczywiście wymaga dopracowania. Ideałem było by ułożenie maksymalnie
+kilku (3, 4) najważniejszych pytań, do czego będziemy zmierzać.
 
-Jest to miara ogólnego samopoczucia, można to przerobić na taki codzienny test. Dodatkowo można pokazywać użytkownikowi paletę kolorów i na podstawie wybranego koloru również dodawać czy odejmować punkty do skali ogólnego samopoczucia.
+Czy Twoje samopoczucie było dziś dobre?
 
-Docelowo miarą samopoczucia była by funkcja składająca się z trzech zmiennych - subiektywnej oceny użytkownika i 2 wyników testów. Oczywiście funkcja jak i testy powinny powstawać pod okiem eksperta - w tym wypadku psychologa.
+Spałem dobrze.
+Po obudzeniu czułem, że mam dużo energii.
+Czułem entuzjazm (ciekawość, pozytywne lub neutralne emocje) na myśl o
+wykonywaniu dziś swoich obowiązków.
+Dużo się dziś śmiałem.
+W ciągu dnia nie miałem problemów w podejmowaniu decyzji.
+Męczyłem się dziś bardziej niż zwykle.
+W ciągu dnia czułem się zniechęcony, przygnębiony i smutny.
+Byłem dziś niespokojny, nie mogłem sobie znaleźć miejsca.
+Złościłem się bez powodu.
+Czułem się potrzebny i przydatny.
+Myślę o jutrze i czekających mnie zadaniach z optymizmem (ew.
+entuzjazmem, ciekawością).
 
-Początkowo mógłby to być taki dosyć prosty i w miarę oczywisty test, a z czasem i w miarę możliwości - udoskonalany.
+Kolejny test polega na wyborze przez użytkownika z palety kolorów,
+koloru, który w danym dniu najlepiej odpowiada jego nastrojowi.
 
-Wydaje nam się że gra jest warta świeczki, gdyż każdy dąży do dobrego samopoczucia. Reguły dające w miarę prawdziwe i sensowne odpowiedzi na to, co ma wpływ na samopoczucie, byłyby cenne dla użytkownika.
+Proponujemy aby test kolorów przeprowadzony był rano, a test nr. 1
+wieczorem, dla bardziej obiektywnego wyniku.
+
+W realizacji zadania chcemy równolegle pracować nad zaprogramowaniem
+testów oraz dopracowaniem pytań i interpretacji.
+
 
 
 == Sprawność fizyczna ==
