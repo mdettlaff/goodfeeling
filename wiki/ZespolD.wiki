@@ -47,21 +47,18 @@ zaznaczał "intuicyjnie". Poniższa lista pytań jest dość długa i
 oczywiście wymaga dopracowania. Ideałem było by ułożenie maksymalnie
 kilku (3, 4) najważniejszych pytań, do czego będziemy zmierzać.
 
-Czy Twoje samopoczucie było dziś dobre?
-
-Spałem dobrze.
-Po obudzeniu czułem, że mam dużo energii.
-Czułem entuzjazm (ciekawość, pozytywne lub neutralne emocje) na myśl o
-wykonywaniu dziś swoich obowiązków.
-Dużo się dziś śmiałem.
-W ciągu dnia nie miałem problemów w podejmowaniu decyzji.
-Męczyłem się dziś bardziej niż zwykle.
-W ciągu dnia czułem się zniechęcony, przygnębiony i smutny.
-Byłem dziś niespokojny, nie mogłem sobie znaleźć miejsca.
-Złościłem się bez powodu.
-Czułem się potrzebny i przydatny.
-Myślę o jutrze i czekających mnie zadaniach z optymizmem (ew.
-entuzjazmem, ciekawością).
+  * Czy Twoje samopoczucie było dziś dobre?
+  # Spałem dobrze.
+  # Po obudzeniu czułem, że mam dużo energii.
+  # Czułem entuzjazm (ciekawość, pozytywne lub neutralne emocje) na myśl o wykonywaniu dziś swoich obowiązków.
+  # Dużo się dziś śmiałem.
+  # W ciągu dnia nie miałem problemów w podejmowaniu decyzji.
+  # Męczyłem się dziś bardziej niż zwykle.
+  # W ciągu dnia czułem się zniechęcony, przygnębiony i smutny.
+  # Byłem dziś niespokojny, nie mogłem sobie znaleźć miejsca.
+  # Złościłem się bez powodu.
+  # Czułem się potrzebny i przydatny.
+  # Myślę o jutrze i czekających mnie zadaniach z optymizmem (ew. entuzjazmem, ciekawością).
 
 Kolejny test polega na wyborze przez użytkownika z palety kolorów,
 koloru, który w danym dniu najlepiej odpowiada jego nastrojowi.
