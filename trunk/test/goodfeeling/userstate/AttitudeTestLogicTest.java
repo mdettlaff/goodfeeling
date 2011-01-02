@@ -23,8 +23,7 @@ public class AttitudeTestLogicTest {
 		pictures.add(new Pair<Picture, Picture>(
 				new Picture(Picture.Category.SAD, Color.BLUE),
 				new Picture(Picture.Category.NEUTRAL, Color.GRAY)));
-		pictures.add(new Pair<Picture, Picture>(
-				null, null));
+		pictures.add(new Pair<Picture, Picture>(null, null));
 		pictures.add(new Pair<Picture, Picture>(
 				new Picture(Picture.Category.SAD, Color.WHITE),
 				new Picture(Picture.Category.HAPPY, Color.YELLOW)));
