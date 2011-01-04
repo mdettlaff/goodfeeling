@@ -5,25 +5,33 @@ import goodfeeling.util.Pair;
 public class Balloon {
 
 	public enum Operator {
-		PLUS,
-		MINUS,
-		TIMES,
-		DIVIDE,
+		PLUS {
+			@Override
+			public int getResult(int x, int y) {
+				return x + y;
+			}
+		},
+		MINUS {
+			@Override
+			public int getResult(int x, int y) {
+				return x - y;
+			}
+		},
+		TIMES {
+			@Override
+			public int getResult(int x, int y) {
+				return x * y;
+			}
+		},
+		DIVIDE {
+			@Override
+			public int getResult(int x, int y) {
+				return (int)((double)x) / y;
+			}
+		},
 		;
 
-		public int getResult(int x, int y) {
-			switch (this) {
-			case PLUS:
-				return x + y;
-			case MINUS:
-				return x - y;
-			case TIMES:
-				return x * y;
-			case DIVIDE:
-				return x / y;
-			}
-			return 0;
-		}
+		public abstract int getResult(int x, int y);
 	}
 
 	public final Operator operator;
