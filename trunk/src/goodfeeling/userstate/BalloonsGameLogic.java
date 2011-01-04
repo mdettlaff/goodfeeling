@@ -26,6 +26,8 @@ public class BalloonsGameLogic {
 	private StringBuilder currentAnswer = new StringBuilder();
 	private Random random = new Random();
 
+	private BalloonGameResults results = new BalloonGameResults();
+
 	public Balloon nextBalloon() {
 		Balloon newBalloon = createBalloon();
 		activeBalloons.add(newBalloon);
@@ -53,10 +55,12 @@ public class BalloonsGameLogic {
 			if (balloon.checkAnswer(Integer.parseInt("" + currentAnswer))) {
 				cancelInput();
 				activeBalloons.remove(balloon);
+				results.addCorrectAnswer();
 				return Response.CORRECT_ANSWER;
 			}
 		}
 		cancelInput();
+		results.addInorrectAnswer();
 		return Response.INCORRECT_ANSWER;
 	}
 
@@ -74,5 +78,9 @@ public class BalloonsGameLogic {
 
 	public void setRandom(Random random) {
 		this.random = random;
+	}
+
+	public BalloonGameResults getResults() {
+		return results ;
 	}
 }

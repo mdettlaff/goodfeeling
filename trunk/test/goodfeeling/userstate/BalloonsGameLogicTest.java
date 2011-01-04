@@ -38,5 +38,8 @@ public class BalloonsGameLogicTest {
 		assertTrue(game.confirmAnswer() == BalloonsGameLogic.Response.INCORRECT_ANSWER);
 		game.enterDigit(3);
 		assertTrue(game.confirmAnswer() == BalloonsGameLogic.Response.INCORRECT_ANSWER);
+		BalloonGameResults results = game.getResults();
+		assertEquals(2, results.getCorrectAnswersCount());
+		assertEquals(3, results.getIncorrectAnswersCount());
 	}
 }
