@@ -7,6 +7,17 @@ Skład zespołu D:
   # Dariusz Kuziemski
   # Karolina Steinborn
 
+== Bieżące zadania ==
+
+Aktualnym celem jest stworzenie zintegrowanego testu, będącego połączeniem gry Balloons oraz testu samopoczucia. Gra Balloons pochodzi z Brain Test Britain ([https://www.bbc.co.uk/labuk/results/braintestbritain/games/balloons.html link]), więc nie będziemy jej tu szczegółowo opisywać. Test samopoczucia polega na pokazywaniu użytkownikowi par obrazów, gdzie z każdej pary ma wybrać jeden bądź żaden. Obrazy należą do określonych kategorii związanych z samopoczuciem. <TODO uzupełnić jakich kategorii i opisać dokładniej test samopoczucia>
+
+Przebieg testu wygląda w ten sposób, że dwa wyżej wymienione rodzaje testów są przeplatane. To znaczy, większość czasu zajmuje gra Balloons, a od czasu do czasu (albo po przejściu do kolejnego levelu - to jest jeszcze do sprecyzowania) pokazywana jest para obrazów do wyboru. Test samopoczucia jest więc niejako przy okazji, tak aby użytkownik zbyt mocno się nad nim nie zastanawiał, co miejmy nadzieję sprowokuje bardziej spontaniczne i wiarygodne wybory.
+
+W celu sprawniejszego podziału pracy, gra Balloons i test samopoczucia będą rozwijane osobno i zostaną zintegrowane później (albo i nie, jeżeli się okaże że tak będzie lepiej).
+
+
+== Opis ogólny ==
+
 Zadaniem zespołu D jest stworzenie części aplikacji odpowiedzialnej za dostarczanie informacji o aktualnym stanie użytkownika. Informacja ta jest potrzebna, aby można znaleźć reguły mówiące o tym, w jaki sposób aktywność użytkownika wpływa na jego stan (czym zajmują się już inne zespoły). Przez stan użytkownika rozumiemy jego sprawność intelektualną, fizyczną oraz samopoczucie. Aspekty te opiszemy szczegółowo poniżej.
 
 
