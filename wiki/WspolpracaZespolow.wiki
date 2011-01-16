@@ -26,7 +26,7 @@ Proszę o reakcję w postaci edytowania tej strony lub dodawania komentarzy.
 
 EDIT
 Przykład użycia:
-
+{{{
 //Tworzymy jakis wpis
 Record r1 = new Record();
 r1.day = 12;
@@ -63,4 +63,5 @@ try {
 	
 } catch (Exception e) {
 	e.printStackTrace();
+}}}
 //Piotr Wolf
