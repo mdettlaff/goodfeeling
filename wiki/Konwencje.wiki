@@ -1,3 +1,4 @@
+#summary Konwencje, których przestrzegamy w czasie pracy nad projektem
 Tutaj wpisujemy przyjęte przez zespół pracujący nad projektem goodfeeling konwencje
 
 == Konwencja językowa==
