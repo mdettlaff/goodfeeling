@@ -1,0 +1,9 @@
+Tutaj wpisujemy przyjęte przez zespół pracujący nad projektem goodfeeling konwencje
+
+= Konwencja językowa =
+Nazwy wszystkich zmiennych, javadoc jak i zwykłe komentarze piszemy wyłącznie po angielsku.
+
+= Konwencje dotyczące obsługi svn przez poszczególne zespoły =
+ ~/src/goodfeeling/userstate – tutaj swoje prace zamieszcza grupa D, zajmująca się testami,
+ ~/src/goodfeeling/db – wyniki prac zespołu zajmującego się bazami danych,
+ ~/src/goodfeeling/gui – grupa pracująca nad GUI.
