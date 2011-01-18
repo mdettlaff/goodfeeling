@@ -8,4 +8,4 @@ Nazwy wszystkich zmiennych, javadoc jak i zwykłe komentarze piszemy wyłącznie
  ~/src/goodfeeling/db – wyniki prac zespołu zajmującego się bazami danych,
  ~/src/goodfeeling/gui – grupa pracująca nad GUI.
 
-_italic_ W razie czego proszę dopisywać kolejne.
+_ W razie czego proszę dopisywać kolejne._
