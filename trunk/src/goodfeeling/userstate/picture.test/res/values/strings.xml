@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, PictureTest!</string>
     <string name="app_name">PictureTest</string>
-<string name="start_info">Select One of Pictures or a button below if you do not want to choose...</string>
+
+    <string name="hello">Hello World!</string>
+    
+	<string name="picture_test_start_info">
+		Select One of pictures or a 
+		button below if you do 
+		not want to choose...
+	</string>
+	
 </resources>
