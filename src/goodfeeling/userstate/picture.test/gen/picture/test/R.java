@@ -11,38 +11,49 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int decyzje1=0x7f020000;
-        public static final int decyzje2=0x7f020001;
-        public static final int decyzje3=0x7f020002;
-        public static final int decyzje4=0x7f020003;
-        public static final int decyzje5=0x7f020004;
-        public static final int decyzje6=0x7f020005;
-        public static final int decyzje7=0x7f020006;
-        public static final int egzamin1=0x7f020007;
-        public static final int egzamin10=0x7f020008;
-        public static final int egzamin11=0x7f020009;
-        public static final int egzamin2=0x7f02000a;
-        public static final int egzamin3=0x7f02000b;
-        public static final int egzamin4=0x7f02000c;
-        public static final int egzamin5=0x7f02000d;
-        public static final int egzamin6=0x7f02000e;
-        public static final int egzamin7=0x7f02000f;
-        public static final int egzamin8=0x7f020010;
-        public static final int egzamin9=0x7f020011;
-        public static final int icon=0x7f020012;
+        public static final int exam_negative1=0x7f020000;
+        public static final int exam_negative2=0x7f020001;
+        public static final int exam_negative3=0x7f020002;
+        public static final int exam_negative4=0x7f020003;
+        public static final int exam_negative5=0x7f020004;
+        public static final int exam_negative6=0x7f020005;
+        public static final int exam_negative7=0x7f020006;
+        public static final int exam_negative8=0x7f020007;
+        public static final int exam_positive1=0x7f020008;
+        public static final int exam_positive2=0x7f020009;
+        public static final int exam_positive3=0x7f02000a;
+        public static final int exam_positive4=0x7f02000b;
+        public static final int exam_positive5=0x7f02000c;
+        public static final int exam_positive6=0x7f02000d;
+        public static final int exam_positive7=0x7f02000e;
+        public static final int icon=0x7f02000f;
+        public static final int morning_negative1=0x7f020010;
+        public static final int morning_negative2=0x7f020011;
+        public static final int morning_negative3=0x7f020012;
+        public static final int morning_negative4=0x7f020013;
+        public static final int morning_negative5=0x7f020014;
+        public static final int morning_negative6=0x7f020015;
+        public static final int morning_negative7=0x7f020016;
+        public static final int morning_positive1=0x7f020017;
+        public static final int morning_positive2=0x7f020018;
+        public static final int morning_positive3=0x7f020019;
+        public static final int morning_positive4=0x7f02001a;
+        public static final int morning_positive5=0x7f02001b;
+        public static final int morning_positive6=0x7f02001c;
+        public static final int morning_positive7=0x7f02001d;
     }
     public static final class id {
-        public static final int button_option_1=0x7f050001;
-        public static final int button_option_2=0x7f050002;
-        public static final int button_option_3=0x7f050003;
+        public static final int picture_test_button_option_1=0x7f050001;
+        public static final int picture_test_button_option_2=0x7f050002;
+        public static final int picture_test_button_option_3=0x7f050003;
         public static final int start_info_text=0x7f050000;
     }
     public static final class layout {
         public static final int main=0x7f030000;
     }
     public static final class string {
-        public static final int app_name=0x7f040001;
-        public static final int hello=0x7f040000;
-        public static final int start_info=0x7f040002;
+        public static final int app_name=0x7f040000;
+        public static final int hello=0x7f040001;
+        public static final int picture_test_start_info=0x7f040002;
     }
 }
