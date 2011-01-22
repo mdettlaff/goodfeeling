@@ -83,10 +83,10 @@ public class testClass {
 			//get food list from dictionary
 			ArrayList<Food> foodsArray = dbHandler.getFoodDictionaryList();
 			
-			//add to food dictionary
+			//add to activities dictionary
 			dbHandler.addToActivityDictionary(new Activity("Pizza"));
 			
-			//get food list from dictionary
+			//get food activities from dictionary
 			ArrayList<Activity> activitiesArray = dbHandler.getActivitiesDictionaryList();
 			
 		} catch (Exception e) {
