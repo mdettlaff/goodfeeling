@@ -87,10 +87,10 @@ Sposób użycia aktualnej wersji biblioteki bazy danych:
 			//get food list from dictionary
 			ArrayList<Food> foodsArray = dbHandler.getFoodDictionaryList();
 			
-			//add to food dictionary
+			//add to activities dictionary
 			dbHandler.addToActivityDictionary(new Activity("Pizza"));
 			
-			//get food list from dictionary
+			//get activities list from dictionary
 			ArrayList<Activity> activitiesArray = dbHandler.getActivitiesDictionaryList();
 			
 		} catch (Exception e) {
