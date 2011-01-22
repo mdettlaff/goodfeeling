@@ -24,44 +24,7 @@ DatabaseManager.saveEvent(event);
 Oczywiście to tylko przykładowa propozycja, jeżeli grupa bazodanowa ma inną wizję to możemy się dostosować.
 Proszę o reakcję w postaci edytowania tej strony lub dodawania komentarzy.
 
-EDIT
-Przykład użycia:
-{{{
-//Tworzymy jakis wpis
-Record r1 = new Record();
-r1.day = 12;
-r1.month = 12;
-r1.year = 2010;
-r1.timeAwaken ="12:12";
+EDIT 2011-01-22
+Sposób użycia został przeniesiony do strony drużyny odpowiedzialnej za bazę danych.
 
-//Inny wpis
-Record r2 = new Record();
-r2.day = 23;
-r2.month = 12;
-r2.year = 2010;
-r2.timeAwaken ="12:12";
-
-//Tworzymy sterownik bazy
-DbHandler dbHandler= new DbHandler();
-
-try {
-	//odpalamy operacje dodania / modyfikacji
-	dbHandler.addOrUpdateRecord(r1);
-	dbHandler.addOrUpdateRecord(r2);
-	
-	//usuwamy r2
-	dbHandler.removeRecord(r2);
-	
-	//wczytujemy wpis z dnia 2010 12 12 //rrrr mm dd
-	Record r3 = dbHandler.getRecord(2010, 12, 12);
-	
-	//Wypisz na ekran zawartosc r3 z bazy
-	System.out.println();
-	System.out.println("Zawartoœæ wpisu z bazy:");
-	System.out.println("Data rrrr mm dd:"+r3.year+"-"+r3.month+"-"+r3.day);
-	System.out.println("Godzina obudzenia:"+r3.timeAwaken);
-	
-} catch (Exception e) {
-	e.printStackTrace();
-}}}
 //Piotr Wolf
