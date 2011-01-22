@@ -7,7 +7,7 @@ Baza danych
 
 = Details =
 
-Sposób użycia biblioteki bazy danych:
+Sposób użycia aktualnej wersji biblioteki bazy danych:
 {{{
 
 		//RECORDS - ADDING / UPDATING / DELETING / READING
@@ -98,3 +98,5 @@ Sposób użycia biblioteki bazy danych:
 		}	
 
 }}}
+
+W razie pytań etc proszę o wpis w komentarze lub w temacie współpracy drużyn.
