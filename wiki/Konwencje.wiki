@@ -12,8 +12,21 @@ Nazwy wszystkich zmiennych, javadoc jak i zwykłe komentarze piszemy wyłącznie
 
  ~/src/goodfeeling/gui – grupa pracująca nad GUI.
 
+ ~/src/goodfeeling/misc - folder na pliki "różne"
+
+
+== Nazewnictwo zmiennych w *strings.xml* ==
+Jest mała szansa iż wejdziemy sobie w przestrzenie nazw, ale proponuję by w strings.xml gdzie przechowywane są łańcuchy znaków nazwy poprzedzać przedrostkiem oznaczającym pakiet, w którym go wykorzystujemy, np:
+
+<string name=*"start_info"*> nazwać od razu (w przypadku picture.test)
+
+<string name=*"picture_test_start_info"*> 
+
+
+== Nazewnictwo ogólne w *main.xml*==
+Proponuję by id obiektów nie nazywać np. "button1" ani innymi nazwami mało wymownymi - chodzi o to by czasami się nie okazało, że po integracji  różnych części nie okazało się, że jest 5 "button1" (:
+Dużo przycisków będzie miała grupa GUI, powodzenia.
 
 
 
-
-_ W razie czego proszę dopisywać kolejne._
+_ W razie czego proszę dopisywać kolejne konwencje i ewentualne uwagi._
