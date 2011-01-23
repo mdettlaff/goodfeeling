@@ -113,8 +113,15 @@ public class PictureTest extends Activity {
     public void setP1(int p1) {		this.p1 = p1;	}
     public int getP2() {		return p2;	}
     public void setP2(int p2) {		this.p2 = p2;	}
-
-    Answers my_answers = new Answers(0,0);
+    
+    private int step = -1; //says how many questions were asked
+    public int getStep() {		return step;	}
+	public void setStep(int step) {		this.step = step;	}
+	public void incStep(){ 		setStep(getStep()+1); 		}
+	
+	/** We store here informations about given answers
+	 */
+	Answers my_answers = new Answers(0,0);
     
 	/**Stores Ids of pictures (look at source of generated {@link R} class)<br>
 	 * <b>mImageId</b>s map<br>
@@ -131,7 +138,7 @@ public class PictureTest extends Activity {
 	 * 		| ...<br>
 	 * ...
 	 */
-	final int[][][] mImageIds = {
+	final private int[][][] mImageIds = {
     		{	
     		  {
       			R.drawable.morning_negative1, R.drawable.morning_negative1, 
@@ -160,7 +167,71 @@ public class PictureTest extends Activity {
     			R.drawable.exam_positive5, R.drawable.exam_positive6, 
     			R.drawable.exam_positive7    				
     		  }
-    		}
+    		},
+    		{
+    		  {
+    			R.drawable.workonthecomputer_negative1	
+    		  },
+    		  {
+    			R.drawable.workonthecomputer_positive1
+    		  }
+    		},
+    		{
+      		  {
+      			R.drawable.talks_negative1
+      		  },
+      		  {
+      			R.drawable.talks_positive1	
+      		  }
+      		},
+    		{
+      		  {
+      			R.drawable.housework_negative1	
+      		  },
+      		  {
+      			R.drawable.housework_positive1	
+      		  }
+      		},
+    		{
+      		  {
+      			R.drawable.study_negative1	
+      		  },
+      		  {
+      			R.drawable.study_positive1	
+      		  }
+      		},
+    		{
+      		  {
+      			R.drawable.decisions_negative1	
+      		  },
+      		  {
+      			R.drawable.decisions_positive1	
+      		  }
+      		},
+    		{
+        	  {
+        		R.drawable.career_negative1
+        	  },
+        	  {
+        		R.drawable.career_positive1	
+        	  }
+        	},
+    		{
+      		  {
+      			R.drawable.relationship_negative1	
+      		  },
+      		  {
+      			R.drawable.relationship_positive1	
+      		  }
+      		},
+    		{
+      		  {
+      			R.drawable.comfort_negative1	
+      		  },
+      		  {
+      			R.drawable.comfort_positive1	
+      		  }
+      		}
     };
 	
 	public int[][][] getmImageIds() {
@@ -175,10 +246,15 @@ public class PictureTest extends Activity {
 	 * @see Toast
 	 */
     public void test_init(){
-    	//if category is 0 (start) then Random
-    	//if(getCat() == 0){
-    		setCat((int)(Math.random()*getmImageIds().length));
-    	//}
+    	
+    	//if step reach the end of categories to choose...
+    	if( (getStep()) == (getmImageIds().length - 1) ) {
+    		setStep(0); //start again from 0...
+    	}
+    	else {
+    	incStep(); //increase progress of test
+    	}
+    	setCat(getStep()); //set actual category to step
     	    	
     	//select which picture (first or second) will be positive/negative
     	if(((int)(Math.random()*2)) == 0){
@@ -190,25 +266,25 @@ public class PictureTest extends Activity {
     		setP2_type(0);
     	}
     	
-    	
     	//select picture for each button
-    	setP1(((int)(Math.random()*getmImageIds()
-    										[getCat()][getP1_type()].length)));
-    	setP2(((int)(Math.random()*getmImageIds()
-    										[getCat()][getP2_type()].length)));
-/*    	Toast.makeText(PictureTest.this, 	my_answers.getPoints() + ", " + 
-    										my_answers.getQuestion_amount(), 
-    										Toast.LENGTH_SHORT).show();*/
+    	setP1(((int)(Math.random() *
+    			getmImageIds()[getCat()][getP1_type()].length)));
+    	setP2(((int)(Math.random() *
+    			getmImageIds()[getCat()][getP2_type()].length)));
     	//display info box
-    	Toast.makeText(PictureTest.this, "("+ my_answers.getPoints() + ", " 
-							    			+ my_answers.getQuestion_amount() 
-							    			+ ")\n" 
-							    			+ my_answers.getResult() 
-							    			+ "%", 
-							    			Toast.LENGTH_SHORT).show();
+    	Toast.makeText(PictureTest.this, 
+    			"(" 
+    			+ my_answers.getPoints() 
+    			+ ", " 
+    			+ my_answers.getQuestion_amount() 
+    			+ ")\n" 
+    			+ my_answers.getResult() 
+    			+ "%", 
+    			Toast.LENGTH_SHORT).show();
     }
-	
-	//Interface for android starts somewhere here... 
+
+    
+    //Interface for android starts here... 
 	//look at onCreate func
 	/** Called when the activity is first created.
      * (non-Javadoc)
@@ -280,8 +356,6 @@ public class PictureTest extends Activity {
     /**Apply choice of first picture
      */
     void first_picture(){
-//    	Toast.makeText(PictureTest.this, "First...", 
-//    									Toast.LENGTH_SHORT).show();
     	if(getP1_type() == 1){ //1 is positive
     		my_answers.incPoints();  //increase points
     	}
@@ -293,8 +367,6 @@ public class PictureTest extends Activity {
     /**Apply choice of first picture
      */
 	void second_picture(){
-//    	Toast.makeText(PictureTest.this, "Second...", 
-//    									Toast.LENGTH_SHORT).show();
     	if(getP2_type() == 1){ //1 is positive
     		my_answers.incPoints();  //increase points
     	}
