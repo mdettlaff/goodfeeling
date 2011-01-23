@@ -9,90 +9,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 /**
- * Object Answers - basic structure to store points, 
- * and number of questions <br>
- */
-class Answers {
-	/**Store points <br>
-	 * +10 for positive choice;<br>
-	 * +0 for negative;
-	 */
-	int points;
-	/**Count how many questions were answered,<br>
-	 * +1 for any choice;<br>
-	 * +0 for not choosing any;
-	 */
-	int question_amount;
-	
-	/**
-	 * value to convert and return result of tests
-	 */
-	float result;
-	
-	/**Constructor for Answers without parameters, <br>
-	 * set <b>points</b> to 0 as default, <br>
-	 * set <b>question_amount</b> to 0 as default
-	 */
-	Answers(){
-		setPoints(0);
-		setQuestion_amount(0);
-	}
-	
-	/**Constructor for Answers with parameters
-	 * @param p store points, set as requested during create
-	 * @param qa count how many questions were answered, set as above
-	 */
-	Answers(int p, int qa){
-		setPoints(p);
-		setQuestion_amount(qa);
-	}
-	
-	/**@return amount of points
-	 */
-	public int getPoints() {
-		return points;
-	}
-	/**Sets point to indicate value
-	 * @param points
-	 */
-	public void setPoints(int points) {
-		this.points = points;
-	}
-	/**Increase by <b>10</b> if positive answer
-	 */
-	public void incPoints(){
-		int a = getPoints()+10;
-		setPoints(a);
-	}
-	/**@return count of question answered
-	 */
-	public int getQuestion_amount() {
-		return question_amount;
-	}
-	/**Set number of question to indicate value
-	 * @param questionAmount
-	 */
-	public void setQuestion_amount(int questionAmount) {
-		question_amount = questionAmount;
-	}
-	/**Increase question_amount by <b>1</b> if any answer were given
-	 */
-	public void incQuestion_amount(){
-		int a = getQuestion_amount()+1;
-		setQuestion_amount(a);
-	}
-
-	public float getResult() {
-		if(getQuestion_amount() == 0){
-			return 0;
-		}
-		result = ((float)getPoints()/((float)getQuestion_amount()))*10;
-		return result;
-	}
-	
-}
-
-/**
  * <b>PictureTest</b> - an {@link Activity} 
  * which execute "test of pictures":<br>
  * - user is shown pair of pictures <br>
@@ -150,6 +66,7 @@ public class PictureTest extends Activity {
 	 * talks (meeting with others)
 	 * housework
 	 * study (learning)
+	 * decisions
 	 * career
 	 * relationships
 	 * comfort (frame of mind) */
@@ -197,8 +114,7 @@ public class PictureTest extends Activity {
     		  {
     			R.drawable.picture_test_exam_positive1, 
     			R.drawable.picture_test_exam_positive2, 
-    			R.drawable.picture_test_exam_positive3, 
-    			R.drawable.picture_test_exam_positive4, 
+    			R.drawable.picture_test_exam_positive3,
     			R.drawable.picture_test_exam_positive5, 
     			R.drawable.picture_test_exam_positive6, 
     			R.drawable.picture_test_exam_positive7, 
@@ -206,7 +122,6 @@ public class PictureTest extends Activity {
     			R.drawable.picture_test_exam_positive9, 
     			R.drawable.picture_test_exam_positive10,
     			R.drawable.picture_test_exam_positive11, 
-    			R.drawable.picture_test_exam_positive12,
     			R.drawable.picture_test_exam_positive13, 
     			R.drawable.picture_test_exam_positive14,
     			R.drawable.picture_test_exam_positive15, 
@@ -228,7 +143,6 @@ public class PictureTest extends Activity {
     		  {
     			R.drawable.picture_test_workonthecomputer_positive1,
     			R.drawable.picture_test_workonthecomputer_positive2,
-    			R.drawable.picture_test_workonthecomputer_positive3,
     			R.drawable.picture_test_workonthecomputer_positive4,
     			R.drawable.picture_test_workonthecomputer_positive5,
     			R.drawable.picture_test_workonthecomputer_positive6
@@ -284,14 +198,12 @@ public class PictureTest extends Activity {
       		  {
       			R.drawable.picture_test_decisions_negative1,
       			R.drawable.picture_test_decisions_negative2,
-      			R.drawable.picture_test_decisions_negative3,
       			R.drawable.picture_test_decisions_negative4
       		  },
       		  {
       			R.drawable.picture_test_decisions_positive1,
       			R.drawable.picture_test_decisions_positive2,
-      			R.drawable.picture_test_decisions_positive3,
-      			R.drawable.picture_test_decisions_positive4
+      			R.drawable.picture_test_decisions_positive3
       		  }
       		},
     		{
@@ -299,14 +211,12 @@ public class PictureTest extends Activity {
         		R.drawable.picture_test_career_negative1, 
         		R.drawable.picture_test_career_negative2, 
         		R.drawable.picture_test_career_negative3, 
-        		R.drawable.picture_test_career_negative4, 
         		R.drawable.picture_test_career_negative5
         	  },
         	  {
         		R.drawable.picture_test_career_positive1,
         		R.drawable.picture_test_career_positive2,
         		R.drawable.picture_test_career_positive3,
-        		R.drawable.picture_test_career_positive4,
         		R.drawable.picture_test_career_positive5
         	  }
         	},
@@ -338,7 +248,6 @@ public class PictureTest extends Activity {
       		  },
       		  {
       			R.drawable.picture_test_comfort_positive1,
-      			R.drawable.picture_test_comfort_positive2,
       			R.drawable.picture_test_comfort_positive3,
       			R.drawable.picture_test_comfort_positive4,
       			R.drawable.picture_test_comfort_positive5,
@@ -411,7 +320,7 @@ public class PictureTest extends Activity {
     @Override
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.picture_test);
         
         //init 1st step of test
         test_init();
