@@ -24,8 +24,10 @@ Jest mała szansa iż wejdziemy sobie w przestrzenie nazw, ale proponuję by w s
 
 
 == Nazewnictwo ogólne w *main.xml*==
-Proponuję by id obiektów nie nazywać np. "button1" ani innymi nazwami mało wymownymi - chodzi o to by czasami się nie okazało, że po integracji  różnych części nie okazało się, że jest 5 "button1" (:
-Dużo przycisków będzie miała grupa GUI, powodzenia.
+main.xml należy tylko do grupy GUI - chociaż i im proponuje stworzenie głównego pliku interfejsu jako np. gui.xml,
+ja sam przy następnych zmianach kodu poprawię swoją nazwę wyglądu main.xml na picture_test.xml.
+
+_stare: Proponuję by id obiektów nie nazywać np. "button1" ani innymi nazwami mało wymownymi - chodzi o to by czasami się nie okazało, że po integracji  różnych części nie okazało się, że jest 5 "button1" (:_
 
 
 
