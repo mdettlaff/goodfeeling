@@ -1,6 +1,8 @@
 package goodfeeling.userstate.balloon;
 
+import goodfeeling.userstate.balloon.BalloonThread.GameState;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 public class Balloon extends Activity {
@@ -48,7 +50,20 @@ public class Balloon extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		System.out.println(">>>>>>> onDestroy");
+		Intent i = new Intent(); 
+		if(this.view.getGameState() == GameState.GAMEOVER) {
+			int[] result = {
+				this.view.getGameResult().getCorrect(),
+				this.view.getGameResult().getIncorrect(),
+				this.view.getGameResult().getAll()};
+			i.putExtra("BalloonResult", result);
+			setResult(RESULT_OK, i);
+		}
+		else {
+			setResult(RESULT_CANCELED, i);
+		}
 		this.finish();
+		System.out.println(">>>>>>> onDestroy");
+		
 	}
 }

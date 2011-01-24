@@ -6,7 +6,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 
 public class BalloonDrawableIncorrect {
-	private final long ANIMATION_INCORRECT = 500l; // in milliseconds
+	private final long ANIMATION_INCORRECT = 1000l; // in milliseconds
 	
 	private Drawable texIncorrect;
 	
@@ -28,8 +28,9 @@ public class BalloonDrawableIncorrect {
 	}
 	
 	public void draw(Canvas canvas) {
-		this.alpha = (int)(255.0f * (1.0f - BalloonInterpolator.i(this.incorrectedAt, ANIMATION_INCORRECT)));
+		this.alpha = (int)(200.0f * (1.0f - BalloonInterpolator.i(this.incorrectedAt, ANIMATION_INCORRECT)));
 		this.texIncorrect.setAlpha(this.alpha);
+		this.texIncorrect.draw(canvas);
 	}
 	
 	public void incorrect() {

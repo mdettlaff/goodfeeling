@@ -1,6 +1,8 @@
 package goodfeeling.userstate.balloon;
 
 public class BalloonInterpolator {
+	public static final float BEGIN = 0.0f;
+	public static final float END = 1.0f;
 	private static boolean is_paused = false;
 	private static long pausedAt = 0l;
 	private static long resumedAt = 0l;
@@ -24,9 +26,9 @@ public class BalloonInterpolator {
 	public static float i(long startAt, long duration) {
 		currentTime = System.currentTimeMillis();
 		if(startAt >= currentTime || startAt < 0l || duration <= 0l)
-			return 0.0f;
+			return BEGIN;
 		if(startAt == 0l)
-			return 1.0f;
+			return END;
 		if(is_paused)
 			dTime = pausedAt - startAt;
 		else
@@ -35,7 +37,7 @@ public class BalloonInterpolator {
 			else
 				dTime = currentTime - startAt - (resumedAt - pausedAt);
 		if(dTime >= duration)
-			return 1.0f;
+			return END;
 		return (float)dTime / duration;
 	}
 }

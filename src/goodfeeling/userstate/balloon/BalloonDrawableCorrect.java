@@ -7,7 +7,7 @@ import android.graphics.drawable.Drawable;
 
 public class BalloonDrawableCorrect {
 
-	private final long ANIMATION_CORRECT = 500l; // in milliseconds
+	private final long ANIMATION_CORRECT = 1000l; // in milliseconds
 	
 	private Drawable texCorrect;
 	
@@ -29,8 +29,9 @@ public class BalloonDrawableCorrect {
 	}
 	
 	public void draw(Canvas canvas) {
-		this.alpha = (int)(255.0f * (1.0f - BalloonInterpolator.i(this.correctedAt, ANIMATION_CORRECT)));
+		this.alpha = (int)(200.0f * (1.0f - BalloonInterpolator.i(this.correctedAt, ANIMATION_CORRECT)));
 		this.texCorrect.setAlpha(this.alpha);
+		this.texCorrect.draw(canvas);
 	}
 	
 	public void correct() {
