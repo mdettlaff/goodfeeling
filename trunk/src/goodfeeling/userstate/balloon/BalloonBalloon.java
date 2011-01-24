@@ -22,7 +22,7 @@ public class BalloonBalloon {
 	
 	public BalloonBalloon(Operation operation, int firstArgument, int secondArgument, BalloonColor color) {
 		this.createdAt = System.currentTimeMillis();
-		this.destroyedAt = 0;
+		this.destroyedAt = 0l;
 		this.is_destroyed = false;
 		this.operation = operation;
 		this.firstArgument = firstArgument;
@@ -55,6 +55,10 @@ public class BalloonBalloon {
 	
 	public boolean isDestroyed() {
 		return this.is_destroyed;
+	}
+	
+	public boolean toRemove() {
+		return this.is_destroyed && BalloonInterpolator.i(this.destroyedAt, BalloonDrawableBalloons.ANIMATION_DESTROY) == 1.0f;
 	}
 	
 	public Operation getOperation() {

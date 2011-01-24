@@ -18,8 +18,8 @@ public class BalloonDrawableBalloons {
 		YELLOW
 	}
 	
-	private final int ANIMATION_CREATE = 1000; // in milliseconds
-	private final int ANIMATION_DESTROY = 500; // in milliseconds
+	public static final int ANIMATION_CREATE = 1500; // in milliseconds
+	public static final int ANIMATION_DESTROY = 1000; // in milliseconds
 	
 	private RectF dimension = null;
 	
@@ -77,8 +77,8 @@ public class BalloonDrawableBalloons {
 		this.firstArgumentOffsetX = this.balloonWidth * 0.63f;
 		this.firstArgumentOffsetY = this.balloonHeight * 0.34f;
 		this.secondArgumentOffsetX = this.firstArgumentOffsetX;
-		this.secondArgumentOffsetY = this.balloonHeight * 0.655f;
-		this.paint.setTextSize(this.balloonHeight * 0.315f);
+		this.secondArgumentOffsetY = this.balloonHeight * 0.59f;
+		this.paint.setTextSize(this.balloonHeight * 0.25f);
 		if(prevDimension != null)
 			for(BalloonBalloon b: this.balloons) {
 				float left = b.getDimension().left / b.getDimension().width() * dimension.width();
@@ -172,11 +172,11 @@ public class BalloonDrawableBalloons {
 			this.paint.setAlpha(this.alpha);
 			canvas.drawText(String.format("%d", b.getFirstArgument()),
 				b.getDimension().left + this.firstArgumentOffsetX,
-				b.getDimension().left + this.firstArgumentOffsetY,
+				b.getDimension().top + this.firstArgumentOffsetY,
 				this.paint);
 			canvas.drawText(String.format("%d", b.getSecondArgument()),
 					b.getDimension().left + this.secondArgumentOffsetX,
-					b.getDimension().left + this.secondArgumentOffsetY,
+					b.getDimension().top + this.secondArgumentOffsetY,
 					this.paint);
 		}
 	}

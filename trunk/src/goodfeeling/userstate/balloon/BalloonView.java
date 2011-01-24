@@ -23,6 +23,14 @@ public class BalloonView extends SurfaceView implements SurfaceHolder.Callback {
 		setFocusableInTouchMode(true);
 	}
 	
+	public BalloonResult getGameResult() {
+		return this.thread.getGameResult();
+	}
+	
+	public GameState getGameState() {
+		return this.thread.getGameState();
+	}
+	
 	// event
 	
 	public boolean onTouchEvent (MotionEvent event) {
