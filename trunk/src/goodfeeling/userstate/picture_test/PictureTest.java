@@ -143,7 +143,7 @@ public class PictureTest extends Activity {
     		  {
     			R.drawable.picture_test_workonthecomputer_positive1,
     			R.drawable.picture_test_workonthecomputer_positive2,
-    			R.drawable.picture_test_workonthecomputer_positive4,
+    			R.drawable.picture_test_workonthecomputer_positive3,
     			R.drawable.picture_test_workonthecomputer_positive5,
     			R.drawable.picture_test_workonthecomputer_positive6
     		  }
