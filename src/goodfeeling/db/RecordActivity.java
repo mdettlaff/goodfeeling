@@ -1,3 +1,5 @@
+package goodfeeling.db;
+
 /**
 * Activity packaging class, represents a single activity done
 * part of data contained in Record class

@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-
+package goodfeeling.db;
 
 public class testClass {
 /*
