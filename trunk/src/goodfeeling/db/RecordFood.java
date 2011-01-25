@@ -1,3 +1,5 @@
+package goodfeeling.db;
+
 /**
 * Food eaten packaging class
 * part of data contained in Record class

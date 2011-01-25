@@ -1,3 +1,5 @@
+package goodfeeling.db;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 

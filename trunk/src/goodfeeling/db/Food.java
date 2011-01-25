@@ -1,3 +1,5 @@
+package goodfeeling.db;
+
 /**
  * 
  * Class for storing single food element, used in selectboxes in GUI

@@ -1,3 +1,5 @@
+package goodfeeling.db;
+
 import java.io.*;
 import java.util.ArrayList;
 
