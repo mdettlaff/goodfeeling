@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Picture_Test v0.74b</string>    
+    <string name="picture_test_app_name">Picture_Test v0.74b</string>    
 	<string name="picture_test_start_info">
 		Select One of pictures or a 
 		button below if you do 
