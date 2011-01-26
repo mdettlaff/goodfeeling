@@ -1,7 +1,8 @@
 package goodfeeling.userstate.picture_test;
 
-import goodfeeling.userstate.picture_test.R;
+import goodfeeling.gui.R;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,9 +40,13 @@ public class PictureTest extends Activity {
 	public void setStep(int step) {		this.step = step;	}
 	public void incStep(){ 		setStep(getStep()+1); 		}
 	
-	/** We store here informations about given answers
-	 */
-	Answers my_answers = new Answers(0,0);
+	private int stepRound = -1;
+	public int getStepRound() {		return stepRound;	}
+	public void setStepRound(int stepRound) {	this.stepRound = stepRound;	}
+	public void incStepRound(){ 		setStepRound(getStepRound()+1); }
+
+	private boolean testState = false;
+	
     
 	/**Stores Ids of pictures (look at source of generated {@link R} class)<br>
 	 * <b>mImageId</b>s map<br>
@@ -143,7 +148,7 @@ public class PictureTest extends Activity {
     		  {
     			R.drawable.picture_test_workonthecomputer_positive1,
     			R.drawable.picture_test_workonthecomputer_positive2,
-    			R.drawable.picture_test_workonthecomputer_positive3,
+    			R.drawable.picture_test_workonthecomputer_positive4,
     			R.drawable.picture_test_workonthecomputer_positive5,
     			R.drawable.picture_test_workonthecomputer_positive6
     		  }
@@ -261,7 +266,14 @@ public class PictureTest extends Activity {
 	public int[][][] getmImageIds() {
 		return mImageIds;
 	}
-	    
+	
+	/**
+	 * Store results of test (numPositiveA, numA)
+	 */
+	//private int my_answers[][];
+	private int answersPositive[];
+	private int answers[];
+	
 	/**Initialize any phase of test: <br>
 	 * choose pictures for test using <b>Math.random()</b> as random 
 	 * function,<br>
@@ -270,9 +282,20 @@ public class PictureTest extends Activity {
 	 * @see Toast
 	 */
     public void test_init(){
+    	System.out.println(">>>>>>>" + getStep() + ">>>>>>" + getStepRound());
+    	if(getStepRound() == 1){
+    		testState = true;
+    		Intent data = new Intent();
+    		data.putExtra("PictureTestResultPositive", this.answersPositive);
+    		data.putExtra("PictureTestResult", this.answers);
+    		setResult(RESULT_OK, data);
+    		finish();
+    		
+    	}
     	
     	//if step reach the end of categories to choose...
     	if( (getStep()) == (getmImageIds().length - 1) ) {
+        	incStepRound();
     		setStep(0); //start again from 0...
     	}
     	else {
@@ -298,12 +321,10 @@ public class PictureTest extends Activity {
     	//display info box
     	Toast.makeText(PictureTest.this, 
     			"(" 
-    			+ my_answers.getPoints() 
+    			+ this.answersPositive[getStep()]
     			+ ", " 
-    			+ my_answers.getQuestion_amount() 
-    			+ ")\n" 
-    			+ my_answers.getResult() 
-    			+ "%", 
+    			+ this.answers[getStep()]
+    			+ ")", 
     			Toast.LENGTH_SHORT).show();
     }
 
@@ -322,6 +343,12 @@ public class PictureTest extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.picture_test);
         
+        this.answersPositive = new int[getmImageIds().length];
+        this.answers = new int[getmImageIds().length];
+    	for(int i = 0; i < getmImageIds().length; i++) {
+    		this.answersPositive[i] = 0;
+    		this.answers[i] = 0;
+        }
         //init 1st step of test
         test_init();
         
@@ -381,22 +408,29 @@ public class PictureTest extends Activity {
     /**Apply choice of first picture
      */
     void first_picture(){
+    	if(testState)
+    		return;
+    	
     	if(getP1_type() == 1){ //1 is positive
-    		my_answers.incPoints();  //increase points
+    		this.answersPositive[getStep()]++;
+    		//my_answers.incPoints();  //increase points
     	}
     	
-    	my_answers.incQuestion_amount(); //picture chosen so increase
+    	this.answers[getStep()]++; //picture chosen so increase
     	test_init();
     }
     
     /**Apply choice of first picture
      */
 	void second_picture(){
+    	if(testState)
+    		return;
     	if(getP2_type() == 1){ //1 is positive
-    		my_answers.incPoints();  //increase points
+    		this.answersPositive[getStep()]++;
+    		//my_answers.incPoints();  //increase points
     	}
     	
-    	my_answers.incQuestion_amount(); //picture chosen so increase
+    	this.answers[getStep()]++; //picture chosen so increase
     	test_init();
     }
     
@@ -404,6 +438,8 @@ public class PictureTest extends Activity {
     /**Apply choosing none of pictures
      */
     void dont_choose(){
+    	if(testState)
+    		return;
     	Toast.makeText(PictureTest.this, "Nothing chosen...", 
     			Toast.LENGTH_SHORT).show();
     	

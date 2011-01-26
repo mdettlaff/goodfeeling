@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+	<Button
+		android:id="@+id/testrun_buttonrun"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:text="Test Run" />
+	<TextView  
+		android:id="@+id/testrun_text0"
+	    android:layout_width="match_parent" 
+	    android:layout_height="wrap_content" 
+	    android:text="Result: Unknown"/>
+	<TextView  
+		android:id="@+id/testrun_text1"
+	    android:layout_width="match_parent" 
+	    android:layout_height="wrap_content"/>
+	<TextView  
+		android:id="@+id/testrun_text2"
+	    android:layout_width="match_parent" 
+	    android:layout_height="wrap_content"/>
+	<TextView  
+		android:id="@+id/testrun_text3"
+	    android:layout_width="match_parent" 
+	    android:layout_height="wrap_content"/>
+	<TextView  
+		android:id="@+id/testrun_text4"
+	    android:layout_width="match_parent" 
+	    android:layout_height="wrap_content"/>
+	<TextView  
+		android:id="@+id/testrun_text5"
+	    android:layout_width="match_parent" 
+	    android:layout_height="wrap_content"/>
+	<TextView  
+		android:id="@+id/testrun_text6"
+	    android:layout_width="match_parent" 
+	    android:layout_height="wrap_content"/>
+	<TextView  
+		android:id="@+id/testrun_text7"
+	    android:layout_width="match_parent" 
+	    android:layout_height="wrap_content"/>
+	<TextView  
+		android:id="@+id/testrun_text8"
+	    android:layout_width="match_parent" 
+	    android:layout_height="wrap_content"/>
+	<TextView  
+		android:id="@+id/testrun_text9"
+	    android:layout_width="match_parent" 
+	    android:layout_height="wrap_content"/>
+	<TextView  
+		android:id="@+id/testrun_text10"
+	    android:layout_width="match_parent" 
+	    android:layout_height="wrap_content"/>
+</LinearLayout>
