@@ -1,5 +1,7 @@
 package goodfeeling.userstate.balloon;
 
+import goodfeeling.gui.R;
+
 import java.util.LinkedList;
 import android.content.Context;
 import android.graphics.Canvas;

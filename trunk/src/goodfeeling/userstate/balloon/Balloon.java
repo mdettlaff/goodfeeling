@@ -1,5 +1,6 @@
 package goodfeeling.userstate.balloon;
 
+import goodfeeling.gui.R;
 import goodfeeling.userstate.balloon.BalloonThread.GameState;
 import android.app.Activity;
 import android.content.Intent;

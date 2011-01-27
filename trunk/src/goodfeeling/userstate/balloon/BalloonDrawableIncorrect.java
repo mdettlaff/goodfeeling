@@ -1,5 +1,6 @@
 package goodfeeling.userstate.balloon;
 
+import goodfeeling.gui.R;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.RectF;

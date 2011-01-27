@@ -1,5 +1,6 @@
 package goodfeeling.userstate.balloon;
 
+import goodfeeling.gui.R;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -16,12 +17,19 @@ public class BalloonDrawableGameOver {
 	private float fontSize2;
 	private float fontSize3;
 	
+	private String sGameOver;
+	private String sScore;
+	private String sPress;
+	
 	public BalloonDrawableGameOver(Context context) {
 		this.paint = new Paint();
 		this.paint.setAntiAlias(true);
 		this.paint.setFakeBoldText(true);
 		this.paint.setARGB(200, 0, 87, 144);
 		this.paint.setTextAlign(Align.CENTER);
+		this.sGameOver = context.getResources().getString(R.string.balloon_gameover);
+		this.sScore = context.getResources().getString(R.string.balloon_score);
+		this.sPress = context.getResources().getString(R.string.balloon_gameover_press);
 	}
 	
 	public void setDimension(RectF dimension) {
@@ -34,19 +42,19 @@ public class BalloonDrawableGameOver {
 	
 	public void draw(Canvas canvas, int score) {
 		this.paint.setTextSize(this.fontSize1);
-		canvas.drawText("Game Over",
+		canvas.drawText(this.sGameOver,
 			this.dimension.centerX(),
 			this.dimension.centerY() - this.fontSize2,
 			this.paint);
 		this.paint.setTextSize(this.fontSize2);
-		canvas.drawText(String.format("Score: %02d", score),
+		canvas.drawText(String.format("%s: %02d", this.sScore, score),
 			this.dimension.centerX(),
 			this.dimension.centerY(),
 			this.paint);
 		this.paint.setTextSize(this.fontSize3);
-		canvas.drawText("Congratulations!",
+		canvas.drawText(this.sPress,
 				this.dimension.centerX(),
-				this.dimension.centerY() + this.fontSize3,
+				this.dimension.centerY() + this.fontSize3 * 2.0f,
 				this.paint);
 	}
 }
