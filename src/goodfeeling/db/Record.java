@@ -1,5 +1,4 @@
 package goodfeeling.db;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -10,10 +9,7 @@ import java.util.Calendar;
 public class Record {
 
 	//Date values, current date on start
-	public int day = 0; //np 23 lub 5 etc
-	public int month = 0; //np 11 lub 6 etc
-	public int year = 0; // np 2010
-	
+	public Calendar date;
 	//other data
 	/**
 	 * Physical exercise rate, can be any string
@@ -23,7 +19,10 @@ public class Record {
 	 * Mental exercise rate, can be any string
 	 */	
 	public String mentalRate = "";
-
+	/**
+	 * Mood rate, can be any string
+	 */	
+	public String moodRate = "";
 	/**
 	 * Eaten food array list
 	 */		
@@ -33,12 +32,13 @@ public class Record {
 	 */		
 	public ArrayList<RecordActivity> activitiesDone = new ArrayList<RecordActivity>();
 	
+	
+	
 	public Record(){
 		//Set current date
 		Calendar cal = Calendar.getInstance();
-		this.day = cal.get(Calendar.DATE);
-		this.month = cal.get(Calendar.MONTH) + 1;
-		this.year = cal.get(Calendar.YEAR);
+
+		this.date = cal;
 	}
 	/**
 	 * Adds food to food array list

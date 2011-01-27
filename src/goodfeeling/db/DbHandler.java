@@ -2,6 +2,7 @@ package goodfeeling.db;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import org.w3c.dom.*;
 import org.xml.sax.*;
@@ -21,8 +22,10 @@ public class DbHandler {
 	* @param record Record class object, update if record of same date exist in database
 	*/
 	public void addOrUpdateRecord(Record record) throws Exception{
-
-		String xmlFileName = record.year+"_"+record.month+".xml";
+		//int day= record.date.get(Calendar.DATE);
+		int month = record.date.get(Calendar.MONTH)+1;
+		int year = record.date.get(Calendar.YEAR);
+		String xmlFileName = year+"_"+month+".xml";
 	    File f = new File(xmlFileName);
 	    
 	    if(!f.exists()){
@@ -40,8 +43,12 @@ public class DbHandler {
 	 * @param record Record class object to be removed from database, year, month, day should not be empty
 	 */
 	public void removeRecord(Record record){
-		if(record.year > 0 && record.month > 0 && record.day > 0){
-			String xmlFileName = record.year+"_"+record.month+".xml";
+		int day= record.date.get(Calendar.DATE);
+		int month = record.date.get(Calendar.MONTH)+1;
+		int year = record.date.get(Calendar.YEAR);
+		
+		if(year > 0 && month > 0 && day > 0){
+			String xmlFileName = year+"_"+month+".xml";
 		    File f = new File(xmlFileName);
 		    
 		    if(f.exists()){
@@ -54,17 +61,16 @@ public class DbHandler {
 	
 	
 	/** Loads record with a provided date 
-	 * @param year 
-	 * @param month int from 1 to 12
-	 * @param day int from 1 to 31
+	 * @param cal Calendar object with date 
 	 * @return Record class object or empty record if not in database
 	 */
-	public Record getRecord(int year, int month, int day){
-		Record record = new Record();
-		record.day= day;
-		record.month = month;
-		record.year = year;
+	public Record getRecord(Calendar cal){
 		
+		Record record = new Record();
+		int day= cal.get(Calendar.DATE);
+		int month = cal.get(Calendar.MONTH)+1;
+		int year = cal.get(Calendar.YEAR);
+		 record.date = cal;
 		if(year > 0 && month > 0 && day > 0){
 			String xmlFileName = year+"_"+month+".xml";
 		    File f = new File(xmlFileName);
@@ -121,6 +127,11 @@ public class DbHandler {
 	////////////////////////////////////////////////////////////////////
 
 	private Record readFromDocument(Document doc, Record record) { //wymaga deklaracji pol
+		
+		int day= record.date.get(Calendar.DATE);
+		int month = record.date.get(Calendar.MONTH)+1;
+		int year = record.date.get(Calendar.YEAR);		
+		
 		Element rootElement = doc.getDocumentElement();
 
 		boolean read = false;
@@ -134,7 +145,7 @@ public class DbHandler {
 	            	for( kid2 = kid.getFirstChild(); kid2 != null; kid2 = kid2.getNextSibling() ){
 		                if( kid2.getNodeName().equals("idkey") ){
 		                	
-		                     if(getElementValue(kid2).equals(record.year+"_"+record.month+"_"+record.day)){
+		                     if(getElementValue(kid2).equals(year+"_"+month+"_"+day)){
 		                    	
 		                    	 read = true;
 		                     }
@@ -226,7 +237,11 @@ public class DbHandler {
 	}	
 	
 	private Document removeFromDocument(Document doc, Record record) {
-
+		int day= record.date.get(Calendar.DATE);
+		int month = record.date.get(Calendar.MONTH)+1;
+		int year = record.date.get(Calendar.YEAR);		
+		
+		
 		Element rootElement = doc.getDocumentElement();
 
 		boolean delete = false;
@@ -238,7 +253,7 @@ public class DbHandler {
 	            	for( kid2 = kid.getFirstChild(); kid2 != null; kid2 = kid2.getNextSibling() ){
 		                if( kid2.getNodeName().equals("idkey") ){
 		                	
-		                     if(getElementValue(kid2).equals(record.year+"_"+record.month+"_"+record.day)){
+		                     if(getElementValue(kid2).equals(year+"_"+month+"_"+day)){
 		                    	
 		                    	 delete = true;
 		                     }
@@ -256,7 +271,10 @@ public class DbHandler {
 		return doc;
 	}	
 	private Document modifyDocument(Document doc, Record record) {
-
+		int day= record.date.get(Calendar.DATE);
+		int month = record.date.get(Calendar.MONTH)+1;
+		int year = record.date.get(Calendar.YEAR);		
+		
 		Element rootElement = doc.getDocumentElement();
 
 		boolean inDB = false;
@@ -269,7 +287,7 @@ public class DbHandler {
 	            	for( kid2 = kid.getFirstChild(); kid2 != null; kid2 = kid2.getNextSibling() ){
 		                if( kid2.getNodeName().equals("idkey") ){
 		                	
-		                     if(getElementValue(kid2).equals(record.year+"_"+record.month+"_"+record.day)){
+		                     if(getElementValue(kid2).equals(year+"_"+month+"_"+day)){
 		                    	 inDB = true;
 		                    	 insert = true;
 		                     }
@@ -297,26 +315,32 @@ public class DbHandler {
 
 	
 	private Element newRecordElement(Record record,  Document document){ //wymaga deklaracji pol
+		
+		int day= record.date.get(Calendar.DATE);
+		int month = record.date.get(Calendar.MONTH)+1;
+		int year = record.date.get(Calendar.YEAR);		
+				
+		
 		//Record
 		Element recordElement = document.createElement("record");
 	//	rootElement.appendChild(recordElement);
 		
 		//idkey
 		Element idkey = document.createElement("idkey");
-		idkey.appendChild(document.createTextNode(record.year+"_"+record.month+"_"+record.day));
+		idkey.appendChild(document.createTextNode(year+"_"+month+"_"+day));
 		recordElement.appendChild(idkey);
 		
 		//day
 		Element dayElement = document.createElement("day");
-		dayElement.appendChild(document.createTextNode(Integer.toString(record.day)));
+		dayElement.appendChild(document.createTextNode(Integer.toString(day)));
 		recordElement.appendChild(dayElement);		
 		//month
 		Element monthElement = document.createElement("month");
-		monthElement.appendChild(document.createTextNode(Integer.toString(record.month)));
+		monthElement.appendChild(document.createTextNode(Integer.toString(month)));
 		recordElement.appendChild(monthElement);
 		//year
 		Element yearElement = document.createElement("year");
-		yearElement.appendChild(document.createTextNode(Integer.toString(record.year)));
+		yearElement.appendChild(document.createTextNode(Integer.toString(year)));
 		recordElement.appendChild(yearElement);		
 		
 		//REST OF DATA
