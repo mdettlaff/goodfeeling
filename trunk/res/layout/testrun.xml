@@ -12,11 +12,12 @@
 		android:id="@+id/testrun_text0"
 	    android:layout_width="match_parent" 
 	    android:layout_height="wrap_content" 
-	    android:text="Result: Unknown"/>
+	    android:text="Balloon result: Unknown"/>
 	<TextView  
 		android:id="@+id/testrun_text1"
 	    android:layout_width="match_parent" 
-	    android:layout_height="wrap_content"/>
+	    android:layout_height="wrap_content"
+	    android:text="PictureTest result: Unknown"/>
 	<TextView  
 		android:id="@+id/testrun_text2"
 	    android:layout_width="match_parent" 

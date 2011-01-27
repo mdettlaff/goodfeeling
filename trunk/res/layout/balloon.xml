@@ -6,6 +6,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent" >
 	<goodfeeling.userstate.balloon.BalloonView
+		android:id="@+id/balloon"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent" />
 </FrameLayout>

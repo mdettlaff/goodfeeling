@@ -1,5 +1,6 @@
 package goodfeeling.gui;
 
+import goodfeeling.userstate.balloon.Balloon;
 import goodfeeling.userstate.picture_test.PictureTest;
 import android.app.Activity;
 import android.content.Intent;
@@ -14,7 +15,7 @@ public class TestRun extends Activity implements OnClickListener {
 	private final int TEST_PICTURE_TEST = 0;
 	private final int TEST_BALLOON = 1;
 	
-	private final int TEST_NUM = 1;
+	private final int TEST_NUM = 2;
 	
 	private TextView[] text;
 	
@@ -24,9 +25,6 @@ public class TestRun extends Activity implements OnClickListener {
 	
 	private int testStep;
 	
-	private Intent intent;
-	
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.testrun);
@@ -46,7 +44,7 @@ public class TestRun extends Activity implements OnClickListener {
         
         this.test = new int[TEST_NUM];
         this.test[0] = TEST_PICTURE_TEST;
-        //this.test[1] = TEST_BALLOON;
+        this.test[1] = TEST_BALLOON;
         this.testStep = 0;
         
         this.buttonRun = (Button)findViewById(R.id.testrun_buttonrun);
@@ -54,53 +52,70 @@ public class TestRun extends Activity implements OnClickListener {
     }
     
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
-    	System.out.println(">>>>>>>>> onActivityResult");
     	switch(requestCode) {
     		case TEST_PICTURE_TEST:
     			switch(resultCode) {
     				case RESULT_OK:
-    					this.text[0].setText("Result:");
     					int ap[] = data.getIntArrayExtra("PictureTestResultPositive");
     					int a[] = data.getIntArrayExtra("PictureTestResult");
-    					if(ap != null && a != null) {
+    					if(ap != null && a != null)
     						for(int i = 1; i < 11; i++)
-    							this.text[i].setText("cat[" + i + "] " + ap[i - 1] + " " + a[i -1]);
+    							this.text[i].setText(String.format("PictureTest result: cat %d, positive %d, all %d", i, ap[i - 1], a[i - 1]));
     						//TODO: cos zrobic z wynikami aplikacji
-    					}
-    					else {
-    						System.out.println(">>>>>>>>> onActivityResult 'TEST_PICTURE_TEST' WTF??? (What a Terrible Failure)");
-    					}
+    					else
+    						this.text[0].setText("PictureTest result: null");
     					break;
     				case RESULT_CANCELED:
-    					System.out.println(">>>>>>>>> onActivityResult 'TEST_PICTURE_TEST' RESULT_CANCELED. WTF??? (What a Terrible Failure)");
+    					this.text[0].setText("PictureTest result: RESULT_CANCELED");
     					break;
     				default:
-    					System.out.println(">>>>>>>>> onActivityResult 'TEST_PICTURE_TEST' unknown result");
+    					System.out.println(">>> 'TEST_PICTURE_TEST' unknown result");
+    			}
+    			break;
+    		case TEST_BALLOON:
+    			switch(resultCode) {
+    				case RESULT_OK:
+    					int result[] = data.getIntArrayExtra("BalloonResult");
+    					if(result != null)
+    						this.text[0].setText(String.format("Balloon result: correct %d, incorrect %d, all %d.", result[0], result[1], result[2]));
+    						//TODO: cos zrobic z wynikami aplikacji
+    					else
+    						this.text[0].setText("Balloon result: null");
+    					break;
+    				case RESULT_CANCELED:
+    					this.text[0].setText("Balloon result: RESULT_CANCELED");
+    					break;
+    				default:
+    					System.out.println(">>> 'TEST_BALLOON' unknown result");
     			}
     			break;
     		default:
-    			System.out.println(">>>>>>>>> onActivityResult unknown activity");
+    			System.out.println(">>> onActivityResult unknown activity");
     	}
     	runNextTest();
     }
 
-	@Override
+    // OnClickListener implements
+    
 	public void onClick(View v) {
-		System.out.println(">>>>>>>>> onClick");
 		runNextTest();
 	}
 	
 	// private
 	
 	private void runNextTest() {
-		if(this.testStep >= TEST_NUM) {
-			System.out.println(">>>>>>> test end");
+		if(this.testStep >= TEST_NUM)
 			return;
-		}
+		Intent intent;
 		switch(this.test[this.testStep]) {
 			case TEST_PICTURE_TEST:
-				intent = (new Intent()).setClass(this, PictureTest.class);
+				intent = new Intent(this, PictureTest.class);
 				break;
+			case TEST_BALLOON:
+				intent = new Intent(this, Balloon.class);
+				break;
+			default:
+				return;
 		}
 		startActivityForResult(intent, this.test[this.testStep]);
 		this.testStep++;
