@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
+
 /**
  * <b>PictureTest</b> - an {@link Activity} 
  * which execute "test of pictures":<br>
@@ -40,11 +41,22 @@ public class PictureTest extends Activity {
 	public void setStep(int step) {		this.step = step;	}
 	public void incStep(){ 		setStep(getStep()+1); 		}
 	
-	private int stepRound = -1;
+	/**
+	 * Represents number of loop on pictures
+	 */
+	final int NUM_ROUND = 1;
+	
+	/**
+	 * StepRound counter
+	 */
+	private int stepRound = 0;
 	public int getStepRound() {		return stepRound;	}
 	public void setStepRound(int stepRound) {	this.stepRound = stepRound;	}
 	public void incStepRound(){ 		setStepRound(getStepRound()+1); }
 
+	/**
+	 * Check if test false then test is on run else finish
+	 */
 	private boolean testState = false;
 	
     
@@ -268,34 +280,49 @@ public class PictureTest extends Activity {
 	}
 	
 	/**
-	 * Store results of test (numPositiveA, numA)
+	 * Store results of test (numPositiveA)
 	 */
-	//private int my_answers[][];
 	private int answersPositive[];
+	/**
+	 * Store results of test (numA)
+	 */
 	private int answers[];
 	
 	/**Initialize any phase of test: <br>
 	 * choose pictures for test using <b>Math.random()</b> as random 
 	 * function,<br>
-	 * display info using <b>Toast</b>
+	 * display info using <b>Toast</b><br>
+	 * finish() test;
 	 * @see Math
 	 * @see Toast
 	 */
     public void test_init(){
-    	System.out.println(">>>>>>>" + getStep() + ">>>>>>" + getStepRound());
-    	if(getStepRound() == 1){
+    	System.out.println(">>>>>>> " + getStep() + ">>>>>> " + getStepRound());
+    	
+    	if(getStepRound() == NUM_ROUND-1 
+    			&& 
+    			getStep() == (getmImageIds().length - 2)){
+    		System.out.println(">>>>>>> step ahead!!!!!!!!!");
     		testState = true;
-    		Intent data = new Intent();
+    	}
+    	if(getStepRound() == NUM_ROUND) {
+    		test_finish();
+    		//testState = true;
+    		//prepare results to return
+/*    		Intent data = new Intent();
+    		//return array results of positive answers for each category
     		data.putExtra("PictureTestResultPositive", this.answersPositive);
+    		//return array with number of questions given for each category
     		data.putExtra("PictureTestResult", this.answers);
     		setResult(RESULT_OK, data);
-    		finish();
-    		
+    		finish();*/	
     	}
-    	
+    	else 
+    	{
+    	System.out.println(">>>>>>> test_init() continues >>>>>>> testState 0");
     	//if step reach the end of categories to choose...
     	if( (getStep()) == (getmImageIds().length - 1) ) {
-        	incStepRound();
+        	incStepRound();        	
     		setStep(0); //start again from 0...
     	}
     	else {
@@ -326,12 +353,14 @@ public class PictureTest extends Activity {
     			+ this.answers[getStep()]
     			+ ")", 
     			Toast.LENGTH_SHORT).show();
+    	}
     }
 
     
-    //Interface for android starts here... 
+	//Interface for android starts here... 
 	//look at onCreate func
-	/** Called when the activity is first created.
+	/** 
+	 * Called when the activity is first created.
      * (non-Javadoc)
      * @see android.app.Activity#onCreate(android.os.Bundle)
      * @see Button
@@ -359,6 +388,8 @@ public class PictureTest extends Activity {
         	(Button) findViewById(R.id.picture_test_button_option_2);
         final Button option3 =
         	(Button) findViewById(R.id.picture_test_button_option_3);
+        
+        
 
         //1st picture is option1 (button1)
         option1.setBackgroundDrawable(getResources().
@@ -366,12 +397,21 @@ public class PictureTest extends Activity {
 		option1.setText("");
         option1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-				// Perform action on click
-            	first_picture();
-        		option1.setBackgroundDrawable(getResources().
-        			getDrawable(mImageIds[getCat()][getP1_type()][getP1()]));
-        		option2.setBackgroundDrawable(getResources().
-        			getDrawable(mImageIds[getCat()][getP2_type()][getP2()]));
+            	if(testState == false){
+            		System.out.println("testState: " + testState);
+            		first_picture();
+            		option1.setBackgroundDrawable(getResources().
+            				getDrawable(mImageIds[getCat()][getP1_type()][getP1()]));
+            		option2.setBackgroundDrawable(getResources().
+            				getDrawable(mImageIds[getCat()][getP2_type()][getP2()]));
+            	}
+            	else {
+            		option1.setBackgroundDrawable(getResources().getDrawable(R.drawable.picture_test_end));
+            		option2.setBackgroundDrawable(null);
+            		option3.setText(R.string.picture_test_end_info);
+            		//option2.setVisibility(0x00000004);
+            		test_init();
+            	}
             }
         });
         
@@ -381,31 +421,51 @@ public class PictureTest extends Activity {
 		option2.setText("");
         option2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Perform action on click
-            	second_picture();
-        		option1.setBackgroundDrawable(getResources().
-        			getDrawable(mImageIds[getCat()][getP1_type()][getP1()]));
-        		option2.setBackgroundDrawable(getResources().
-        			getDrawable(mImageIds[getCat()][getP2_type()][getP2()]));
+            	if(testState == false){
+            		System.out.println("testState: " + testState);
+            		second_picture();
+            		option1.setBackgroundDrawable(getResources().
+            				getDrawable(mImageIds[getCat()][getP1_type()][getP1()]));
+            		option2.setBackgroundDrawable(getResources().
+            				getDrawable(mImageIds[getCat()][getP2_type()][getP2()]));
+            	}
+            	else {
+            		option1.setBackgroundDrawable(getResources().getDrawable(R.drawable.picture_test_end));
+            		option2.setBackgroundDrawable(null);
+            		option3.setText(R.string.picture_test_end_info);
+            		//option2.setVisibility(0x00000004);
+            		test_init();
+            	}
             }
         });
         
         //3rd option mean not choosing any of above
-		option3.setText("None of above");
+        option3.setText(R.string.none_select);
         option3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Perform action on click
-                dont_choose();
-        		option1.setBackgroundDrawable(getResources().
-        			getDrawable(mImageIds[getCat()][getP1_type()][getP1()]));
-            	option2.setBackgroundDrawable(getResources().
-        			getDrawable(mImageIds[getCat()][getP2_type()][getP2()]));
+            	if(testState == false){
+            		System.out.println("testState: " + testState);
+            		dont_choose();
+            		option1.setBackgroundDrawable(getResources().
+            				getDrawable(mImageIds[getCat()][getP1_type()][getP1()]));
+            		option2.setBackgroundDrawable(getResources().
+            				getDrawable(mImageIds[getCat()][getP2_type()][getP2()]));
+            	}
+            	else {
+            		option1.setBackgroundDrawable(getResources().getDrawable(R.drawable.picture_test_end));
+            		option2.setBackgroundDrawable(null);
+            		option3.setText(R.string.picture_test_end_info);
+            		//option2.setVisibility(0x00000004);
+            		test_init();
+            	}
             }
         });
+        
     }
     
     
-    /**Apply choice of first picture
+    /**
+     * Apply choice of first picture
      */
     void first_picture(){
     	if(testState)
@@ -420,7 +480,8 @@ public class PictureTest extends Activity {
     	test_init();
     }
     
-    /**Apply choice of first picture
+    /**
+     * Apply choice of first picture
      */
 	void second_picture(){
     	if(testState)
@@ -435,7 +496,8 @@ public class PictureTest extends Activity {
     }
     
 	
-    /**Apply choosing none of pictures
+    /**
+     * Apply choosing none of pictures
      */
     void dont_choose(){
     	if(testState)
@@ -445,5 +507,20 @@ public class PictureTest extends Activity {
     	
     	//nothing chosen so we don't increase count of given answers
     	test_init();
+    }
+    
+    
+    /**
+     * Method which return results and finish this activity
+     * @see Intent
+     */
+    void test_finish(){
+		Intent data = new Intent();
+		//return array results of positive answers for each category
+		data.putExtra("PictureTestResultPositive", this.answersPositive);
+		//return array with number of questions given for each category
+		data.putExtra("PictureTestResult", this.answers);
+		setResult(RESULT_OK, data);
+		finish();
     }
 }
