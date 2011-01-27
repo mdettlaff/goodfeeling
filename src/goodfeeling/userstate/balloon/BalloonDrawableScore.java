@@ -1,5 +1,6 @@
 package goodfeeling.userstate.balloon;
 
+import goodfeeling.gui.R;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -11,6 +12,8 @@ public class BalloonDrawableScore {
 	private RectF dimension;
 	
 	private Paint paint;
+	
+	private String sScore;
 
 	public BalloonDrawableScore(Context context) {
 		this.paint = new Paint();
@@ -18,6 +21,7 @@ public class BalloonDrawableScore {
 		this.paint.setFakeBoldText(true);
 		this.paint.setARGB(150, 0, 87, 144);
 		this.paint.setTextAlign(Align.LEFT);
+		this.sScore = context.getResources().getString(R.string.balloon_score);
 	}
 	
 	public void setDimension(RectF dimension) {
@@ -26,7 +30,7 @@ public class BalloonDrawableScore {
 	}
 	
 	public void draw(Canvas canvas, int score) {
-		canvas.drawText(String.format("Score: %02d", score),
+		canvas.drawText(String.format("%s: %02d", this.sScore, score),
 			this.dimension.left,
 			this.dimension.bottom,
 			this.paint);

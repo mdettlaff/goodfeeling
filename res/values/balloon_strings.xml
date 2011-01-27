@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="balloon_ready_press">Press to start</string>
+    <string name="balloon_gameover_press">Press to exit</string>
+    <string name="balloon_gameover">Game Over</string>
+    <string name="balloon_score">Score</string>
+    <string name="balloon_button_label_0">0</string>
+    <string name="balloon_button_label_1">1</string>
+    <string name="balloon_button_label_2">1</string>
+    <string name="balloon_button_label_3">2</string>
+    <string name="balloon_button_label_4">4</string>
+    <string name="balloon_button_label_5">5</string>
+    <string name="balloon_button_label_6">6</string>
+    <string name="balloon_button_label_7">7</string>
+    <string name="balloon_button_label_8">8</string>
+    <string name="balloon_button_label_9">9</string>
+    <string name="balloon_button_label_C">C</string>
+    <string name="balloon_button_label_E">E</string>
+</resources>

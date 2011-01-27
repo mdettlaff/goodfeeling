@@ -1,5 +1,6 @@
 package goodfeeling.userstate.balloon;
 
+import goodfeeling.gui.R;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -43,18 +44,30 @@ public class BalloonDrawableButtons {
 	public BalloonDrawableButtons(Context context) {
 		this.texButton = context.getResources().getDrawable(R.drawable.balloon_button);
 		this.buttons = new BalloonButton[BUTTON_NUM];
-		this.buttons[0] = new BalloonButton(ButtonsId.BUTTON_1, "1");
-		this.buttons[1] = new BalloonButton(ButtonsId.BUTTON_2, "2");
-		this.buttons[2] = new BalloonButton(ButtonsId.BUTTON_3, "3");
-		this.buttons[3] = new BalloonButton(ButtonsId.BUTTON_4, "4");
-		this.buttons[4] = new BalloonButton(ButtonsId.BUTTON_5, "5");
-		this.buttons[5] = new BalloonButton(ButtonsId.BUTTON_6, "6");
-		this.buttons[6] = new BalloonButton(ButtonsId.BUTTON_7, "7");
-		this.buttons[7] = new BalloonButton(ButtonsId.BUTTON_8, "8");
-		this.buttons[8] = new BalloonButton(ButtonsId.BUTTON_9, "9");
-		this.buttons[9] = new BalloonButton(ButtonsId.BUTTON_0, "0");
-		this.buttons[10] = new BalloonButton(ButtonsId.BUTTON_C, "C");
-		this.buttons[11] = new BalloonButton(ButtonsId.BUTTON_E, "E");
+		this.buttons[0] = new BalloonButton(ButtonsId.BUTTON_1,
+			context.getResources().getString(R.string.balloon_button_label_1));
+		this.buttons[1] = new BalloonButton(ButtonsId.BUTTON_2,
+			context.getResources().getString(R.string.balloon_button_label_2));
+		this.buttons[2] = new BalloonButton(ButtonsId.BUTTON_3,
+			context.getResources().getString(R.string.balloon_button_label_3));
+		this.buttons[3] = new BalloonButton(ButtonsId.BUTTON_4,
+			context.getResources().getString(R.string.balloon_button_label_4));
+		this.buttons[4] = new BalloonButton(ButtonsId.BUTTON_5,
+			context.getResources().getString(R.string.balloon_button_label_5));
+		this.buttons[5] = new BalloonButton(ButtonsId.BUTTON_6,
+			context.getResources().getString(R.string.balloon_button_label_6));
+		this.buttons[6] = new BalloonButton(ButtonsId.BUTTON_7,
+			context.getResources().getString(R.string.balloon_button_label_7));
+		this.buttons[7] = new BalloonButton(ButtonsId.BUTTON_8,
+			context.getResources().getString(R.string.balloon_button_label_8));
+		this.buttons[8] = new BalloonButton(ButtonsId.BUTTON_9,
+			context.getResources().getString(R.string.balloon_button_label_9));
+		this.buttons[9] = new BalloonButton(ButtonsId.BUTTON_0,
+			context.getResources().getString(R.string.balloon_button_label_0));
+		this.buttons[10] = new BalloonButton(ButtonsId.BUTTON_C,
+			context.getResources().getString(R.string.balloon_button_label_C));
+		this.buttons[11] = new BalloonButton(ButtonsId.BUTTON_E,
+			context.getResources().getString(R.string.balloon_button_label_E));
 		this.paint = new Paint();
 		this.paint.setAntiAlias(true);
 		this.paint.setFakeBoldText(true);
