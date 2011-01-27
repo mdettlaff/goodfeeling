@@ -1,13 +1,12 @@
 package goodfeeling.userstate.balloon;
 
 import goodfeeling.userstate.balloon.BalloonDrawableBalloons.BalloonColor;
-
 import java.util.LinkedList;
 import java.util.Random;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.RectF;
+import android.os.Handler;
 import android.view.SurfaceHolder;
 
 public class BalloonThread extends Thread {
@@ -35,6 +34,10 @@ public class BalloonThread extends Thread {
 	 * time before the balloon flies away, in milliseconds
 	 */
 	private final long GAME_BALLOON_DURATION = 10000l;
+	/*
+	 * waiting time to finish the game
+	 */
+	private final long GAME_GAMEOVER_WAIT = 1500l;
 	
 	public enum GameState {
 		READY,
@@ -55,6 +58,8 @@ public class BalloonThread extends Thread {
 	
 	private boolean threadRun;
 	
+	private Handler handler;
+	
 	private long threadInterval;
 	
 	private GameState gameState;
@@ -72,6 +77,8 @@ public class BalloonThread extends Thread {
 	private Random random;
 	
 	private long balloonCreateAt;
+	
+	private long gameOverAt;
 	
 	private BalloonDrawableBackground dBackground;
 	private BalloonDrawableBalloons dBalloons;
@@ -96,6 +103,7 @@ public class BalloonThread extends Thread {
 		this.gameEntry = "";
 		this.random = new Random();
 		this.balloonCreateAt = 0l;
+		this.gameOverAt = 0l;
 		this.dBackground = new BalloonDrawableBackground(context);
 		this.dBalloons = new BalloonDrawableBalloons(context, this.balloons);
 		this.dScore = new BalloonDrawableScore(context);
@@ -131,8 +139,14 @@ public class BalloonThread extends Thread {
 		this.threadRun = threadRun;
 	}
 	
+	public void setHandler(Handler handler) {
+		this.handler = handler;
+	}
+	
 	public GameState getGameState() {
-		return this.gameState;
+		synchronized(this.holder) {
+			return this.gameState;
+		}
 	}
 	
 	public void setGameState(GameState state) {
@@ -161,6 +175,7 @@ public class BalloonThread extends Thread {
 					return;
 				case GAMEOVER:
 					if(this.gameState == GameState.WORK) {
+						this.gameOverAt = System.currentTimeMillis();
 						this.gameState = GameState.GAMEOVER;
 						this.threadInterval = THREAD_INTERVAL_IDLE;
 					}
@@ -170,58 +185,64 @@ public class BalloonThread extends Thread {
 	}
 	
 	public BalloonResult getGameResult(){
-		return this.gameResult;
+		synchronized(this.holder) {
+			return this.gameResult;
+		}
 	}
 
 	public void doPressed(float x, float y) {
 		synchronized(this.holder) {
 			switch(this.gameState) {
-			case READY:
-				setGameState(GameState.WORK);
-				return;
-			case PAUSE:
-				setGameState(GameState.RESUME);
-				return;
-			case WORK:
-				switch(this.dButtons.onPressed(x, y)) {
-					case BUTTON_0:
-						gameEntryAdd(0);
-						break;
-					case BUTTON_1:
-						gameEntryAdd(1);
-						break;
-					case BUTTON_2:
-						gameEntryAdd(2);
-						break;
-					case BUTTON_3:
-						gameEntryAdd(3);
-						break;
-					case BUTTON_4:
-						gameEntryAdd(4);
-						break;
-					case BUTTON_5:
-						gameEntryAdd(5);
-						break;
-					case BUTTON_6:
-						gameEntryAdd(6);
-						break;
-					case BUTTON_7:
-						gameEntryAdd(7);
-						break;
-					case BUTTON_8:
-						gameEntryAdd(8);
-						break;
-					case BUTTON_9:
-						gameEntryAdd(9);
-						break;
-					case BUTTON_C:
-						gameEntryClear();
-						break;
-					case BUTTON_E:
-						gameEntryEnter();
-						break;
-				}
-				return;
+				case READY:
+					setGameState(GameState.WORK);
+					return;
+				case PAUSE:
+					setGameState(GameState.RESUME);
+					return;
+				case WORK:
+					switch(this.dButtons.onPressed(x, y)) {
+						case BUTTON_0:
+							gameEntryAdd(0);
+							break;
+						case BUTTON_1:
+							gameEntryAdd(1);
+							break;
+						case BUTTON_2:
+							gameEntryAdd(2);
+							break;
+						case BUTTON_3:
+							gameEntryAdd(3);
+							break;
+						case BUTTON_4:
+							gameEntryAdd(4);
+							break;
+						case BUTTON_5:
+							gameEntryAdd(5);
+							break;
+						case BUTTON_6:
+							gameEntryAdd(6);
+							break;
+						case BUTTON_7:
+							gameEntryAdd(7);
+							break;
+						case BUTTON_8:
+							gameEntryAdd(8);
+							break;
+						case BUTTON_9:
+							gameEntryAdd(9);
+							break;
+						case BUTTON_C:
+							gameEntryClear();
+							break;
+						case BUTTON_E:
+							gameEntryEnter();
+							break;
+					}
+					return;
+				case GAMEOVER:
+					if(BalloonInterpolator.i(this.gameOverAt, GAME_GAMEOVER_WAIT) == BalloonInterpolator.END)
+						this.handler.sendEmptyMessage(Balloon.MSG_EXIT);
+					return;
 			}
 		}
 	}
@@ -286,7 +307,8 @@ public class BalloonThread extends Thread {
 				this.dButtons.draw(canvas);
 				break;
 			case GAMEOVER:
-				this.dGameOver.draw(canvas, this.gameResult.getCorrect());
+				this.dGameOver.draw(canvas, this.gameResult.getCorrect(),
+					BalloonInterpolator.i(this.gameOverAt, GAME_GAMEOVER_WAIT));
 				break;
 		}
 	}

@@ -40,7 +40,7 @@ public class BalloonDrawableGameOver {
 		
 	}
 	
-	public void draw(Canvas canvas, int score) {
+	public void draw(Canvas canvas, int score, float i) {
 		this.paint.setTextSize(this.fontSize1);
 		canvas.drawText(this.sGameOver,
 			this.dimension.centerX(),
@@ -52,9 +52,10 @@ public class BalloonDrawableGameOver {
 			this.dimension.centerY(),
 			this.paint);
 		this.paint.setTextSize(this.fontSize3);
-		canvas.drawText(this.sPress,
-				this.dimension.centerX(),
-				this.dimension.centerY() + this.fontSize3 * 2.0f,
-				this.paint);
+		if(i == BalloonInterpolator.END)
+			canvas.drawText(this.sPress,
+					this.dimension.centerX(),
+					this.dimension.centerY() + this.fontSize3 * 2.0f,
+					this.paint);
 	}
 }

@@ -1,70 +1,44 @@
 package goodfeeling.userstate.balloon;
 
 import goodfeeling.gui.R;
-import goodfeeling.userstate.balloon.BalloonThread.GameState;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 
-public class Balloon extends Activity {
+public class Balloon extends Activity implements Handler.Callback {
+	
+	public static final int MSG_EXIT = 0;
 	
 	private BalloonView view;
+	
+	private BalloonThread thread;
+	
+	private Handler handler;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
         setContentView(R.layout.balloon);
-        this.view = (BalloonView) findViewById(R.layout.balloon);
-        System.out.println(">>>>>>> onCreate");
+        this.view = (BalloonView)findViewById(R.id.balloon);
+        this.thread = this.view.getThread();
+        this.handler = new Handler(this);
+        this.thread.setHandler(this.handler);
     }
-    
-	@Override
-	protected void onStart() {
-		super.onStart();
-		System.out.println(">>>>>>> onStart");
-	}
-
-	@Override
-	protected void onRestart() {
-		super.onRestart();
-		System.out.println(">>>>>>> onRestart");
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		System.out.println(">>>>>>> onResume");
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		System.out.println(">>>>>>> onPause");
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		System.out.println(">>>>>>> onStop");
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		Intent i = new Intent(); 
-		if(this.view.getGameState() == GameState.GAMEOVER) {
+	
+	public boolean handleMessage(Message msg) {
+		if(msg.what == MSG_EXIT) {
+			Intent data = new Intent(); 
 			int[] result = {
-				this.view.getGameResult().getCorrect(),
-				this.view.getGameResult().getIncorrect(),
-				this.view.getGameResult().getAll()};
-			i.putExtra("BalloonResult", result);
-			setResult(RESULT_OK, i);
+				this.thread.getGameResult().getCorrect(),
+				this.thread.getGameResult().getIncorrect(),
+				this.thread.getGameResult().getAll()};
+			data.putExtra("BalloonResult", result);
+			setResult(RESULT_OK, data);
+			this.finish();
+			return true;
 		}
-		else {
-			setResult(RESULT_CANCELED, i);
-		}
-		this.finish();
-		System.out.println(">>>>>>> onDestroy");
-		
+		return false;
 	}
 }
