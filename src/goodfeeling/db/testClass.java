@@ -14,13 +14,13 @@ public class testClass {
 /*
 	public static void main(String[] args) {
 		
-		
 		//RECORDS - ADDING / UPDATING / DELETING / READING
 		///////////////////////////////////////////////////
 		//New record, if fields: day, month and year are not provided, current date is taken
 		Record r1 = new Record();
 		r1.physicalRate = "Poor";
 		r1.moodRate = "Poor";
+		r1.mentalRate = "Poor";
 			//Create food for the record
 			RecordFood food1 = new RecordFood();
 			food1.name = "Potato";

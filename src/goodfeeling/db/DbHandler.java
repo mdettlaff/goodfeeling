@@ -159,6 +159,10 @@ public class DbHandler {
 		                	if( kid2.getNodeName().equals("mentalRate") ){
 		                		record.mentalRate = getElementValue(kid2);
 		                	}
+		                	//moodRate
+		                	if( kid2.getNodeName().equals("moodRate") ){
+		                		record.moodRate = getElementValue(kid2);
+		                	}		                	
 		                	//food
 		                	if( kid2.getNodeName().equals("foods") ){
 		                		if (kid2.hasChildNodes()){
@@ -355,7 +359,13 @@ public class DbHandler {
 			Element timeAwakenElement = document.createElement("mentalRate");
 			timeAwakenElement.appendChild(document.createTextNode(record.mentalRate));
 			recordElement.appendChild(timeAwakenElement);	
-		}			
+		}
+		//moodRate
+		if(!record.moodRate.equals("")){
+			Element timeAwakenElement = document.createElement("moodRate");
+			timeAwakenElement.appendChild(document.createTextNode(record.moodRate));
+			recordElement.appendChild(timeAwakenElement);	
+		}
 		//FOODS
 		if(record.eatenFood.size() > 0){
 			Element foodsElement = document.createElement("foods");
