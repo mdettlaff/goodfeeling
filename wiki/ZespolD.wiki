@@ -132,7 +132,7 @@ Użycie takiego testu w naszym projekcie jest kiepskim pomysłem w związku z wy
 
 Rozsądnym podejściem może być wykonanie trzech prostych testów badających kolejno: siłę, szybkość i wytrzymałość. Pytanie o dokładny rodzaj testów otwiera szeroką dyskusję i wymaga więcej czasu na wczytanie się w fachową literaturę.
 
-== Jak to dziła ==
+== Jak to działa ==
 http://goodfeeling.googlecode.com/svn/wiki/ZespolD/device1.png
 http://goodfeeling.googlecode.com/svn/wiki/ZespolD/device2.png
 http://goodfeeling.googlecode.com/svn/wiki/ZespolD/device3.png
