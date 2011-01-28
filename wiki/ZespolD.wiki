@@ -131,3 +131,9 @@ Jest zalecane aby próby 1, 2, 3 przeprowadzać w pierwszego dnia, pozostałe dr
 Użycie takiego testu w naszym projekcie jest kiepskim pomysłem w związku z wymogiem łatwości przeprowadzanego badania. Dlatego właśnie w tym miejscu kłócą się ze sobą zasady trafności i łatwości. Trafność wymagała by kilku testów, z kolei łatwość dąży do jak najmniejszej ich liczby.
 
 Rozsądnym podejściem może być wykonanie trzech prostych testów badających kolejno: siłę, szybkość i wytrzymałość. Pytanie o dokładny rodzaj testów otwiera szeroką dyskusję i wymaga więcej czasu na wczytanie się w fachową literaturę.
+
+== Jak to dziła ==
+http://goodfeeling.googlecode.com/svn/wiki/ZespolD/device1.png
+http://goodfeeling.googlecode.com/svn/wiki/ZespolD/device2.png
+http://goodfeeling.googlecode.com/svn/wiki/ZespolD/device3.png
+http://goodfeeling.googlecode.com/svn/wiki/ZespolD/device4.png
