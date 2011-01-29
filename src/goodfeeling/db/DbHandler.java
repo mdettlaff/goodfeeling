@@ -152,16 +152,82 @@ public class DbHandler {
 		                }
 		                if(read){
 		                	//physicalRate
-		                	if( kid2.getNodeName().equals("physicalRate") ){
-		                		record.physicalRate = getElementValue(kid2);
+		                	if( kid2.getNodeName().equals("physicalRates") ){
+		                		if (kid2.hasChildNodes()){
+			                		for( kid3 = kid2.getFirstChild(); kid3 != null; kid3 = kid3.getNextSibling() ){
+			                			if( kid3.getNodeName().equals("physicalRate") ){
+					                		if (kid3.hasChildNodes()){
+					                			TestResult tempTest = new TestResult();
+						                		for( kid4 = kid3.getFirstChild(); kid4 != null; kid4 = kid4.getNextSibling() ){
+						                			
+						                			//name
+						                			if( kid4.getNodeName().equals("rate") ){
+						                				tempTest.rate = getElementValue(kid4);
+						                			}
+						                			//amount
+						                			if( kid4.getNodeName().equals("hour") ){
+						                				tempTest.hour = Integer.parseInt(getElementValue(kid4));
+						                			}
+
+						                		}
+					                			//add
+					                			record.physicalRates.add(tempTest);						                		
+					                		}
+			                			}
+			                		}
+		                		}
 		                	}
 		                	//mentalRate
-		                	if( kid2.getNodeName().equals("mentalRate") ){
-		                		record.mentalRate = getElementValue(kid2);
+		                	if( kid2.getNodeName().equals("mentalRates") ){
+		                		if (kid2.hasChildNodes()){
+			                		for( kid3 = kid2.getFirstChild(); kid3 != null; kid3 = kid3.getNextSibling() ){
+			                			if( kid3.getNodeName().equals("mentalRate") ){
+					                		if (kid3.hasChildNodes()){
+					                			TestResult tempTest = new TestResult();
+						                		for( kid4 = kid3.getFirstChild(); kid4 != null; kid4 = kid4.getNextSibling() ){
+						                			
+						                			//name
+						                			if( kid4.getNodeName().equals("rate") ){
+						                				tempTest.rate = getElementValue(kid4);
+						                			}
+						                			//amount
+						                			if( kid4.getNodeName().equals("hour") ){
+						                				tempTest.hour = Integer.parseInt(getElementValue(kid4));
+						                			}
+
+						                		}
+					                			//add
+					                			record.mentalRates.add(tempTest);						                		
+					                		}
+			                			}
+			                		}
+		                		}		  
 		                	}
 		                	//moodRate
-		                	if( kid2.getNodeName().equals("moodRate") ){
-		                		record.moodRate = getElementValue(kid2);
+		                	if( kid2.getNodeName().equals("moodRates") ){
+		                		if (kid2.hasChildNodes()){
+			                		for( kid3 = kid2.getFirstChild(); kid3 != null; kid3 = kid3.getNextSibling() ){
+			                			if( kid3.getNodeName().equals("moodRate") ){
+					                		if (kid3.hasChildNodes()){
+					                			TestResult tempTest = new TestResult();
+						                		for( kid4 = kid3.getFirstChild(); kid4 != null; kid4 = kid4.getNextSibling() ){
+						                			
+						                			//name
+						                			if( kid4.getNodeName().equals("rate") ){
+						                				tempTest.rate = getElementValue(kid4);
+						                			}
+						                			//amount
+						                			if( kid4.getNodeName().equals("hour") ){
+						                				tempTest.hour = Integer.parseInt(getElementValue(kid4));
+						                			}
+
+						                		}
+					                			//add
+					                			record.moodRates.add(tempTest);						                		
+					                		}
+			                			}
+			                		}
+		                		}
 		                	}		                	
 		                	//food
 		                	if( kid2.getNodeName().equals("foods") ){
@@ -169,8 +235,9 @@ public class DbHandler {
 			                		for( kid3 = kid2.getFirstChild(); kid3 != null; kid3 = kid3.getNextSibling() ){
 			                			if( kid3.getNodeName().equals("food") ){
 					                		if (kid3.hasChildNodes()){
-						                		for( kid4 = kid3.getFirstChild(); kid4 != null; kid4 = kid4.getNextSibling() ){
-						                			RecordFood tempFood = new RecordFood();
+					                			RecordFood tempFood = new RecordFood();
+					                			for( kid4 = kid3.getFirstChild(); kid4 != null; kid4 = kid4.getNextSibling() ){
+						                			
 						                			//name
 						                			if( kid4.getNodeName().equals("name") ){
 						                				tempFood.name = getElementValue(kid4);
@@ -187,9 +254,10 @@ public class DbHandler {
 						                			if( kid4.getNodeName().equals("timeConsumed") ){
 						                				tempFood.timeConsumed = getElementValue(kid4);
 						                			}
-						                			//add
-						                			record.addFood(tempFood);
+
 						                		}
+					                			//add
+					                			record.addFood(tempFood);						                		
 					                		}
 			                			}
 			                		}
@@ -201,8 +269,9 @@ public class DbHandler {
 			                		for( kid3 = kid2.getFirstChild(); kid3 != null; kid3 = kid3.getNextSibling() ){
 			                			if( kid3.getNodeName().equals("activity") ){
 					                		if (kid3.hasChildNodes()){
+					                			RecordActivity tempActivity = new RecordActivity();
 						                		for( kid4 = kid3.getFirstChild(); kid4 != null; kid4 = kid4.getNextSibling() ){
-						                			RecordActivity tempActivity = new RecordActivity();
+						                			
 						                			//name
 						                			if( kid4.getNodeName().equals("name") ){
 						                				tempActivity.name = getElementValue(kid4);
@@ -219,9 +288,10 @@ public class DbHandler {
 						                			if( kid4.getNodeName().equals("intensivity") ){
 						                				tempActivity.intensivity = getElementValue(kid4);
 						                			}
-						                			//add
-						                			record.addActivity(tempActivity);
+
 						                		}
+					                			//add
+					                			record.addActivity(tempActivity);						                		
 					                		}
 			                			}
 			                		}
@@ -348,23 +418,74 @@ public class DbHandler {
 		recordElement.appendChild(yearElement);		
 		
 		//REST OF DATA
-		//physicalRate
-		if(!record.physicalRate.equals("")){
-			Element timeAwakenElement = document.createElement("physicalRate");
-			timeAwakenElement.appendChild(document.createTextNode(record.physicalRate));
-			recordElement.appendChild(timeAwakenElement);	
+		//physicalRates
+		
+		if(record.physicalRates.size() > 0){
+
+			Element testResultsElement = document.createElement("physicalRates");
+
+			for(int ii = 0; ii < record.physicalRates.size(); ii++ ){
+				Element testResultElement = document.createElement("physicalRate");
+				TestResult tempTestResult = record.physicalRates.get(ii);
+				
+				//rate
+				Element rateElement = document.createElement("rate");
+				rateElement.appendChild(document.createTextNode(tempTestResult.rate));
+				testResultElement.appendChild(rateElement);
+				//hour
+				Element hourElement = document.createElement("hour");
+				hourElement.appendChild(document.createTextNode(Integer.toString(tempTestResult.hour)));
+				testResultElement.appendChild(hourElement);	
+
+				testResultsElement.appendChild(testResultElement);	
+			}
+			
+			recordElement.appendChild(testResultsElement);				
+
 		}	
 		//mentalRate
-		if(!record.mentalRate.equals("")){
-			Element timeAwakenElement = document.createElement("mentalRate");
-			timeAwakenElement.appendChild(document.createTextNode(record.mentalRate));
-			recordElement.appendChild(timeAwakenElement);	
+		if(record.mentalRates.size() > 0){
+			Element testResultsElement = document.createElement("mentalRates");
+
+			for(int ii = 0; ii < record.mentalRates.size(); ii++ ){
+				Element testResultElement = document.createElement("mentalRate");
+				TestResult tempTestResult = record.mentalRates.get(ii);
+				
+				//rate
+				Element rateElement = document.createElement("rate");
+				rateElement.appendChild(document.createTextNode(tempTestResult.rate));
+				testResultElement.appendChild(rateElement);
+				//hour
+				Element hourElement = document.createElement("hour");
+				hourElement.appendChild(document.createTextNode(Integer.toString(tempTestResult.hour)));
+				testResultElement.appendChild(hourElement);	
+
+				testResultsElement.appendChild(testResultElement);	
+			}
+			
+			recordElement.appendChild(testResultsElement);	
 		}
 		//moodRate
-		if(!record.moodRate.equals("")){
-			Element timeAwakenElement = document.createElement("moodRate");
-			timeAwakenElement.appendChild(document.createTextNode(record.moodRate));
-			recordElement.appendChild(timeAwakenElement);	
+		if(record.moodRates.size() > 0){
+			Element testResultsElement = document.createElement("moodRates");
+
+			for(int ii = 0; ii < record.moodRates.size(); ii++ ){
+				Element testResultElement = document.createElement("moodRate");
+				TestResult tempTestResult = record.moodRates.get(ii);
+				
+				//rate
+				Element rateElement = document.createElement("rate");
+				rateElement.appendChild(document.createTextNode(tempTestResult.rate));
+				testResultElement.appendChild(rateElement);
+				//hour
+				Element hourElement = document.createElement("hour");
+				hourElement.appendChild(document.createTextNode(Integer.toString(tempTestResult.hour)));
+				testResultElement.appendChild(hourElement);	
+
+				testResultsElement.appendChild(testResultElement);	
+			}
+			
+			recordElement.appendChild(testResultsElement);	
 		}
 		//FOODS
 		if(record.eatenFood.size() > 0){
