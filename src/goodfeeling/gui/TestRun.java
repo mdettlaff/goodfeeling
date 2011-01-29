@@ -1,6 +1,8 @@
 package goodfeeling.gui;
 
 import goodfeeling.userstate.balloon.Balloon;
+import goodfeeling.userstate.balloon.BalloonResult;
+import goodfeeling.userstate.balloon.BalloonResultException;
 import goodfeeling.userstate.picture_test.PictureTest;
 import android.app.Activity;
 import android.content.Intent;
@@ -75,12 +77,16 @@ public class TestRun extends Activity implements OnClickListener {
     		case TEST_BALLOON:
     			switch(resultCode) {
     				case RESULT_OK:
-    					int result[] = data.getIntArrayExtra("BalloonResult");
-    					if(result != null)
-    						this.text[0].setText(String.format("Balloon result: correct %d, incorrect %d, all %d.", result[0], result[1], result[2]));
-    						//TODO: cos zrobic z wynikami aplikacji
-    					else
+    					try {
+    						BalloonResult result = new BalloonResult(data);
+    						this.text[0].setText(String.format("Balloon result: correct %d, incorrect %d, all %d.",
+    							result.getCorrect(),
+    							result.getIncorrect(),
+    							result.getAll()));
+    					} catch(BalloonResultException e) {
     						this.text[0].setText("Balloon result: null");
+    					}
+    					//TODO: cos zrobic z wynikami aplikacji			
     					break;
     				case RESULT_CANCELED:
     					this.text[0].setText("Balloon result: RESULT_CANCELED");

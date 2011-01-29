@@ -30,11 +30,7 @@ public class Balloon extends Activity implements Handler.Callback {
 	public boolean handleMessage(Message msg) {
 		if(msg.what == MSG_EXIT) {
 			Intent data = new Intent(); 
-			int[] result = {
-				this.thread.getGameResult().getCorrect(),
-				this.thread.getGameResult().getIncorrect(),
-				this.thread.getGameResult().getAll()};
-			data.putExtra("BalloonResult", result);
+			this.thread.getGameResult().put(data);
 			setResult(RESULT_OK, data);
 			this.finish();
 			return true;
