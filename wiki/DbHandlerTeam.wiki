@@ -18,7 +18,7 @@ Sposób użycia aktualnej wersji biblioteki bazy danych:
 		//add some tests results
 		TestResult physicalTest1 = new TestResult(12,"Poor");
 		r1.physicalRates.add(physicalTest1);
-		TestResult moodTest1 = new TestResult(15,"Poor");
+		TestResult moodTest1 = new TestResult("Poor"); //current hour taken
 		r1.moodRates.add(moodTest1);
 		TestResult mentalTest1 = new TestResult(11,"Poor");
 		r1.mentalRates.add(mentalTest1);
@@ -87,23 +87,38 @@ Sposób użycia aktualnej wersji biblioteki bazy danych:
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		//DICTIONARY OPERATIONS
 		///////////////////////////////////////////////////		
 		
-		//ADD NEW ITEM TO DICTIONARY
 		try {
+			//FOOD
 			//add to food dictionary
-			Food fd1 = new Food("Pizza");
-			dbHandler.addToFoodDictionary(fd1);
+			dbHandler.addToFoodDictionary(new Food("Pizza"));
+			dbHandler.addToFoodDictionary(new Food("Hamburger"));
+			dbHandler.addToFoodDictionary(new Food("Hot dog"));
 			
 			//get food list from dictionary
 			ArrayList<Food> foodsArray = dbHandler.getFoodDictionaryList();
+			System.out.println("Food in DB:");
+			System.out.println();
+			for(int i = 0; i < foodsArray.size(); i++){
+				System.out.println(i+". name: "+foodsArray.get(i).name);
+			}		
 			
-			//add to food dictionary
-			dbHandler.addToActivityDictionary(new Activity("Pizza"));
+			//ACTIVITIES
+			//add to activities dictionary
+			dbHandler.addToActivityDictionary(new Activity("Running"));
+			dbHandler.addToActivityDictionary(new Activity("Walking"));
+			dbHandler.addToActivityDictionary(new Activity("Smoking"));
 			
-			//get food list from dictionary
+			//get activities list from dictionary
 			ArrayList<Activity> activitiesArray = dbHandler.getActivitiesDictionaryList();
+			System.out.println("Activities in DB:");
+			System.out.println();
+			for(int i = 0; i < activitiesArray.size(); i++){
+				System.out.println(i+". name: "+activitiesArray.get(i).name);
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
