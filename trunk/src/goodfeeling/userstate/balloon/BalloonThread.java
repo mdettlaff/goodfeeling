@@ -37,7 +37,7 @@ public class BalloonThread extends Thread {
 	/*
 	 * waiting time to finish the game
 	 */
-	private final long GAME_GAMEOVER_WAIT = 1500l;
+	private final long GAME_GAMEOVER_WAIT = 2000l;
 	
 	public enum GameState {
 		READY,
