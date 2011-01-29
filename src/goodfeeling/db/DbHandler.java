@@ -18,6 +18,8 @@ import javax.xml.transform.stream.*;
 */
 public class DbHandler {
 	
+	public String xmlActivitiesFileName = "activities_dictionary.xml";
+	public String xmlFoodsFileName = "foods_dictionary.xml";
 	/** Adds or updates one record in database
 	* @param record Record class object, update if record of same date exist in database
 	*/
@@ -84,49 +86,85 @@ public class DbHandler {
 		}		
 		return record;
 	}
-	/** Adds Food object to Food dictionary database [TODO]
+	/** Adds Food object to Food dictionary database
 	 * @param food Food class object, food.name is required
 	 */
-	public void addToFoodDictionary(Food food) {
-		// TODO
+	public void addToFoodDictionary(Food food) throws Exception {
+
+	    File f = new File(xmlFoodsFileName);	
+    	
+	    if(!f.exists()){
+	    	Document doc = newFoodDocument(food); 
+	    	saveXMLDocument(xmlFoodsFileName, doc);
+	    	
+	    }else{
+	    	Document doc = parseFile(xmlFoodsFileName);
+	    	doc = modifyFoodDocument(doc,food);  
+	    	saveXMLDocument(xmlFoodsFileName, doc);	    	
+	    }   		
 		
 	}
-	/** Gets Food objects in database [TODO]
+	/** Gets Food objects in database 
 	 * @return ArrayList<Food>
 	 */
 	public ArrayList<Food> getFoodDictionaryList(){
-		// TODO
+		
 		ArrayList<Food> foods = new ArrayList<Food>();
 		
-		foods.add(new Food("Pizza"));
-		foods.add(new Food("Potato"));
-		foods.add(new Food("Tomato"));
-		return foods;
+
+		File f = new File(xmlFoodsFileName);	
+	    if(f.exists()){
+	    	
+	    	Document doc = parseFile(xmlFoodsFileName);
+	    	foods = readFoodsFromDocument(doc, foods);     	
+	    	
+	    }		
+		
+		return foods;	
+
 	}
-	/** Gets Activity objects in database [TODO]
+	/** Gets Activity objects in database
 	 * @return ArrayList<Activity>
 	 */	
 	public ArrayList<Activity> getActivitiesDictionaryList() {
-		// TODO
+	
 		ArrayList<Activity> activities = new ArrayList<Activity>();
 		
-		activities.add(new Activity("Swimming"));
-		activities.add(new Activity("Writing"));
-		activities.add(new Activity("Playing"));
+
+		File f = new File(xmlActivitiesFileName);	
+	    if(f.exists()){
+	    	
+	    	Document doc = parseFile(xmlActivitiesFileName);
+	    	activities = readActivitiesFromDocument(doc, activities);     	
+	    	
+	    }		
+		
 		return activities;		
 	}
-	/** Adds Activity object to Activities dictionary database [TODO]
+	/** Adds Activity object to Activities dictionary database
 	 * @param activity Activity class object, activity.name is required
 	 */
-	public void addToActivityDictionary(Activity activity) {
-		// TODO
-		
+	public void addToActivityDictionary(Activity activity) throws Exception {
+
+	    File f = new File(xmlActivitiesFileName);	
+    	
+	    if(!f.exists()){
+	    	Document doc = newActivityDocument(activity); 
+	    	saveXMLDocument(xmlActivitiesFileName, doc);
+	    	
+	    }else{
+	    	Document doc = parseFile(xmlActivitiesFileName);
+	    	doc = modifyActivityDocument(doc,activity);  
+	    	saveXMLDocument(xmlActivitiesFileName, doc);	    	
+	    }    	
+    	
+	    			
 	}
 	////////////////////////////////////////////////////////////////////
 	//Private //////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////
 
-	private Record readFromDocument(Document doc, Record record) { //wymaga deklaracji pol
+	private Record readFromDocument(Document doc, Record record) { 
 		
 		int day= record.date.get(Calendar.DATE);
 		int month = record.date.get(Calendar.MONTH)+1;
@@ -297,8 +335,7 @@ public class DbHandler {
 			                		}
 		                		}
 		                	}
-		               		//rest TODO
-		                	//...
+
 		                	
 		                } 		                
 	            	}
@@ -385,10 +422,187 @@ public class DbHandler {
 		
 		
 		return doc;
+	}
+
+	private ArrayList<Activity> readActivitiesFromDocument(Document doc, ArrayList<Activity> activities) { 
+		
+		Element rootElement = doc.getDocumentElement();
+
+		Node kid;
+		Node kid2;
+        if (rootElement.hasChildNodes()){
+            for( kid = rootElement.getFirstChild(); kid != null; kid = kid.getNextSibling() ){
+            	if (kid.hasChildNodes()){
+	            	for( kid2 = kid.getFirstChild(); kid2 != null; kid2 = kid2.getNextSibling() ){
+		                if( kid2.getNodeName().equals("name") ){
+		                	String name = getElementValue(kid2);
+		                	activities.add(new Activity(name));
+		                }
+	            	}		
+            	}
+            }
+        }		
+		
+		return activities;
+	}		
+	
+	private Document newActivityDocument(Activity activity) throws ParserConfigurationException {
+		
+	    DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+	    DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+		Document document = documentBuilder.newDocument();
+		
+		
+		//Root
+		String root ="activities";
+		Element rootElement = document.createElement(root);
+		document.appendChild(rootElement);
+		//newRecordElement(record,rootElement,document);
+    	Element tempElement = newActivityElement(activity,document);
+    	rootElement.appendChild(tempElement);		
+		return document;
+		
 	}	
+	
+	private Document modifyActivityDocument(Document doc, Activity activity) {	
+		
+		Element rootElement = doc.getDocumentElement();
 
 	
-	private Element newRecordElement(Record record,  Document document){ //wymaga deklaracji pol
+		boolean inDB = false;
+		Node kid;
+		Node kid2;
+        if (rootElement.hasChildNodes()){
+            for( kid = rootElement.getFirstChild(); kid != null; kid = kid.getNextSibling() ){
+            	if (kid.hasChildNodes()){
+	            	for( kid2 = kid.getFirstChild(); kid2 != null; kid2 = kid2.getNextSibling() ){
+		                if( kid2.getNodeName().equals("name") ){
+		                	
+		                     if(getElementValue(kid2).equals(activity.name)){
+		                    	 inDB = true;
+		                     }
+		                }
+		                
+	            	}
+            	}
+            }
+        }
+        if(!inDB){
+        	Element tempElement = newActivityElement(activity,doc);
+        	rootElement.appendChild(tempElement);
+        }        
+		return doc;
+	}
+	
+	private Element newActivityElement(Activity activity,  Document document){ 
+
+		
+		//Record
+		Element activityElement = document.createElement("activity");
+	//	rootElement.appendChild(recordElement);
+		
+		//name
+		Element nameElement = document.createElement("name");
+		nameElement.appendChild(document.createTextNode(activity.name));
+		activityElement.appendChild(nameElement);
+		
+ 
+		return activityElement;
+	}	
+	
+	//FOOD OPERATIONS
+	
+	
+	
+	private ArrayList<Food> readFoodsFromDocument(Document doc, ArrayList<Food> foods) { 
+		
+		Element rootElement = doc.getDocumentElement();
+
+		Node kid;
+		Node kid2;
+        if (rootElement.hasChildNodes()){
+            for( kid = rootElement.getFirstChild(); kid != null; kid = kid.getNextSibling() ){
+            	if (kid.hasChildNodes()){
+	            	for( kid2 = kid.getFirstChild(); kid2 != null; kid2 = kid2.getNextSibling() ){
+		                if( kid2.getNodeName().equals("name") ){
+		                	String name = getElementValue(kid2);
+		                	foods.add(new Food(name));
+		                }
+	            	}		
+            	}
+            }
+        }		
+		
+		return foods;
+	}		
+	 
+	private Document newFoodDocument(Food food) throws ParserConfigurationException {
+		
+	    DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+	    DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+		Document document = documentBuilder.newDocument();
+		
+		
+		//Root
+		String root ="foods";
+		Element rootElement = document.createElement(root);
+		document.appendChild(rootElement);
+		//newRecordElement(record,rootElement,document);
+    	Element tempElement = newFoodElement(food,document);
+    	rootElement.appendChild(tempElement);		
+		return document;
+		
+	}	
+	
+	private Document modifyFoodDocument(Document doc, Food food) {	
+		
+		Element rootElement = doc.getDocumentElement();
+
+	
+		boolean inDB = false;
+		Node kid;
+		Node kid2;
+        if (rootElement.hasChildNodes()){
+            for( kid = rootElement.getFirstChild(); kid != null; kid = kid.getNextSibling() ){
+            	if (kid.hasChildNodes()){
+	            	for( kid2 = kid.getFirstChild(); kid2 != null; kid2 = kid2.getNextSibling() ){
+		                if( kid2.getNodeName().equals("name") ){
+		                	
+		                     if(getElementValue(kid2).equals(food.name)){
+		                    	 inDB = true;
+		                     }
+		                }
+		                
+	            	}
+            	}
+            }
+        }
+        if(!inDB){
+        	Element tempElement = newFoodElement(food,doc);
+        	rootElement.appendChild(tempElement);
+        }        
+		return doc;
+	}
+	
+	private Element newFoodElement(Food food,  Document document){ 
+
+		
+		//Record
+		Element foodElement = document.createElement("food");
+	//	rootElement.appendChild(recordElement);
+		
+		//name
+		Element nameElement = document.createElement("name");
+		nameElement.appendChild(document.createTextNode(food.name));
+		foodElement.appendChild(nameElement);
+		
+ 
+		return foodElement;
+	}		
+
+	//---------------------------
+	
+	private Element newRecordElement(Record record,  Document document){ 
 		
 		int day= record.date.get(Calendar.DATE);
 		int month = record.date.get(Calendar.MONTH)+1;
@@ -547,8 +761,7 @@ public class DbHandler {
 			
 			recordElement.appendChild(activitiesElement);				
 		}		
-   		//rest TODO
-    	//...
+ 
 		return recordElement;
 	}
 	
