@@ -4,6 +4,8 @@ import goodfeeling.userstate.balloon.Balloon;
 import goodfeeling.userstate.balloon.BalloonResult;
 import goodfeeling.userstate.balloon.BalloonResultException;
 import goodfeeling.userstate.picture_test.PictureTest;
+import goodfeeling.userstate.picture_test.PictureTestResult;
+import goodfeeling.userstate.picture_test.PictureTestResultException;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -58,20 +60,23 @@ public class TestRun extends Activity implements OnClickListener {
     		case TEST_PICTURE_TEST:
     			switch(resultCode) {
     				case RESULT_OK:
-    					int ap[] = data.getIntArrayExtra("PictureTestResultPositive");
-    					int a[] = data.getIntArrayExtra("PictureTestResult");
-    					if(ap != null && a != null)
-    						for(int i = 1; i < 11; i++)
-    							this.text[i].setText(String.format("PictureTest result: cat %d, positive %d, all %d", i, ap[i - 1], a[i - 1]));
-    						//TODO: cos zrobic z wynikami aplikacji
-    					else
+    					try {
+    						PictureTestResult result = new PictureTestResult(data);
+    						for(int i = 0; i < result.getCategoryNumber(); i++)
+    							this.text[i + 1].setText(String.format("PictureTest result: cat %d, positive %d, all %d",
+    								i,
+    								result.getAnswerPositive(i),
+    								result.getAnswer(i)));		
+    					} catch (PictureTestResultException e) {
     						this.text[0].setText("PictureTest result: null");
+    					}
+    					//TODO: cos zrobic z wynikami aplikacji
     					break;
     				case RESULT_CANCELED:
     					this.text[0].setText("PictureTest result: RESULT_CANCELED");
     					break;
     				default:
-    					System.out.println(">>> 'TEST_PICTURE_TEST' unknown result");
+    					System.out.println(">>> 'TEST_PICTURE_TEST' unknown resultCode");
     			}
     			break;
     		case TEST_BALLOON:
@@ -92,7 +97,7 @@ public class TestRun extends Activity implements OnClickListener {
     					this.text[0].setText("Balloon result: RESULT_CANCELED");
     					break;
     				default:
-    					System.out.println(">>> 'TEST_BALLOON' unknown result");
+    					System.out.println(">>> 'TEST_BALLOON' unknown resultCode");
     			}
     			break;
     		default:

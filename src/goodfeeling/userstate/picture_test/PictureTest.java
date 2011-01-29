@@ -284,14 +284,7 @@ public class PictureTest extends Activity {
 		return mImageIds;
 	}
 	
-	/**
-	 * Store results of test (numPositiveA)
-	 */
-	private int answersPositive[];
-	/**
-	 * Store results of test (numA)
-	 */
-	private int answers[];
+	private PictureTestResult answers;
 	
 	/**Initialize any phase of test: <br>
 	 * choose pictures for test using <b>Math.random()</b> as random 
@@ -345,12 +338,12 @@ public class PictureTest extends Activity {
     	setP2(((int)(Math.random() *
     			getmImageIds()[getCat()][getP2_type()].length)));
     	//display info box
-    	Toast.makeText(PictureTest.this, 
-    			"(" 
-    			+ this.answersPositive[getStep()]
-    			+ ", " 
-    			+ this.answers[getStep()]
-    			+ ")", 
+    	Toast.makeText(PictureTest.this,
+    			"("
+    			+ this.answers.getAnswerPositive(getStep())
+    			+ ", "
+    			+ this.answers.getAnswer(getStep())
+    			+ ")",
     			Toast.LENGTH_SHORT).show();
     	
     	}
@@ -372,12 +365,7 @@ public class PictureTest extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.picture_test);
         
-        this.answersPositive = new int[getmImageIds().length];
-        this.answers = new int[getmImageIds().length];
-    	for(int i = 0; i < getmImageIds().length; i++) {
-    		this.answersPositive[i] = 0;
-    		this.answers[i] = 0;
-        }
+        this.answers = new PictureTestResult(getmImageIds().length);
     	
         //define buttons - all 3 options in test
         final Button option1 = 
@@ -484,24 +472,24 @@ public class PictureTest extends Activity {
 	void apply_choice(int i){
 		if( (i == 1) && (testStateFinal == false) ){
 	    	if(getP1_type() == 1){ //1 is positive
-	    		this.answersPositive[getStep()]++;
+	    		this.answers.incAnswerPositive(getStep());
 	    	}
-	    	this.answers[getStep()]++; //picture chosen so increase
+	    	this.answers.incAnswer(getStep()); //picture chosen so increase
 		}
 		else if((i == 1) 
 				&& (testStateFinal == true) 
 				&& (testStateEnd == false)){
 	    	if(getP1_type() == 1){ //1 is positive
-	    		this.answersPositive[getStep()]++;
+	    		this.answers.incAnswerPositive(getStep());
 	    	}
-	    	this.answers[getStep()]++; //picture chosen so increase
+	    	this.answers.incAnswer(getStep()); //picture chosen so increase
 	    	testStateEnd = true;
 		}
 		else if (i == 2){
 	    	if(getP2_type() == 1){ //1 is positive
-	    		this.answersPositive[getStep()]++;
+	    		this.answers.incAnswerPositive(getStep());
 	    	}
-	    	this.answers[getStep()]++; //picture chosen so increase
+	    	this.answers.incAnswer(getStep()); //picture chosen so increase
 		}
 	}
     
@@ -523,23 +511,20 @@ public class PictureTest extends Activity {
      * @see Intent
      */
     void test_finish(){
-    	if(NUM_ROUND < answers[0]){
-    		--answers[0];
+    	if(NUM_ROUND < this.answers.getAnswer(0)){
+    		this.answers.decAnswer(0);
     		if(getP1_type() == 1){
-    			--answersPositive[0];
+    			this.answers.decAnswerPositive(0);
 	    	}
     	}
-    	for(int i = 0; i < getmImageIds().length; i++){
+    	for(int i = 0; i < this.answers.getCategoryNumber(); i++){
     		System.out.println("<<<cat["+ i +"]>>>" 
-    				+ answersPositive[i] 
+    				+ this.answers.getAnswerPositive(i)
     				+ " of " 
-    				+ answers[i]);
+    				+ this.answers.getAnswer(i));
     	}
 		Intent data = new Intent();
-		//return array results of positive answers for each category
-		data.putExtra("PictureTestResultPositive", this.answersPositive);
-		//return array with number of questions given for each category
-		data.putExtra("PictureTestResult", this.answers);
+		this.answers.put(data);
 		setResult(RESULT_OK, data);
 		finish();
     }
