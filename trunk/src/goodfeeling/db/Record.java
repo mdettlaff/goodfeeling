@@ -9,20 +9,23 @@ import java.util.Calendar;
 public class Record {
 
 	//Date values, current date on start
+	/**
+	 * Date of record being added to database (year, month and day must be provided)
+	 * Current date is taken as a default
+	 */	
 	public Calendar date;
-	//other data
 	/**
-	 * Physical exercise rate, can be any string
+	 * Physical exercise rates
 	 */
-	public String physicalRate = "";
+	public ArrayList<TestResult> physicalRates = new ArrayList<TestResult>();
 	/**
-	 * Mental exercise rate, can be any string
+	 * Mental exercise rates
 	 */	
-	public String mentalRate = "";
+	public ArrayList<TestResult> mentalRates = new ArrayList<TestResult>();
 	/**
-	 * Mood rate, can be any string
+	 * Mood exercise rates
 	 */	
-	public String moodRate = "";
+	public ArrayList<TestResult> moodRates = new ArrayList<TestResult>();	
 	/**
 	 * Eaten food array list
 	 */		
@@ -54,6 +57,43 @@ public class Record {
 	 */			
 	public void addActivity(RecordActivity activity){
 		this.activitiesDone.add(activity);
+		
+	}
+	/**
+	 * Returns last physical test rate
+	 * @return last physical test rate or empty string if none test were made
+	 */		
+	public String getLastPhysicalRate() {
+		
+		if(this.physicalRates.size() > 0){
+			return this.physicalRates.get(this.physicalRates.size()-1).rate;
+		}else{
+			return "";
+		}
+		
+	}
+	/**
+	 * Returns last mood test rate
+	 * @return last mood test rate or empty string if none test were made
+	 */		
+	public String getLastMoodRate() {
+		if(this.moodRates.size() > 0){
+			return this.moodRates.get(this.moodRates.size()-1).rate;
+		}else{
+			return "";
+		}
+		
+	}
+	/**
+	 * Returns last mental test rate
+	 * @return last mental test rate or empty string if none test were made
+	 */		
+	public String getLastMentalRate() {
+		if(this.mentalRates.size() > 0){
+			return this.mentalRates.get(this.mentalRates.size()-1).rate;
+		}else{
+			return "";
+		}
 		
 	}	
 }
