@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, GoodFeeling!</string>
+    <string name="app_name">Good Feeling</string>
+    <string name="gui_title">GoodFeeling</string>
+    <string name="gui_title_hello">Hello</string>
+    <string name="gui_title_check_suggestions">Check Suggestions</string>
+    <string name="gui_title_fill_diary">Fill diary</string>
+    <string name="gui_title_make_test">Make test</string>
+    <string name="gui_title_help">Help</string>
+    <string name="gui_title_manual">Manual</string>
+    <string name="gui_title_diary">Diary</string>
+    <string name="gui_title_sleep">Sleep</string>
+    <string name="gui_title_activity">Activity</string>
+    <string name="gui_title_work">Work</string>
+    <string name="gui_title_relax">Relax</string>
+    <string name="gui_title_meals">Meals</string>
+    <string name="gui_title_health">Health</string>
+    <string name="gui_err_not_implemented">Not implemented</string>
+</resources>
