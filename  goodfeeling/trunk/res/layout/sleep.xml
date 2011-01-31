@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical">
+	<TextView android:text="Sen" android:textSize="12pt"
+		android:id="@+id/TextView01" android:layout_width="wrap_content"
+		android:layout_height="wrap_content"></TextView>
+	<LinearLayout android:id="@+id/LinearLayout02"
+		android:layout_width="wrap_content" android:layout_height="wrap_content">
+		<TextView android:text="Od:" android:id="@+id/TextView02"
+			android:textSize="12pt" android:layout_width="60px"
+			android:layout_height="wrap_content"></TextView>
+		<TimePicker android:id="@+id/fromTimePicker"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"></TimePicker>
+	</LinearLayout>
+	<LinearLayout android:id="@+id/LinearLayout03"
+		android:layout_width="wrap_content" android:layout_height="wrap_content">
+		<TextView android:text="Do:" android:id="@+id/TextView03"
+			android:textSize="12pt" android:layout_width="60px"
+			android:layout_height="wrap_content"></TextView>
+		<TimePicker android:id="@+id/untilTimePicker"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"></TimePicker>
+	</LinearLayout>
+	<LinearLayout android:id="@+id/LinearLayout01"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+		<Button android:text="Wróć" android:id="@+id/back"
+			android:layout_width="100px" android:layout_height="wrap_content"></Button>
+		<Button android:text="Zapisz" android:id="@+id/save"
+			android:layout_width="100px" android:layout_height="wrap_content"></Button>
+	</LinearLayout>
+</LinearLayout>
