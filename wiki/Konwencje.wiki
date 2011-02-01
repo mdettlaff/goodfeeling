@@ -1,16 +1,18 @@
 #summary Konwencje, których przestrzegamy w czasie pracy nad projektem
 
 == Konwencja językowa==
-Nazwy wszystkich zmiennych, javadoc jak i zwykłe komentarze piszemy wyłącznie po angielsku.
+Nazwy wszystkich zmiennych, javadoc jak i zwykłe komentarze piszemy wyłącznie po angielsku. Sama aplikacja (z perspektywy użytkownika) również jest po angielsku.
 
 
-== Konwencje dotyczące obsługi svn przez poszczególne zespoły==
+== Konwencje dotyczące pakietów ==
 
- ~/src/goodfeeling/userstate – tutaj swoje prace zamieszcza grupa D, zajmująca się testami,
+ ~/src/goodfeeling/userstate – tutaj swoje prace zamieszcza grupa D, zajmująca się testami
 
- ~/src/goodfeeling/db – wyniki prac zespołu zajmującego się bazami danych,
+ ~/src/goodfeeling/db – wyniki prac zespołu zajmującego się bazami danych
 
- ~/src/goodfeeling/gui – grupa pracująca nad GUI.
+ ~/src/goodfeeling/gui – grupa pracująca nad GUI
+
+ ~/src/goodfeeling/common - klasy używane przez wiele zespołów, nie pasujące do wyżej wymienionych pakietów
 
  ~/src/goodfeeling/misc - folder na pliki "różne"
 
