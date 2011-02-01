@@ -1,5 +1,11 @@
 package goodfeeling.gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import goodfeeling.common.AndroidFileIO;
+import goodfeeling.db.DbHandler;
+import goodfeeling.userstate.UserStatePersistence;
 import goodfeeling.userstate.balloon.Balloon;
 import goodfeeling.userstate.balloon.BalloonResult;
 import goodfeeling.userstate.balloon.BalloonResultException;
@@ -22,12 +28,19 @@ public class TestRun extends Activity implements OnClickListener {
 	private final int TEST_NUM = 2;
 	
 	private TextView[] text;
+	private TextView summaryText;
 	
 	private Button buttonRun;
 	
 	private int test[];
 	
 	private int testStep;
+
+	private List<PictureTestResult> pictureTestResults =
+		new ArrayList<PictureTestResult>();
+	private List<BalloonResult> balloonTestResults =
+			new ArrayList<BalloonResult>();
+	private boolean areResultsPersisted = false;
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +58,7 @@ public class TestRun extends Activity implements OnClickListener {
         this.text[8] = (TextView)findViewById(R.id.testrun_text8);
         this.text[9] = (TextView)findViewById(R.id.testrun_text9);
         this.text[10] = (TextView)findViewById(R.id.testrun_text10);
+        summaryText = (TextView)findViewById(R.id.testrun_summary);
         
         this.test = new int[TEST_NUM];
         this.test[0] = TEST_PICTURE_TEST;
@@ -62,15 +76,15 @@ public class TestRun extends Activity implements OnClickListener {
     				case RESULT_OK:
     					try {
     						PictureTestResult result = new PictureTestResult(data);
-    						for(int i = 0; i < result.getCategoryNumber(); i++)
+    						for(int i = 0; i < result.getCategoryCount(); i++)
     							this.text[i + 1].setText(String.format("PictureTest result: cat %d, positive %d, all %d",
     								i,
     								result.getAnswerPositive(i),
     								result.getAnswer(i)));		
+    						pictureTestResults.add(result);
     					} catch (PictureTestResultException e) {
     						this.text[0].setText("PictureTest result: null");
     					}
-    					//TODO: cos zrobic z wynikami aplikacji
     					break;
     				case RESULT_CANCELED:
     					this.text[0].setText("PictureTest result: RESULT_CANCELED");
@@ -88,10 +102,10 @@ public class TestRun extends Activity implements OnClickListener {
     							result.getCorrect(),
     							result.getIncorrect(),
     							result.getAll()));
+    						balloonTestResults.add(result);
     					} catch(BalloonResultException e) {
     						this.text[0].setText("Balloon result: null");
     					}
-    					//TODO: cos zrobic z wynikami aplikacji			
     					break;
     				case RESULT_CANCELED:
     					this.text[0].setText("Balloon result: RESULT_CANCELED");
@@ -115,8 +129,19 @@ public class TestRun extends Activity implements OnClickListener {
 	// private
 	
 	private void runNextTest() {
-		if(this.testStep >= TEST_NUM)
+		if (this.testStep >= TEST_NUM) {
+			if (!areResultsPersisted) {
+				UserStatePersistence persistence = new UserStatePersistence(
+						new DbHandler(new AndroidFileIO(this)));
+				persistence.persistResults(pictureTestResults, balloonTestResults);
+				summaryText.setText(String.format("Summary: mood rate = %s, mental rate = %s",
+						persistence.getCurrentMood(),
+						persistence.getCurrentMentalPerformance()));
+
+				areResultsPersisted = true;
+			}
 			return;
+		}
 		Intent intent;
 		switch(this.test[this.testStep]) {
 			case TEST_PICTURE_TEST:

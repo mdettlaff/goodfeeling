@@ -517,7 +517,7 @@ public class PictureTest extends Activity {
     			this.answers.decAnswerPositive(0);
 	    	}
     	}
-    	for(int i = 0; i < this.answers.getCategoryNumber(); i++){
+    	for(int i = 0; i < this.answers.getCategoryCount(); i++){
     		System.out.println("<<<cat["+ i +"]>>>" 
     				+ this.answers.getAnswerPositive(i)
     				+ " of " 
