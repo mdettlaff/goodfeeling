@@ -58,8 +58,12 @@ Sposób użycia aktualnej wersji biblioteki bazy danych:
 		r2.physicalRates.add(physicalTest2);		
 		r2.addFood(food1);
 		r2.addActivity(act1);
-		//Init dbHandler
-		DbHandler dbHandler= new DbHandler();
+
+		// init dbHandler
+                // 'this' is the current Android activity
+		DbHandler dbHandler = new DbHandler(new AndroidFileIO(this));
+                // to use the standard Java file I/O for testing purposes, do this:
+                // DbHandler dbHandler = new DbHandler();
 
 		try {
 			//update or add both records
