@@ -25,7 +25,7 @@ public class TestRun extends Activity implements OnClickListener {
 	private final int TEST_PICTURE_TEST = 0;
 	private final int TEST_BALLOON = 1;
 	
-	private final int TEST_NUM = 2;
+	private final int TEST_NUM = 4;
 	
 	private TextView[] text;
 	private TextView summaryText;
@@ -63,6 +63,8 @@ public class TestRun extends Activity implements OnClickListener {
         this.test = new int[TEST_NUM];
         this.test[0] = TEST_PICTURE_TEST;
         this.test[1] = TEST_BALLOON;
+        this.test[2] = TEST_PICTURE_TEST;
+        this.test[3] = TEST_BALLOON;
         this.testStep = 0;
         
         this.buttonRun = (Button)findViewById(R.id.testrun_buttonrun);
@@ -129,7 +131,7 @@ public class TestRun extends Activity implements OnClickListener {
 	// private
 	
 	private void runNextTest() {
-		if (this.testStep >= TEST_NUM) {
+		if (this.testStep >= test.length) {
 			if (!areResultsPersisted) {
 				UserStatePersistence persistence = new UserStatePersistence(
 						new DbHandler(new AndroidFileIO(this)));
@@ -137,7 +139,6 @@ public class TestRun extends Activity implements OnClickListener {
 				summaryText.setText(String.format("Summary: mood rate = %s, mental rate = %s",
 						persistence.getCurrentMood(),
 						persistence.getCurrentMentalPerformance()));
-
 				areResultsPersisted = true;
 			}
 			return;

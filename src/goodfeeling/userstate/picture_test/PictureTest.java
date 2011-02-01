@@ -47,7 +47,7 @@ public class PictureTest extends Activity {
 	 * * Set it to "2" if 20 questions (2 for each category) <br>
 	 * * etc... 
 	 */
-	final int NUM_ROUND = 2;
+	final int NUM_ROUND = 1;
 	
 	/**
 	 * StepRound counter
