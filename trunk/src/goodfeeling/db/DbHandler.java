@@ -20,6 +20,25 @@ public class DbHandler {
 	
 	public String xmlActivitiesFileName = "activities_dictionary.xml";
 	public String xmlFoodsFileName = "foods_dictionary.xml";
+
+	private final FileIO fileIO;
+
+	/**
+	 * Use only for testing purposes.
+	 */
+	DbHandler() {
+		fileIO = new StandardJavaFileIO();
+	}
+
+	/**
+	 * For use in production code.
+	 *
+	 * @param fileIO File I/O suitable for Android devices.
+	 */
+	public DbHandler(FileIO fileIO) {
+		this.fileIO = fileIO;
+	}
+
 	/** Adds or updates one record in database
 	* @param record Record class object, update if record of same date exist in database
 	*/
@@ -28,17 +47,15 @@ public class DbHandler {
 		int month = record.date.get(Calendar.MONTH)+1;
 		int year = record.date.get(Calendar.YEAR);
 		String xmlFileName = year+"_"+month+".xml";
-	    File f = new File(xmlFileName);
-	    
-	    if(!f.exists()){
-	    	Document doc = newDocument(record); 
-	    	saveXMLDocument(xmlFileName, doc);
-	    	
-	    }else{
-	    	Document doc = parseFile(xmlFileName);
-	    	doc = modifyDocument(doc,record); 
-	    	saveXMLDocument(xmlFileName, doc);	    	
-	    }	
+
+		try {
+			Document doc = parseFile(xmlFileName);
+			doc = modifyDocument(doc,record); 
+			saveXMLDocument(xmlFileName, doc);	    	
+		} catch (FileNotFoundException e) {
+			Document doc = newDocument(record); 
+			saveXMLDocument(xmlFileName, doc);
+		}
 	}
 
 	/** Removes a record from database
@@ -51,13 +68,13 @@ public class DbHandler {
 		
 		if(year > 0 && month > 0 && day > 0){
 			String xmlFileName = year+"_"+month+".xml";
-		    File f = new File(xmlFileName);
 		    
-		    if(f.exists()){
+		    try {
 		    	Document doc = parseFile(xmlFileName);
 		    	doc = removeFromDocument(doc,record); 
 		    	saveXMLDocument(xmlFileName, doc);	    	
-		    }	
+		    } catch (FileNotFoundException e) {
+		    }
 		}
 	}
 	
@@ -75,14 +92,11 @@ public class DbHandler {
 		 record.date = cal;
 		if(year > 0 && month > 0 && day > 0){
 			String xmlFileName = year+"_"+month+".xml";
-		    File f = new File(xmlFileName);
-		    
-		    if(f.exists()){
-	
+		    try {
 		    	Document doc = parseFile(xmlFileName);
 		    	record = readFromDocument(doc,record);     	
-		    	
-		    }	
+		    } catch (FileNotFoundException e) {
+		    }
 		}		
 		return record;
 	}
@@ -90,19 +104,14 @@ public class DbHandler {
 	 * @param food Food class object, food.name is required
 	 */
 	public void addToFoodDictionary(Food food) throws Exception {
-
-	    File f = new File(xmlFoodsFileName);	
-    	
-	    if(!f.exists()){
-	    	Document doc = newFoodDocument(food); 
-	    	saveXMLDocument(xmlFoodsFileName, doc);
-	    	
-	    }else{
-	    	Document doc = parseFile(xmlFoodsFileName);
-	    	doc = modifyFoodDocument(doc,food);  
-	    	saveXMLDocument(xmlFoodsFileName, doc);	    	
-	    }   		
-		
+		try {
+			Document doc = parseFile(xmlFoodsFileName);
+			doc = modifyFoodDocument(doc,food);  
+			saveXMLDocument(xmlFoodsFileName, doc);	    	
+		} catch (FileNotFoundException e) {
+			Document doc = newFoodDocument(food); 
+			saveXMLDocument(xmlFoodsFileName, doc);
+		}
 	}
 	/** Gets Food objects in database 
 	 * @return ArrayList<Food>
@@ -111,15 +120,11 @@ public class DbHandler {
 		
 		ArrayList<Food> foods = new ArrayList<Food>();
 		
-
-		File f = new File(xmlFoodsFileName);	
-	    if(f.exists()){
-	    	
-	    	Document doc = parseFile(xmlFoodsFileName);
-	    	foods = readFoodsFromDocument(doc, foods);     	
-	    	
-	    }		
-		
+		try {
+			Document doc = parseFile(xmlFoodsFileName);
+			foods = readFoodsFromDocument(doc, foods);     	
+		} catch (FileNotFoundException e) {
+		}
 		return foods;	
 
 	}
@@ -130,15 +135,11 @@ public class DbHandler {
 	
 		ArrayList<Activity> activities = new ArrayList<Activity>();
 		
-
-		File f = new File(xmlActivitiesFileName);	
-	    if(f.exists()){
-	    	
-	    	Document doc = parseFile(xmlActivitiesFileName);
-	    	activities = readActivitiesFromDocument(doc, activities);     	
-	    	
-	    }		
-		
+		try {
+			Document doc = parseFile(xmlActivitiesFileName);
+			activities = readActivitiesFromDocument(doc, activities);     	
+		} catch (FileNotFoundException e) {
+		}
 		return activities;		
 	}
 	/** Adds Activity object to Activities dictionary database
@@ -146,20 +147,16 @@ public class DbHandler {
 	 */
 	public void addToActivityDictionary(Activity activity) throws Exception {
 
-	    File f = new File(xmlActivitiesFileName);	
-    	
-	    if(!f.exists()){
-	    	Document doc = newActivityDocument(activity); 
-	    	saveXMLDocument(xmlActivitiesFileName, doc);
-	    	
-	    }else{
-	    	Document doc = parseFile(xmlActivitiesFileName);
-	    	doc = modifyActivityDocument(doc,activity);  
-	    	saveXMLDocument(xmlActivitiesFileName, doc);	    	
-	    }    	
-    	
-	    			
+		try {
+			Document doc = parseFile(xmlActivitiesFileName);
+			doc = modifyActivityDocument(doc,activity);  
+			saveXMLDocument(xmlActivitiesFileName, doc);	    	
+		} catch (FileNotFoundException e) {
+			Document doc = newActivityDocument(activity); 
+			saveXMLDocument(xmlActivitiesFileName, doc);
+		}
 	}
+
 	////////////////////////////////////////////////////////////////////
 	//Private //////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////
@@ -833,11 +830,10 @@ public class DbHandler {
     private boolean saveXMLDocument(String fileName, Document doc) {
         System.out.println("Saving XML file... " + fileName);
         // open output stream where XML Document will be saved
-        File xmlOutputFile = new File(fileName);
         FileOutputStream fos;
         Transformer transformer;
         try {
-            fos = new FileOutputStream(xmlOutputFile);
+            fos = fileIO.getFileOutputStream(fileName);
         }
         catch (FileNotFoundException e) {
             System.out.println("Error occured: " + e.getMessage());
@@ -865,7 +861,7 @@ public class DbHandler {
         return true;
     }
     
-    private Document parseFile(String fileName) {
+    private Document parseFile(String fileName) throws FileNotFoundException {
         System.out.println("Parsing XML file... " + fileName);
         DocumentBuilder docBuilder;
         Document doc = null;
@@ -878,13 +874,15 @@ public class DbHandler {
             System.out.println("Wrong parser configuration: " + e.getMessage());
             return null;
         }
-        File sourceFile = new File(fileName);
         try {
-            doc = docBuilder.parse(sourceFile);
+            doc = docBuilder.parse(fileIO.getFileInputStream(fileName));
         }
         catch (SAXException e) {
             System.out.println("Wrong XML file structure: " + e.getMessage());
             return null;
+        }
+        catch (FileNotFoundException e) {
+        	throw e;
         }
         catch (IOException e) {
             System.out.println("Could not read source file: " + e.getMessage());
