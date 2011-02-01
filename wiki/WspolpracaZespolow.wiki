@@ -2,29 +2,15 @@
 
 = Współpraca zespołów =
 
-== API grupy bazodanowej (A) dla grupy D ==
+== API zespołu bazodanowego (drużyna A) dla zespołu D ==
 
-API jakiego grupa D oczekiwałaby od grupy bazodanowej mogłoby wyglądać mniej więcej tak:
+Przykład użycia API zespołu bazodanowego przez zespół D:
 
 {{{
-GFEvent event = new GFEvent();
-event.setType(GFEvent.Type.ATTITUDE_TEST_RESULT); // GFEvent.Type to enum
-// score to zmienna typu double będąca wynikem procentowym z zakresu od 0 do 100
-event.setScore(score);
-DatabaseManager.saveEvent(event);
-
-...
-
-GFEvent event = new GFEvent();
-event.setType(GFEvent.Type.INTELLECTUAL_ABILITY_TEST_RESULT);
-event.setScore(score);
-DatabaseManager.saveEvent(event);
+// 'this' to aktualne Activity Androida
+DbHandler dbHandler = new DbHandler(new AndroidFileIO(this));
+Record record = dbHandler.getRecord(Calendar.getInstance());
+record.moodRates.add(new TestResult(pictureTestScore + "%"));
+record.mentalRates.add(new TestResult(balloonsTestScore + "%"));
+dbHandler.addOrUpdateRecord(record);
 }}}
-
-Oczywiście to tylko przykładowa propozycja, jeżeli grupa bazodanowa ma inną wizję to możemy się dostosować.
-Proszę o reakcję w postaci edytowania tej strony lub dodawania komentarzy.
-
-EDIT 2011-01-22
-Sposób użycia został przeniesiony do strony drużyny odpowiedzialnej za bazę danych.
-
-//Piotr Wolf
