@@ -42,7 +42,7 @@ public class PictureTestResult {
 		intent.putExtra(PICTURE_TEST_RESULT_NAME, this.answers);
 	}
 	
-	public int getCategoryNumber() {
+	public int getCategoryCount() {
 		return this.categoryNumber;
 	}
 	
