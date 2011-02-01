@@ -13,15 +13,15 @@ public class BalloonThread extends Thread {
 	/*
 	 * thread sleep time, in milliseconds
 	 */
-	private final long THREAD_INTERVAL = 10l;
+	private final long THREAD_INTERVAL = 10L;
 	/*
 	 * thread sleep time when it is in idle mode, in milliseconds
 	 */
-	private final long THREAD_INTERVAL_IDLE = 200l;
+	private final long THREAD_INTERVAL_IDLE = 200L;
 	/*
 	 * duration of the game, in milliseconds
 	 */
-	private final long GAME_DURATION = 120000l;
+	private final long GAME_DURATION = 45000L;
 	/*
 	 * maximum number of balloons at the same time
 	 */
@@ -33,11 +33,11 @@ public class BalloonThread extends Thread {
 	/*
 	 * time before the balloon flies away, in milliseconds
 	 */
-	private final long GAME_BALLOON_DURATION = 10000l;
+	private final long GAME_BALLOON_DURATION = 10000L;
 	/*
 	 * waiting time to finish the game
 	 */
-	private final long GAME_GAMEOVER_WAIT = 2000l;
+	private final long GAME_GAMEOVER_WAIT = 2000L;
 	
 	public enum GameState {
 		READY,
