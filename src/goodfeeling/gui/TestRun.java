@@ -36,12 +36,10 @@ public class TestRun extends Activity implements OnClickListener {
 	
 	private int testStep;
 
-	private List<PictureTestResult> pictureTestResults =
-		new ArrayList<PictureTestResult>();
-	private List<BalloonResult> balloonTestResults =
-			new ArrayList<BalloonResult>();
-	private boolean areResultsPersisted = false;
-	
+	private List<PictureTestResult> pictureTestResults;
+	private List<BalloonResult> balloonTestResults;
+	private boolean isWholeTestFinished;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.testrun);
@@ -59,18 +57,22 @@ public class TestRun extends Activity implements OnClickListener {
         this.text[9] = (TextView)findViewById(R.id.testrun_text9);
         this.text[10] = (TextView)findViewById(R.id.testrun_text10);
         summaryText = (TextView)findViewById(R.id.testrun_summary);
-        
-        this.test = new int[TEST_NUM];
-        this.test[0] = TEST_PICTURE_TEST;
-        this.test[1] = TEST_BALLOON;
-        this.test[2] = TEST_PICTURE_TEST;
-        this.test[3] = TEST_BALLOON;
+
+        test = new int[TEST_NUM];
+        for (int i = 0; i < test.length; i++) {
+        	boolean isEven = i % 2 == 0;
+        	test[i] = isEven ? TEST_PICTURE_TEST : TEST_BALLOON;
+        }
         this.testStep = 0;
         
         this.buttonRun = (Button)findViewById(R.id.testrun_buttonrun);
         this.buttonRun.setOnClickListener(this);
+
+    	pictureTestResults = new ArrayList<PictureTestResult>();
+    	balloonTestResults = new ArrayList<BalloonResult>();
+    	isWholeTestFinished = false;
     }
-    
+
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
     	switch(requestCode) {
     		case TEST_PICTURE_TEST:
@@ -127,19 +129,14 @@ public class TestRun extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		runNextTest();
 	}
-	
+
 	// private
-	
+
 	private void runNextTest() {
 		if (this.testStep >= test.length) {
-			if (!areResultsPersisted) {
-				UserStatePersistence persistence = new UserStatePersistence(
-						new DbHandler(new AndroidFileIO(this)));
-				persistence.persistResults(pictureTestResults, balloonTestResults);
-				summaryText.setText(String.format("Summary: mood rate = %s, mental rate = %s",
-						persistence.getCurrentMood(),
-						persistence.getCurrentMentalPerformance()));
-				areResultsPersisted = true;
+			if (!isWholeTestFinished) {
+				onWholeTestFinished();
+				isWholeTestFinished = true;
 			}
 			return;
 		}
@@ -156,5 +153,14 @@ public class TestRun extends Activity implements OnClickListener {
 		}
 		startActivityForResult(intent, this.test[this.testStep]);
 		this.testStep++;
+	}
+
+	private void onWholeTestFinished() {
+		UserStatePersistence persistence = new UserStatePersistence(
+				new DbHandler(new AndroidFileIO(this)));
+		persistence.persistResults(pictureTestResults, balloonTestResults);
+		summaryText.setText(String.format("Summary: mood rate = %s, mental rate = %s",
+				persistence.getCurrentMood(),
+				persistence.getCurrentMentalPerformance()));
 	}
 }
