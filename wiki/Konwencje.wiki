@@ -12,6 +12,8 @@ Nazwy wszystkich zmiennych, javadoc jak i zwykłe komentarze piszemy wyłącznie
 
  ~/src/goodfeeling/gui – grupa pracująca nad GUI
 
+ ~/src/goodfeeling/weka - warstwa integracji z algorytmami z programu Weka
+
  ~/src/goodfeeling/common - klasy używane przez wiele zespołów, nie pasujące do wyżej wymienionych pakietów
 
  ~/src/goodfeeling/misc - folder na pliki "różne"
