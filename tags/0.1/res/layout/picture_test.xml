@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+	<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/start_info_text"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_marginTop="5dip"
+		android:text="@string/picture_test_start_info">
+	</TextView>
+        
+	<Button 
+		android:id="@+id/picture_test_button_option_1" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:layout_marginTop="50dip"
+		android:layout_marginLeft="2dip"
+		android:text="option1">
+	</Button>
+	
+	<Button 
+		android:id="@+id/picture_test_button_option_2" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/picture_test_button_option_1"
+		android:layout_marginTop="50dip"
+		android:layout_marginLeft="5dip"
+		android:text="option2" >
+	</Button>
+
+	<Button 
+		android:id="@+id/picture_test_button_option_3" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="240dip"
+		android:text="option3">
+	</Button>
+	
+	
+</RelativeLayout>
