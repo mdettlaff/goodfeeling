@@ -1,14 +1,14 @@
 package goodfeeling.common;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import android.content.Context;
 
-import goodfeeling.db.FileIO;
+import goodfeeling.db.InputOutput;
 
-public class AndroidFileIO implements FileIO {
+public class AndroidFileIO implements InputOutput {
 
 	private final Context context;
 
@@ -17,13 +17,12 @@ public class AndroidFileIO implements FileIO {
 	}
 
 	@Override
-	public FileInputStream getFileInputStream(String name)
-			throws FileNotFoundException {
+	public InputStream getInputStream(String name) throws FileNotFoundException {
 		return context.openFileInput(name);
 	}
 
 	@Override
-	public FileOutputStream getFileOutputStream(String name)
+	public OutputStream getOutputStream(String name)
 			throws FileNotFoundException {
 		return context.openFileOutput(name, Context.MODE_PRIVATE);
 	}
