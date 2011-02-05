@@ -2,7 +2,6 @@ package goodfeeling.db;
 
 import static org.junit.Assert.assertEquals;
 
-
 import java.util.Calendar;
 
 import org.junit.Before;
@@ -10,7 +9,7 @@ import org.junit.Test;
 
 public class DbHandlerTest {
 
-	private InMemoryIO io;
+	private InputOutput io;
 	private Calendar today;
 
 	@Before
