@@ -1,15 +1,25 @@
 package goodfeeling.db;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import org.w3c.dom.*;
-import org.xml.sax.*;
-import javax.xml.parsers.*;
-import javax.xml.transform.*;
-import javax.xml.transform.dom.*;
-import javax.xml.transform.stream.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
 
 /**
 * Class handling database operations
@@ -21,22 +31,22 @@ public class DbHandler {
 	public String xmlActivitiesFileName = "activities_dictionary.xml";
 	public String xmlFoodsFileName = "foods_dictionary.xml";
 
-	private final FileIO fileIO;
+	private final InputOutput io;
 
 	/**
 	 * Use only for testing purposes.
 	 */
 	DbHandler() {
-		fileIO = new StandardJavaFileIO();
+		io = new StandardJavaFileIO();
 	}
 
 	/**
 	 * For use in production code.
 	 *
-	 * @param fileIO File I/O suitable for Android devices.
+	 * @param io File I/O suitable for Android devices.
 	 */
-	public DbHandler(FileIO fileIO) {
-		this.fileIO = fileIO;
+	public DbHandler(InputOutput io) {
+		this.io = io;
 	}
 
 	/** Adds or updates one record in database
@@ -830,10 +840,10 @@ public class DbHandler {
     private boolean saveXMLDocument(String fileName, Document doc) {
         System.out.println("Saving XML file... " + fileName);
         // open output stream where XML Document will be saved
-        FileOutputStream fos;
+        OutputStream os;
         Transformer transformer;
         try {
-            fos = fileIO.getFileOutputStream(fileName);
+            os = io.getOutputStream(fileName);
         }
         catch (FileNotFoundException e) {
             System.out.println("Error occured: " + e.getMessage());
@@ -849,7 +859,7 @@ public class DbHandler {
             return false;
         }
         DOMSource source = new DOMSource(doc);
-        StreamResult result = new StreamResult(fos);
+        StreamResult result = new StreamResult(os);
         // transform source into result will do save
         try {
             transformer.transform(source, result);
@@ -875,7 +885,7 @@ public class DbHandler {
             return null;
         }
         try {
-            doc = docBuilder.parse(fileIO.getFileInputStream(fileName));
+            doc = docBuilder.parse(io.getInputStream(fileName));
         }
         catch (SAXException e) {
             System.out.println("Wrong XML file structure: " + e.getMessage());
@@ -890,9 +900,4 @@ public class DbHandler {
         System.out.println("XML file parsed");
         return doc;
     }
-
-
-
-
-    
 }
