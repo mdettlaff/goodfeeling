@@ -85,6 +85,10 @@ testów oraz dopracowaniem pytań i interpretacji.
 
 == Sprawność fizyczna ==
 
+Nowe:
+Po ustaleniach z dnia 04.01.10 test sprawności zostanie wykonany tylko i wyłącznie przy użyciu Akcelerometru. Test będzie polegał na 5 kolejnych zamachach na które użytkownik będzie miał określoną ilość czasu, w ich trakcie pobierana będzie seria wartości z których będzie ostatecznie będzie wybierana mediana. Wynik testu będzie jedną wartością zwracaną do bazy danych.
+
+Stare:
 W tym projekcie ważne jest aby użytkownik mógł zbadać sprawność fizyczną jak najmniejszym wysiłkiem. Dokonywanie pomiarów nie powinno pochłaniać wiele czasu i wymagać od badanego specjalnych umiejętności. Przez wysiłek rozumiemy tu:
   * dodatkowe przeliczenia (w formie pisemnej bądź "w myślach")
   * używaniu dodatkowych narzędzi

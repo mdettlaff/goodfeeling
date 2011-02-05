@@ -102,7 +102,6 @@ public class PictureTest extends Activity {
         		R.drawable.picture_test_morning_negative4, 
         		R.drawable.picture_test_morning_negative5, 
         		R.drawable.picture_test_morning_negative6, 
-        		R.drawable.picture_test_morning_negative7, 
         		R.drawable.picture_test_morning_negative8,
         		R.drawable.picture_test_morning_negative9, 
         		R.drawable.picture_test_morning_negative10
@@ -124,13 +123,10 @@ public class PictureTest extends Activity {
     		  {
 				R.drawable.picture_test_exam_negative1, 
 				R.drawable.picture_test_exam_negative2, 
-				R.drawable.picture_test_exam_negative3, 
 				R.drawable.picture_test_exam_negative4, 
 				R.drawable.picture_test_exam_negative5, 
 				R.drawable.picture_test_exam_negative6, 
-				R.drawable.picture_test_exam_negative7, 
-				R.drawable.picture_test_exam_negative8,
-				R.drawable.picture_test_exam_negative9, 
+				R.drawable.picture_test_exam_negative7,
 				R.drawable.picture_test_exam_negative10
     		  },
     		  {
@@ -158,8 +154,6 @@ public class PictureTest extends Activity {
     			R.drawable.picture_test_workonthecomputer_negative4,	
     			R.drawable.picture_test_workonthecomputer_negative5,	
     			R.drawable.picture_test_workonthecomputer_negative6,
-    			R.drawable.picture_test_workonthecomputer_negative7,
-    			R.drawable.picture_test_workonthecomputer_negative8,
     			R.drawable.picture_test_workonthecomputer_negative9	
     		  },
     		  {
@@ -174,7 +168,6 @@ public class PictureTest extends Activity {
       		  {
       			R.drawable.picture_test_talks_negative1,
       			R.drawable.picture_test_talks_negative2,
-      			R.drawable.picture_test_talks_negative3,
       			R.drawable.picture_test_talks_negative4,
       			R.drawable.picture_test_talks_negative5,
       			R.drawable.picture_test_talks_negative6
@@ -255,7 +248,6 @@ public class PictureTest extends Activity {
       			R.drawable.picture_test_relationships_positive3,
       			R.drawable.picture_test_relationships_positive4,
       			R.drawable.picture_test_relationships_positive5,
-      			R.drawable.picture_test_relationships_positive6,
       			R.drawable.picture_test_relationships_positive7
       		  }
       		},
