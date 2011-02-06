@@ -91,7 +91,7 @@ public class DbHandler {
 	
 	/** Loads record with a provided date 
 	 * @param cal Calendar object with date 
-	 * @return Record class object or empty record if not in database
+	 * @return Record class object or null if not in database
 	 */
 	public Record getRecord(Calendar cal){
 		
@@ -106,6 +106,7 @@ public class DbHandler {
 		    	Document doc = parseFile(xmlFileName);
 		    	record = readFromDocument(doc,record);     	
 		    } catch (FileNotFoundException e) {
+		    	record = null;
 		    }
 		}		
 		return record;
@@ -346,12 +347,14 @@ public class DbHandler {
 		                	
 		                } 		                
 	            	}
-	            	read = false;		
+	            	if(read){
+	            		return record;
+	            	}	
             	}
             }
         }		
 		
-		return record;
+		return null;
 	}	
 	
 	private Document removeFromDocument(Document doc, Record record) {
