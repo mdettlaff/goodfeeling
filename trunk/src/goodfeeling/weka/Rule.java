@@ -4,10 +4,17 @@ public class Rule {
 
 	private final RulePredicate antecedent;
 	private final RulePredicate consequent;
+	private final double confidence;
 
-	public Rule(RulePredicate antecedent, RulePredicate consequent) {
+	public Rule(RulePredicate antecedent, RulePredicate consequent,
+			double confidence) {
 		this.antecedent = antecedent;
 		this.consequent = consequent;
+		if (confidence < 0 || confidence > 1) {
+			throw new IllegalArgumentException(
+					"Confidence must be a value between 0 and 1.");
+		}
+		this.confidence = confidence;
 	}
 
 	public RulePredicate getAntecedent() {
@@ -16,6 +23,10 @@ public class Rule {
 
 	public RulePredicate getConsequent() {
 		return consequent;
+	}
+
+	public double getConfidence() {
+		return confidence;
 	}
 
 	@Override
