@@ -1,4 +1,6 @@
 package goodfeeling.db;
+import goodfeeling.db.RecordFood;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -34,9 +36,11 @@ public class Record {
 	 * Activites done array list
 	 */		
 	public ArrayList<RecordActivity> activitiesDone = new ArrayList<RecordActivity>();
-	
-	
-	
+	/**
+	 * Eaten food summary array list, for export only
+	 */		
+	public ArrayList<RecordFood> eatenFoodSum = new ArrayList<RecordFood>();	
+		
 	public Record(){
 		//Set current date
 		Calendar cal = Calendar.getInstance();
