@@ -34,8 +34,11 @@ public class DbHandler {
 	public String xmlActivitiesFileName = "activities_dictionary.xml";
 	public String xmlFoodsFileName = "foods_dictionary.xml";
 	public String csvFilename = "data.csv";
+	
 	public int numberOfActivities = 0;
 	public int numberOfFood = 0;
+	public int numberOfFoodSums = 0;
+	
 	private final InputOutput io;
 
 	/**
@@ -177,36 +180,114 @@ public class DbHandler {
 	public Table generateDataTable() throws Exception {
 		Table table = new Table();
 		ArrayList<Record> records = new  ArrayList<Record>();
-	//	Record r1 = new Record();
-	//	Record r2 = new Record();
-	//	records.add(r1);
-		//records.add(r2);
+
 		
 		records = getRecordsListFromDb(2010);
-		//saveCSVDocument(csvFilename,records); 	
+		table = convertRecordsToTable(records);
 	
 		return table;
 	    			
 	}	
-	/** Generates CSV file based on all records in database
+	/** Generates CSV file based on all records in database for testing only
 	 */	
 	public void generateCSV() throws Exception {
-
 		ArrayList<Record> records = new  ArrayList<Record>();
-	//	Record r1 = new Record();
-	//	Record r2 = new Record();
-	//	records.add(r1);
-		//records.add(r2);
-		
 		records = getRecordsListFromDb(2010);
-		saveCSVDocument(csvFilename,records); 	
-	
-
-	    			
+		saveCSVDocument(csvFilename,records); 			
 	}	
 	////////////////////////////////////////////////////////////////////
 	//Private //////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////
+	
+	private Table convertRecordsToTable(ArrayList<Record> records){
+		
+		int rowSize = (numberOfActivities*4)+(numberOfFood*3)+(numberOfFoodSums*2)+4;
+    	String[] columnNames = new String[rowSize];
+    	columnNames[0] = "date";
+    	int columnI = 1;
+    	for(int j = 0; j < numberOfActivities; j++){
+    		columnNames[columnI] = "activity"+j+"name"; 
+    		columnI++;
+    		columnNames[columnI] = "activity"+j+"starthour"; 
+    		columnI++;
+    		columnNames[columnI] = "activity"+j+"duration"; 
+    		columnI++;
+    		columnNames[columnI] = "activity"+j+"intensivity"; 
+    		columnI++;
+    	}
+    	for(int j = 0; j < numberOfFood; j++){
+    		columnNames[columnI] = "food"+j+"name";
+    		columnI++;
+    		columnNames[columnI] = "food"+j+"amount";
+    		columnI++;
+    		columnNames[columnI] = "food"+j+"timeconsumed";
+    		columnI++;
+    	}   
+    	for(int j = 0; j < numberOfFoodSums; j++){
+    		columnNames[columnI] = "foodsum"+j+"name";
+    		columnI++;
+    		columnNames[columnI] = "foodsum"+j+"amount";
+    		columnI++;
+    	}  
+    	columnNames[columnI] ="mentalrate";
+    	columnI++;
+    	columnNames[columnI] ="moodrate";
+    	columnI++;
+    	columnNames[columnI] ="physicalrate";
+
+    	Table table = new Table(columnNames);
+    	
+    	for(int i = 0; i < records.size(); i++){
+    		int day= records.get(i).date.get(Calendar.DATE);
+    		int month = records.get(i).date.get(Calendar.MONTH)+1;
+    		int year = records.get(i).date.get(Calendar.YEAR);
+    		Object[] row = new Object[rowSize];
+    		row[0] = day+"-"+month+"-"+year;
+            int rcolumnI = 1;
+            
+        	for(int j = 0; j < numberOfActivities; j++){
+        		if(j<records.get(i).activitiesDone.size()){
+        			row[rcolumnI] = records.get(i).activitiesDone.get(j).name; rcolumnI++;
+        			row[rcolumnI] = records.get(i).activitiesDone.get(j).startHour; rcolumnI++;
+        			row[rcolumnI] = records.get(i).activitiesDone.get(j).duration; rcolumnI++;
+        			row[rcolumnI] = records.get(i).activitiesDone.get(j).intensivity; rcolumnI++;
+        		}else{
+        			row[rcolumnI] =""; rcolumnI++;
+        			row[rcolumnI] =""; rcolumnI++;
+        			row[rcolumnI] =""; rcolumnI++;
+        			row[rcolumnI] =""; rcolumnI++;
+        		}
+        	}
+        	for(int j = 0; j < numberOfFood; j++){
+        		
+        		if(j<records.get(i).eatenFood.size()){
+        			row[rcolumnI] = records.get(i).eatenFood.get(j).name; rcolumnI++;
+        			row[rcolumnI] = records.get(i).eatenFood.get(j).amount; rcolumnI++;
+        			row[rcolumnI] = records.get(i).eatenFood.get(j).timeConsumed; rcolumnI++;
+        		}else{
+        			row[rcolumnI] =""; rcolumnI++;
+        			row[rcolumnI] =""; rcolumnI++;
+        			row[rcolumnI] =""; rcolumnI++;
+        		}            		
+        	} 
+        	for(int j = 0; j < numberOfFoodSums; j++){
+        		
+        		if(j<records.get(i).eatenFood.size()){
+        			row[rcolumnI] = records.get(i).eatenFoodSum.get(j).name; rcolumnI++;
+        			row[rcolumnI] = records.get(i).eatenFoodSum.get(j).amount; rcolumnI++;
+        		}else{
+        			row[rcolumnI] =""; rcolumnI++;
+        			row[rcolumnI] =""; rcolumnI++;
+        		}            		
+        	}             	
+        	row[rcolumnI] = records.get(i).getLastMentalRate(); rcolumnI++;
+        	row[rcolumnI] = records.get(i).getLastMoodRate(); rcolumnI++;
+        	row[rcolumnI] = records.get(i).getLastPhysicalRate(); rcolumnI++;
+        	table.addRow(row);
+    	}
+		return table;
+	}
+	
 	private ArrayList<Record> getRecordsListFromDb(int year){
 		ArrayList<Record> records = new  ArrayList<Record>();
 		Calendar current = Calendar.getInstance();
@@ -219,13 +300,36 @@ public class DbHandler {
 			tempCal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
 			tempRecord = getRecord(tempCal);
 			if(tempRecord.eatenFood.size() > 0 || tempRecord.activitiesDone.size() > 0 || !tempRecord.getLastMentalRate().equals("")|| !tempRecord.getLastMoodRate().equals("")|| !tempRecord.getLastPhysicalRate().equals("")){
+				
+				for(int ii = 0; ii < tempRecord.eatenFood.size(); ii++){
+					boolean found = false;
+					int foundIndex = 0;
+					for(int jj = 0; jj < tempRecord.eatenFoodSum.size(); jj++){
+						if(tempRecord.eatenFood.get(ii).name.equals(tempRecord.eatenFoodSum.get(jj).name)){
+							found = true;
+							foundIndex = jj;
+						}
+					}
+					if(!found){
+						RecordFood f1 = new RecordFood();
+						f1.name = tempRecord.eatenFood.get(ii).name;
+						f1.amount = tempRecord.eatenFood.get(ii).amount;
+						tempRecord.eatenFoodSum.add(f1);
+					}else{
+						tempRecord.eatenFoodSum.get(foundIndex).amount = tempRecord.eatenFoodSum.get(foundIndex).amount + tempRecord.eatenFood.get(ii).amount;
+					}
+				}
+				
 				records.add(tempRecord);
 				if(numberOfFood < tempRecord.eatenFood.size()){
 					numberOfFood = tempRecord.eatenFood.size();
 				}
 				if(numberOfActivities < tempRecord.activitiesDone.size()){
 					numberOfActivities = tempRecord.activitiesDone.size();
-				}				
+				}
+				if(numberOfFoodSums < tempRecord.eatenFoodSum.size()){
+					numberOfFoodSums = tempRecord.eatenFoodSum.size();
+				}
 			}
 			cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE)+1);
 		}
@@ -972,7 +1076,10 @@ public class DbHandler {
         	}
         	for(int j = 0; j < numberOfFood; j++){
         		source = source + ",food"+j+"name,food"+j+"amount,food"+j+"timeconsumed";
-        	}        	
+        	}   
+        	for(int j = 0; j < numberOfFoodSums; j++){
+        		source = source + ",foodsum"+j+"name,foodsum"+j+"amount";
+        	}          	
         	source = source + ",mentalrate,moodrate,physicalrate";
         	source = source + "\r\n";
         	
@@ -1001,7 +1108,15 @@ public class DbHandler {
             		}else{
             			source = source + ",,,";
             		}            		
-            	}                   
+            	} 
+            	for(int j = 0; j < numberOfFoodSums; j++){
+            		
+            		if(j<records.get(i).eatenFood.size()){
+            			source = source + ","+records.get(i).eatenFoodSum.get(j).name+","+records.get(i).eatenFoodSum.get(j).amount;
+            		}else{
+            			source = source + ",,";
+            		}            		
+            	}             	
                 source = source+","+records.get(i).getLastMentalRate()+
                 ","+records.get(i).getLastMoodRate()+
                 ","+records.get(i).getLastPhysicalRate()+
@@ -1022,7 +1137,7 @@ public class DbHandler {
         }
         catch (FileNotFoundException e) {
             System.out.println("Error occured: " + e.getMessage());
-            return false; 
+            return false;
         }
 
         System.out.println("CSV file saved.");
