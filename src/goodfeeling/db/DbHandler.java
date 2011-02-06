@@ -1,5 +1,8 @@
 package goodfeeling.db;
 
+import goodfeeling.common.Table;
+import goodfeeling.db.Record;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -30,7 +33,9 @@ public class DbHandler {
 	
 	public String xmlActivitiesFileName = "activities_dictionary.xml";
 	public String xmlFoodsFileName = "foods_dictionary.xml";
-
+	public String csvFilename = "data.csv";
+	public int numberOfActivities = 0;
+	public int numberOfFood = 0;
 	private final InputOutput io;
 
 	/**
@@ -91,7 +96,7 @@ public class DbHandler {
 	
 	/** Loads record with a provided date 
 	 * @param cal Calendar object with date 
-	 * @return Record class object or null if not in database
+	 * @return Record class object or empty Record if not in database
 	 */
 	public Record getRecord(Calendar cal){
 		
@@ -106,7 +111,7 @@ public class DbHandler {
 		    	Document doc = parseFile(xmlFileName);
 		    	record = readFromDocument(doc,record);     	
 		    } catch (FileNotFoundException e) {
-		    	record = null;
+		    	
 		    }
 		}		
 		return record;
@@ -167,11 +172,65 @@ public class DbHandler {
 			saveXMLDocument(xmlActivitiesFileName, doc);
 		}
 	}
+	/** Generates Table object for all records in database
+	 */		
+	public Table generateDataTable() throws Exception {
+		Table table = new Table();
+		ArrayList<Record> records = new  ArrayList<Record>();
+	//	Record r1 = new Record();
+	//	Record r2 = new Record();
+	//	records.add(r1);
+		//records.add(r2);
+		
+		records = getRecordsListFromDb(2010);
+		//saveCSVDocument(csvFilename,records); 	
+	
+		return table;
+	    			
+	}	
+	/** Generates CSV file based on all records in database
+	 */	
+	public void generateCSV() throws Exception {
 
+		ArrayList<Record> records = new  ArrayList<Record>();
+	//	Record r1 = new Record();
+	//	Record r2 = new Record();
+	//	records.add(r1);
+		//records.add(r2);
+		
+		records = getRecordsListFromDb(2010);
+		saveCSVDocument(csvFilename,records); 	
+	
+
+	    			
+	}	
 	////////////////////////////////////////////////////////////////////
 	//Private //////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////
-
+	private ArrayList<Record> getRecordsListFromDb(int year){
+		ArrayList<Record> records = new  ArrayList<Record>();
+		Calendar current = Calendar.getInstance();
+		Calendar cal = Calendar.getInstance();
+		cal.set(year,0,1);
+		//int i = 0;
+		while(cal.before(current) || cal.equals(current)){
+			Record tempRecord = new Record();
+			Calendar tempCal = Calendar.getInstance();
+			tempCal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
+			tempRecord = getRecord(tempCal);
+			if(tempRecord.eatenFood.size() > 0 || tempRecord.activitiesDone.size() > 0 || !tempRecord.getLastMentalRate().equals("")|| !tempRecord.getLastMoodRate().equals("")|| !tempRecord.getLastPhysicalRate().equals("")){
+				records.add(tempRecord);
+				if(numberOfFood < tempRecord.eatenFood.size()){
+					numberOfFood = tempRecord.eatenFood.size();
+				}
+				if(numberOfActivities < tempRecord.activitiesDone.size()){
+					numberOfActivities = tempRecord.activitiesDone.size();
+				}				
+			}
+			cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE)+1);
+		}
+		return records;
+	}
 	private Record readFromDocument(Document doc, Record record) { 
 		
 		int day= record.date.get(Calendar.DATE);
@@ -347,14 +406,12 @@ public class DbHandler {
 		                	
 		                } 		                
 	            	}
-	            	if(read){
-	            		return record;
-	            	}	
+	            	read = false;	
             	}
             }
         }		
 		
-		return null;
+		return record;
 	}	
 	
 	private Document removeFromDocument(Document doc, Record record) {
@@ -875,7 +932,7 @@ public class DbHandler {
     }
     
     private Document parseFile(String fileName) throws FileNotFoundException {
-        System.out.println("Parsing XML file... " + fileName);
+       // System.out.println("Parsing XML file... " + fileName);
         DocumentBuilder docBuilder;
         Document doc = null;
         DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -900,7 +957,76 @@ public class DbHandler {
         catch (IOException e) {
             System.out.println("Could not read source file: " + e.getMessage());
         }
-        System.out.println("XML file parsed");
+        //System.out.println("XML file parsed");
         return doc;
     }
+    private boolean saveCSVDocument(String fileName, ArrayList<Record> records) {
+        System.out.println("Saving CSV file... " + fileName);
+        // open output stream where CSV Document will be saved
+        OutputStream os;
+        
+        try {
+        	String source = "date";
+        	for(int j = 0; j < numberOfActivities; j++){
+        		source = source + ",activity"+j+"name,activity"+j+"starthour,activity"+j+"duration,activity"+j+"intensivity";
+        	}
+        	for(int j = 0; j < numberOfFood; j++){
+        		source = source + ",food"+j+"name,food"+j+"amount,food"+j+"timeconsumed";
+        	}        	
+        	source = source + ",mentalrate,moodrate,physicalrate";
+        	source = source + "\r\n";
+        	
+        	for(int i = 0; i < records.size(); i++){
+        		int day= records.get(i).date.get(Calendar.DATE);
+        		int month = records.get(i).date.get(Calendar.MONTH)+1;
+        		int year = records.get(i).date.get(Calendar.YEAR);
+        		os = io.getOutputStream(fileName);
+             
+                source = source+ day+"-"+month+"-"+year;
+            	for(int j = 0; j < numberOfActivities; j++){
+            		//System.out.println("numberOfActivities="+numberOfActivities);
+            		//System.out.println("j="+j);
+            		//System.out.println("act size="+records.get(i).activitiesDone.size());
+            		if(j<records.get(i).activitiesDone.size()){
+            			source = source + ","+records.get(i).activitiesDone.get(j).name+","+records.get(i).activitiesDone.get(j).startHour+","+records.get(i).activitiesDone.get(j).duration+","+records.get(i).activitiesDone.get(j).intensivity;
+            		}else{
+            			source = source + ",,,,";
+            		}
+            		
+            	}
+            	for(int j = 0; j < numberOfFood; j++){
+            		
+            		if(j<records.get(i).eatenFood.size()){
+            			source = source + ","+records.get(i).eatenFood.get(j).name+","+records.get(i).eatenFood.get(j).amount+","+records.get(i).eatenFood.get(j).timeConsumed;
+            		}else{
+            			source = source + ",,,";
+            		}            		
+            	}                   
+                source = source+","+records.get(i).getLastMentalRate()+
+                ","+records.get(i).getLastMoodRate()+
+                ","+records.get(i).getLastPhysicalRate()+
+                "\r\n";
+
+            	byte buf[] = source.getBytes();
+  	
+            	try {
+                	os.write(buf);
+                	os.close(); 
+				} catch (IOException e) {
+					System.out.println("Error : " + e.getMessage());
+				}       		
+        	}
+
+            
+            
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Error occured: " + e.getMessage());
+            return false;
+        }
+
+        System.out.println("CSV file saved.");
+        return true;
+    }   
+    
 }
