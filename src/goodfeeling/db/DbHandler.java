@@ -1022,7 +1022,7 @@ public class DbHandler {
         }
         catch (FileNotFoundException e) {
             System.out.println("Error occured: " + e.getMessage());
-            return false;
+            return false; 
         }
 
         System.out.println("CSV file saved.");
