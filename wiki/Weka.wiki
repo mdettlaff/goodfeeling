@@ -68,9 +68,9 @@ Liczba kolumn ulega zmianie w zależności od maksymalnej ilości food i activit
 
 Dodatkowo na samym końcu jest podsumowanie łaczne danych składników posiłków: 
 
-foodsum0name
+foodsumXname
 
-foodsum1amount
+foodsumXamount
 
 To na wypadek gdy ktoś zje parę np. ziemniaków przez cały dzień w innych porach a my chcemy mieć ich sumę (także zalecenia prowadzącego).
 
