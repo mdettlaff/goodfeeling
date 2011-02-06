@@ -19,6 +19,11 @@ public class Table {
 	}
 
 	public void addRow(Object... row) {
+		if (columnNames.size() != row.length) {
+			throw new IllegalArgumentException("Cannot add a row with " +
+					row.length + " elements to a table with " +
+					columnNames.size() + " columns.");
+		}
 		rows.add(Arrays.asList(row));
 	}
 

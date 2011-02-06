@@ -33,9 +33,9 @@ public class InstancesRulesFinderTest {
 		RulePredicate programmerOccupation = new RulePredicate();
 		programmerOccupation.putAttribute("occupation", "programmer");
 		List<Rule> expected = Arrays.asList(
-				new Rule(highIncome, whiteRace),
-				new Rule(whiteRace, highIncome),
-				new Rule(programmerOccupation, whiteRace)
+				new Rule(highIncome, whiteRace, 1),
+				new Rule(whiteRace, highIncome, 1),
+				new Rule(programmerOccupation, whiteRace, 1)
 		);
 		return expected;
 	}

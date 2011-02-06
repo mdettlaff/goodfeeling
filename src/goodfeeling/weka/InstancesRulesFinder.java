@@ -12,7 +12,7 @@ import weka.core.Instances;
 class InstancesRulesFinder {
 
 	private static final String RULE_REGEX =
-		"\\s*\\d+\\. (.+?) \\d+ ==> (.+?) \\d.*";
+		"\\s*\\d+\\. (.+?) \\d+ ==> (.+?) \\d\\s+conf:\\((.+?)\\).*";
 
 	private Instances data;
 
@@ -46,7 +46,8 @@ class InstancesRulesFinder {
 		}
 		RulePredicate antecedent = parsePredicate(matcher.group(1));
 		RulePredicate consequent = parsePredicate(matcher.group(2));
-		return new Rule(antecedent, consequent);
+		double conficence = Double.parseDouble(matcher.group(3));
+		return new Rule(antecedent, consequent, conficence);
 	}
 
 	private RulePredicate parsePredicate(String rawPredicate) {
