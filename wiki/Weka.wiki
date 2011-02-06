@@ -73,3 +73,5 @@ foodsum0name
 foodsum1amount
 
 To na wypadek gdy ktoś zje parę np. ziemniaków przez cały dzień w innych porach a my chcemy mieć ich sumę (także zalecenia prowadzącego).
+
+Można już używać metody {{{dbHandler.generateDataTable();}}} do pobrania obiektu klasy Table z danymi z bazy
