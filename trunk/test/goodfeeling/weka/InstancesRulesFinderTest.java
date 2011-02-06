@@ -13,12 +13,19 @@ import weka.core.FastVector;
 import weka.core.Instance;
 import weka.core.Instances;
 
-public class RulesFinderTest {
+public class InstancesRulesFinderTest {
 
 	@Test
 	public void testFindRulesForSimpleData() throws Exception {
-		RulesFinder rulesFinder = new RulesFinder(getTestData());
+		InstancesRulesFinder rulesFinder = new InstancesRulesFinder(getTestData());
 		List<Rule> rules = rulesFinder.findRules();
+		List<Rule> expected = getExpectedRules();
+		assertTrue("Not enough rules found.", rules.size() > expected.size());
+		List<Rule> actual = rules.subList(0, expected.size());
+		assertEquals(expected, actual);
+	}
+
+	static List<Rule> getExpectedRules() {
 		RulePredicate highIncome = new RulePredicate();
 		highIncome.putAttribute("income", ">50K");
 		RulePredicate whiteRace = new RulePredicate();
@@ -30,13 +37,10 @@ public class RulesFinderTest {
 				new Rule(whiteRace, highIncome),
 				new Rule(programmerOccupation, whiteRace)
 		);
-		assertTrue("Not enough rules found.", rules.size() > expected.size());
-		for (int i = 0; i < expected.size(); i++) {
-			assertEquals(expected.get(i), rules.get(i));
-		}
+		return expected;
 	}
 
-	private Instances getTestData() {
+	private static Instances getTestData() {
 		final int attributesCount = 3;
 		FastVector occupations = new FastVector();
 		occupations.addElement("programmer");
@@ -55,7 +59,7 @@ public class RulesFinderTest {
 		attrInfo.addElement(occupation);
 		attrInfo.addElement(race);
 		attrInfo.addElement(income);
-		Instances data = new Instances("test", attrInfo , attributesCount);
+		Instances data = new Instances("test", attrInfo, attributesCount);
 
 		Instance instance1 = new Instance(attributesCount);
 		instance1.setValue(occupation, "programmer");
