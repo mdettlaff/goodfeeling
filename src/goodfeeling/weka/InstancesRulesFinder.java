@@ -9,14 +9,14 @@ import weka.associations.Apriori;
 import weka.associations.Associator;
 import weka.core.Instances;
 
-public class RulesFinder {
+class InstancesRulesFinder {
 
 	private static final String RULE_REGEX =
 		"\\s*\\d+\\. (.+?) \\d+ ==> (.+?) \\d.*";
 
 	private Instances data;
 
-	public RulesFinder(Instances data) {
+	public InstancesRulesFinder(Instances data) {
 		this.data = data;
 	}
 
