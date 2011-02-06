@@ -2,6 +2,7 @@ package goodfeeling.common;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,12 +36,22 @@ public class TableTest {
 	@Test
 	public void testTableCreationLists() {
 		List<String> columnNames = Arrays.asList("foo", "bar");
-		List<?> row1 = Arrays.asList("a", "b");
-		List<?> row2 = Arrays.asList("c", "d");
+		List<Object> row1 = new ArrayList<Object>();
+		row1.add("a");
+		row1.add("b");
+		List<Object> row2 = new ArrayList<Object>();
+		row2.add("c");
+		row2.add("d");
 		Table table = new Table(columnNames);
 		table.addRow(row1);
 		table.addRow(row2);
 		assertSimpleTableIsAsExpected(table);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddedRowSizeAndColumnCountMustBeEqual() {
+		Table table = new Table("foo", "bar", "baz");
+		table.addRow("a", "b");
 	}
 
 	@Test
