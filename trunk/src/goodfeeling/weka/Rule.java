@@ -35,6 +35,9 @@ public class Rule {
 		int result = 1;
 		result = prime * result
 				+ ((antecedent == null) ? 0 : antecedent.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(confidence);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result
 				+ ((consequent == null) ? 0 : consequent.hashCode());
 		return result;
@@ -53,6 +56,9 @@ public class Rule {
 			if (other.antecedent != null)
 				return false;
 		} else if (!antecedent.equals(other.antecedent))
+			return false;
+		if (Double.doubleToLongBits(confidence) != Double
+				.doubleToLongBits(other.confidence))
 			return false;
 		if (consequent == null) {
 			if (other.consequent != null)
