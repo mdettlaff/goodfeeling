@@ -272,7 +272,7 @@ public class DbHandler {
         	} 
         	for(int j = 0; j < numberOfFoodSums; j++){
         		
-        		if(j<records.get(i).eatenFood.size()){
+        		if(j<records.get(i).eatenFoodSum.size()){
         			row[rcolumnI] = records.get(i).eatenFoodSum.get(j).name; rcolumnI++;
         			row[rcolumnI] = records.get(i).eatenFoodSum.get(j).amount; rcolumnI++;
         		}else{
@@ -1101,6 +1101,7 @@ public class DbHandler {
             		}
             		
             	}
+            	
             	for(int j = 0; j < numberOfFood; j++){
             		
             		if(j<records.get(i).eatenFood.size()){
@@ -1109,14 +1110,16 @@ public class DbHandler {
             			source = source + ",,,";
             		}            		
             	} 
+            	
             	for(int j = 0; j < numberOfFoodSums; j++){
             		
-            		if(j<records.get(i).eatenFood.size()){
+            		if(j<records.get(i).eatenFoodSum.size()){
             			source = source + ","+records.get(i).eatenFoodSum.get(j).name+","+records.get(i).eatenFoodSum.get(j).amount;
             		}else{
             			source = source + ",,";
             		}            		
-            	}             	
+            	}            
+            	
                 source = source+","+records.get(i).getLastMentalRate()+
                 ","+records.get(i).getLastMoodRate()+
                 ","+records.get(i).getLastPhysicalRate()+
