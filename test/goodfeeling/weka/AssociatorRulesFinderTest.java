@@ -13,12 +13,12 @@ import weka.core.FastVector;
 import weka.core.Instance;
 import weka.core.Instances;
 
-public class InstancesRulesFinderTest {
+public class AssociatorRulesFinderTest {
 
 	@Test
 	public void testFindRulesForSimpleData() throws Exception {
-		InstancesRulesFinder rulesFinder = new InstancesRulesFinder(getTestData());
-		List<Rule> rules = rulesFinder.findRules();
+		AssociatorRulesFinder rulesFinder = new AssociatorRulesFinder();
+		List<Rule> rules = rulesFinder.findRules(getTestData());
 		List<Rule> expected = getExpectedRules();
 		assertTrue("Not enough rules found.", rules.size() > expected.size());
 		List<Rule> actual = rules.subList(0, expected.size());
@@ -40,8 +40,7 @@ public class InstancesRulesFinderTest {
 		return expected;
 	}
 
-	private static Instances getTestData() {
-		final int attributesCount = 3;
+	static Instances getTestData() {
 		FastVector occupations = new FastVector();
 		occupations.addElement("programmer");
 		occupations.addElement("accountant");
@@ -59,26 +58,28 @@ public class InstancesRulesFinderTest {
 		attrInfo.addElement(occupation);
 		attrInfo.addElement(race);
 		attrInfo.addElement(income);
-		Instances data = new Instances("test", attrInfo, attributesCount);
-
-		Instance instance1 = new Instance(attributesCount);
-		instance1.setValue(occupation, "programmer");
-		instance1.setValue(race, "white");
-		instance1.setValue(income, ">50K");
-		data.add(instance1);
-
-		Instance instance2 = new Instance(attributesCount);
-		instance2.setValue(occupation, "accountant");
-		instance2.setValue(race, "white");
-		instance2.setValue(income, ">50K");
-		data.add(instance2);
-
-		Instance instance3 = new Instance(attributesCount);
-		instance3.setValue(occupation, "accountant");
-		instance3.setValue(race, "black");
-		instance3.setValue(income, "<50K");
-		data.add(instance3);
-
+		Instances data = new Instances("test", attrInfo, attrInfo.size());
+		{
+			Instance instance = new Instance(attrInfo.size());
+			instance.setValue(occupation, "programmer");
+			instance.setValue(race, "white");
+			instance.setValue(income, ">50K");
+			data.add(instance);
+		}
+		{
+			Instance instance = new Instance(attrInfo.size());
+			instance.setValue(occupation, "accountant");
+			instance.setValue(race, "white");
+			instance.setValue(income, ">50K");
+			data.add(instance);
+		}
+		{
+			Instance instance = new Instance(attrInfo.size());
+			instance.setValue(occupation, "accountant");
+			instance.setValue(race, "black");
+			instance.setValue(income, "<50K");
+			data.add(instance);
+		}
 		data.setClass(income);
 		return data;
 	}

@@ -9,18 +9,13 @@ import weka.associations.Apriori;
 import weka.associations.Associator;
 import weka.core.Instances;
 
-class InstancesRulesFinder {
+class AssociatorRulesFinder implements IRulesFinder {
 
 	private static final String RULE_REGEX =
 		"\\s*\\d+\\. (.+?) \\d+ ==> (.+?) \\d\\s+conf:\\((.+?)\\).*";
 
-	private Instances data;
-
-	public InstancesRulesFinder(Instances data) {
-		this.data = data;
-	}
-
-	public List<Rule> findRules() throws Exception {
+	@Override
+	public List<Rule> findRules(Instances data) throws Exception {
 		Associator associator = new Apriori();
 		associator.buildAssociations(data);
 		String rawRules = associator.toString();
