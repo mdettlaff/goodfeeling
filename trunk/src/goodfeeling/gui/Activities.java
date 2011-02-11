@@ -13,7 +13,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 public class Activities extends Activity {
-	String[] activities = { "spacer", "rower", "basen", "łyżwy", "rolki",
+	String[] activities = { "spacer", "ryby", "rower", "basen", "łyżwy", "rolki",
 			"narty" };
 
 	int fromMin, fromHour, untilMin, untilHour;
@@ -24,12 +24,12 @@ public class Activities extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activities);
 
-		Calendar kalendarz = Calendar.getInstance();
+		Calendar calendar = Calendar.getInstance();
 
-		fromMin = kalendarz.getTime().getMinutes();
-		untilMin = kalendarz.getTime().getMinutes();
-		fromHour = kalendarz.getTime().getHours();
-		untilHour = kalendarz.getTime().getHours();
+		fromMin = calendar.getTime().getMinutes();
+		untilMin = calendar.getTime().getMinutes();
+		fromHour = calendar.getTime().getHours();
+		untilHour = calendar.getTime().getHours();
 
 		Button back = (Button) findViewById(R.id.back);
 		back.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +71,7 @@ public class Activities extends Activity {
 		});
 
 		TimePicker fromTimePicker = (TimePicker) findViewById(R.id.fromTimePicker);
+		fromTimePicker.setIs24HourView(true);
 		fromTimePicker
 				.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
 
@@ -82,6 +83,7 @@ public class Activities extends Activity {
 				});
 
 		TimePicker untilTimePicker = (TimePicker) findViewById(R.id.untilTimePicker);
+		untilTimePicker.setIs24HourView(true);
 		untilTimePicker
 				.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
 

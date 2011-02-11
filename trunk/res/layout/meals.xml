@@ -1,15 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	android:orientation="vertical">
-	<TextView android:text="Posiłki" android:textSize="12pt"
-		android:id="@+id/TextView01" android:layout_width="wrap_content"
-		android:layout_height="wrap_content"></TextView>
+	android:orientation="vertical" android:background="#2e3436">
+	<!-- <TextView android:text="Posiłki" android:textSize="12pt" android:id="@+id/TextView01" 
+		android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView> -->
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+		<TextView android:text="Meals" android:textSize="9pt"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:textColor="#ffffff" android:paddingTop="10sp"
+			android:paddingLeft="10sp" />
+		<LinearLayout android:layout_weight="0.2"
+			android:orientation="horizontal" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:gravity="right">
+			<LinearLayout android:orientation="vertical"
+				android:gravity="center_horizontal" android:layout_width="75sp"
+				android:layout_height="wrap_content">
+				<ImageButton android:layout_height="wrap_content"
+					android:padding="0sp" android:id="@+id/help_btn" android:src="@drawable/help"
+					android:layout_width="wrap_content"></ImageButton>
+				<TextView android:text="@string/gui_title_help"
+					android:gravity="center_horizontal" android:layout_width="50sp"
+					android:layout_height="wrap_content" android:textColor="#ffffff" />
+			</LinearLayout>
+			<LinearLayout android:orientation="vertical"
+				android:gravity="center_horizontal" android:layout_width="75sp"
+				android:layout_height="wrap_content">
+				<ImageButton android:layout_height="wrap_content"
+					android:padding="0sp" android:id="@+id/manual_btn" android:src="@drawable/manual"
+					android:layout_width="wrap_content"></ImageButton>
+				<TextView android:text="@string/gui_title_manual"
+					android:gravity="center_horizontal" android:layout_width="50sp"
+					android:layout_height="wrap_content" android:textColor="#ffffff" />
+			</LinearLayout>
+		</LinearLayout>
+	</LinearLayout>
+
+	<ListView android:id="@id/android:list" android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:layout_weight="1"
+		android:drawSelectorOnTop="false" />
+	<TextView android:id="@id/android:empty" android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:text="Empty List!" />
+
 	<LinearLayout android:id="@+id/LinearLayout01"
 		android:layout_width="fill_parent" android:layout_height="wrap_content">
-		<Button android:text="Wróć" android:id="@+id/back"
+		<Button android:text="Back" android:id="@+id/back"
 			android:layout_width="100px" android:layout_height="wrap_content"></Button>
-		<Button android:text="Zapisz" android:id="@+id/save"
+		<Button android:text="Save" android:id="@+id/save"
 			android:layout_width="100px" android:layout_height="wrap_content"></Button>
 	</LinearLayout>
 </LinearLayout>

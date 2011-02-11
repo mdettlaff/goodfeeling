@@ -1,33 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	android:orientation="vertical">
-	<TextView android:text="Aktywności" android:textSize="12pt"
-		android:id="@+id/TextView01" android:layout_width="wrap_content"
-		android:layout_height="wrap_content"></TextView>
+	android:orientation="vertical" android:background="#2e3436"
+	android:paddingTop="10sp">
+	<!-- <TextView android:text="Activities" android:textSize="9pt" android:id="@+id/TextView01" 
+		android:layout_width="wrap_content" android:layout_height="wrap_content" 
+		android:textColor="#ffffff"></TextView> -->
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+		<TextView android:text="Activities" android:textSize="9pt"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:textColor="#ffffff" android:paddingTop="10sp"
+			android:paddingLeft="10sp" />
+		<LinearLayout android:layout_weight="0.2"
+			android:orientation="horizontal" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:gravity="right">
+			<LinearLayout android:orientation="vertical"
+				android:gravity="center_horizontal" android:layout_width="75sp"
+				android:layout_height="wrap_content">
+				<ImageButton android:layout_height="wrap_content"
+					android:padding="0sp" android:id="@+id/help_btn" android:src="@drawable/help"
+					android:layout_width="wrap_content"></ImageButton>
+				<TextView android:text="@string/gui_title_help"
+					android:gravity="center_horizontal" android:layout_width="50sp"
+					android:layout_height="wrap_content" android:textColor="#ffffff" />
+			</LinearLayout>
+			<LinearLayout android:orientation="vertical"
+				android:gravity="center_horizontal" android:layout_width="75sp"
+				android:layout_height="wrap_content">
+				<ImageButton android:layout_height="wrap_content"
+					android:padding="0sp" android:id="@+id/manual_btn" android:src="@drawable/manual"
+					android:layout_width="wrap_content"></ImageButton>
+				<TextView android:text="@string/gui_title_manual"
+					android:gravity="center_horizontal" android:layout_width="50sp"
+					android:layout_height="wrap_content" android:textColor="#ffffff" />
+			</LinearLayout>
+		</LinearLayout>
+	</LinearLayout>
 	<AutoCompleteTextView android:id="@+id/activityName"
 		android:layout_width="fill_parent" android:layout_height="wrap_content"></AutoCompleteTextView>
 	<LinearLayout android:id="@+id/LinearLayout02"
 		android:layout_width="wrap_content" android:layout_height="wrap_content">
-		<TextView android:text="Od:" android:id="@+id/TextView02"
-			android:textSize="12pt" android:layout_width="60px"
-			android:layout_height="wrap_content"></TextView>
+		<TextView android:text="From:" android:id="@+id/TextView02"
+			android:textSize="9pt" android:layout_width="60px"
+			android:layout_height="wrap_content" android:textColor="#ffffff"></TextView>
 		<TimePicker android:id="@+id/fromTimePicker"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"></TimePicker>
 	</LinearLayout>
 	<LinearLayout android:id="@+id/LinearLayout03"
 		android:layout_width="wrap_content" android:layout_height="wrap_content">
-		<TextView android:text="Do:" android:id="@+id/TextView03"
-			android:textSize="12pt" android:layout_width="60px"
-			android:layout_height="wrap_content"></TextView>
+		<TextView android:text="Until:" android:id="@+id/TextView03"
+			android:textSize="9pt" android:layout_width="60px"
+			android:layout_height="wrap_content" android:textColor="#ffffff"></TextView>
 		<TimePicker android:id="@+id/untilTimePicker"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"></TimePicker>
 	</LinearLayout>
 	<LinearLayout android:id="@+id/LinearLayout01"
 		android:layout_width="fill_parent" android:layout_height="wrap_content">
-		<Button android:text="Wróć" android:id="@+id/back"
+		<Button android:text="Back" android:id="@+id/back"
 			android:layout_width="100px" android:layout_height="wrap_content"></Button>
-		<Button android:text="Zapisz" android:id="@+id/save"
+		<Button android:text="Save" android:id="@+id/save"
 			android:layout_width="100px" android:layout_height="wrap_content"></Button>
 	</LinearLayout>
 

@@ -1,5 +1,7 @@
 package goodfeeling.gui;
 
+import java.util.Calendar;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +17,13 @@ public class Sleep extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.sleep);
+		
+		Calendar calendar = Calendar.getInstance();
+
+		fromMin = calendar.getTime().getMinutes();
+		untilMin = calendar.getTime().getMinutes();
+		fromHour = calendar.getTime().getHours();
+		untilHour = calendar.getTime().getHours();
 
 		Button back = (Button) findViewById(R.id.back);
 		back.setOnClickListener(new View.OnClickListener() {
@@ -37,6 +46,7 @@ public class Sleep extends Activity {
 			}
 		});
 		TimePicker fromTimePicker = (TimePicker) findViewById(R.id.fromTimePicker);
+		fromTimePicker.setIs24HourView(true);
 		fromTimePicker
 				.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
 
@@ -47,6 +57,7 @@ public class Sleep extends Activity {
 					}
 				});
 		TimePicker untilTimePicker = (TimePicker) findViewById(R.id.untilTimePicker);
+		untilTimePicker.setIs24HourView(true);
 		untilTimePicker
 				.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
 
