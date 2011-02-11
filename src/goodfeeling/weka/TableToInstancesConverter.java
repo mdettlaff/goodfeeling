@@ -24,12 +24,25 @@ class TableToInstancesConverter {
 			String attributeName = table.getColumnNames().get(col);
 			for (int row = 0; row < table.getRowCount(); row++) {
 				Object value = table.getValueAt(row, col);
-				if (!possibleAttributeValues.contains(value)) {
+				if (value != null && !(value instanceof Number)
+						&& !(value instanceof String)) {
+					throw new IllegalArgumentException(
+							"Only String and Number instances are allowed.");
+				}
+				boolean isValueEmpty = isValueEmpty(value);
+				if (!isValueEmpty && (value instanceof String)
+						&& !possibleAttributeValues.contains(value)) {
 					possibleAttributeValues.addElement(value);
 				}
 			}
-			Attribute attribute =
-				new Attribute(attributeName, possibleAttributeValues);
+			Attribute attribute;
+			if (possibleAttributeValues.size() > 0) {
+				// nominal attribute
+				attribute = new Attribute(attributeName, possibleAttributeValues);
+			} else {
+				// numeric attribute
+				attribute = new Attribute(attributeName);
+			}
 			attrInfo.addElement(attribute);
 		}
 		Instances data = new Instances(null, attrInfo, table.getColumnCount());
@@ -38,8 +51,10 @@ class TableToInstancesConverter {
 			for (int col = 0; col < table.getColumnCount(); col++) {
 				Attribute attribute = (Attribute)attrInfo.elementAt(col);
 				Object value = table.getValueAt(row, col);
-				if (value == null) {
+				if (isValueEmpty(value)) {
 					instance.setMissing(attribute);
+				} else if (value instanceof Number) {
+					instance.setValue(attribute, ((Number)value).doubleValue());
 				} else {
 					instance.setValue(attribute, value.toString());
 				}
@@ -48,6 +63,10 @@ class TableToInstancesConverter {
 		}
 		data.setClass(getClassAttribute(attrInfo));
 		return data;
+	}
+
+	private boolean isValueEmpty(Object value) {
+		return value == null || value.toString().length() == 0;
 	}
 
 	private Attribute getClassAttribute(FastVector attrInfo) {
