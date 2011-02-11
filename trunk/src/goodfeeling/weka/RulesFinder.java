@@ -26,7 +26,7 @@ public class RulesFinder {
 	public RulesFinder(Table data, String classColumnName) {
 		this.data = data;
 		this.classColumnName = classColumnName;
-		defaultInternalRulesFinder = new AssociatorRulesFinder();
+		defaultInternalRulesFinder = new DecisionTreeRulesFinder();
 	}
 
 	void setConcreteRulesFinder(IRulesFinder rulesFinder) {

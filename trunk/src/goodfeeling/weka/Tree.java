@@ -130,12 +130,19 @@ public class Tree {
 
 	private static Set<String> findNodesIds(String dot) {
 		Set<String> nodes = new HashSet<String>();
-		Pattern pattern = Pattern.compile(GRAPH_EDGE_REGEX);
+		Pattern patternEdge = Pattern.compile(GRAPH_EDGE_REGEX);
 		for (String line : dot.split("\n")) {
-			Matcher matcher = pattern.matcher(line);
+			Matcher matcher = patternEdge.matcher(line);
 			if (matcher.find()) {
 				nodes.add(matcher.group(1));
 				nodes.add(matcher.group(2));
+			}
+		}
+		Pattern patternNode = Pattern.compile(GRAPH_SINGLE_NODE_REGEX);
+		for (String line : dot.split("\n")) {
+			Matcher matcher = patternNode.matcher(line);
+			if (matcher.find()) {
+				nodes.add(matcher.group(1));
 			}
 		}
 		return nodes;

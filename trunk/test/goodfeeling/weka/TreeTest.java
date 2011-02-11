@@ -178,4 +178,16 @@ public class TreeTest {
 		assertEquals("= white", actual.getEdgeLabel(highIncome));
 		assertEquals(expected, actual);
 	}
+
+	@Test
+	public void testParseDOTTreeWithOnlyOneNode() {
+		final String dot =
+			"digraph J48Tree {\n" +
+			"N0 [label=\">50K (4.0/2.0)\" shape=box style=filled ]\n" +
+			"}";
+		Tree actual = Tree.parseDOT(dot);
+		Tree expected = new Tree("N0");
+		expected.setLabel(">50K (4.0/2.0)");
+		assertEquals(expected, actual);
+	}
 }

@@ -28,7 +28,7 @@ public class RuleTranslator {
 			String attribute = entry.getKey();
 			String attributeValue = entry.getValue();
 			message.append("your ");
-			message.append(attribute);
+			message.append(humanReadableAttributeName(attribute));
 			message.append(" is ");
 			message.append(attributeValue);
 			message.append(" and ");
@@ -42,5 +42,9 @@ public class RuleTranslator {
 		} else {
 			return "It might be that ";
 		}
+	}
+
+	private static String humanReadableAttributeName(String attributeName) {
+		return attributeName.replaceFirst("\\d+.*$", "");
 	}
 }
