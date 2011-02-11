@@ -44,12 +44,12 @@ public class Diary extends Activity {
 		});
 		
 
-		ImageButton work = (ImageButton) findViewById(R.id.work_btn);
+		/*ImageButton work = (ImageButton) findViewById(R.id.work_btn);
 		work.setOnClickListener(notImplemented);
 		ImageButton relax = (ImageButton) findViewById(R.id.relax_btn);
 		relax.setOnClickListener(notImplemented);
 		ImageButton health = (ImageButton) findViewById(R.id.health_btn);
-		health.setOnClickListener(notImplemented);
+		health.setOnClickListener(notImplemented);*/
 		
 
 		Button back = (Button) findViewById(R.id.back);

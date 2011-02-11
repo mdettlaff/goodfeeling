@@ -33,12 +33,7 @@ public class GoodFeeling extends Activity {
 		});
 
 		ImageButton test = (ImageButton) findViewById(R.id.make_test_btn);
-		test.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				startActivity(new Intent(v.getContext(), TestRun.class));
-			}
-		});
-
+		test.setOnClickListener(notImplemented);
 		/*
 		ImageButton back = (ImageButton) findViewById(R.id.back);
 		back.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +45,7 @@ public class GoodFeeling extends Activity {
 		*/
 	}
 
-	private void DisplayToast(String msg) {
+	public void DisplayToast(String msg) {
 		Toast.makeText(getBaseContext(), msg, Toast.LENGTH_SHORT).show();
 	}
 }
