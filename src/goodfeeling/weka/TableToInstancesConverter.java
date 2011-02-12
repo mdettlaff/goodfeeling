@@ -9,15 +9,33 @@ import weka.core.Instances;
 class TableToInstancesConverter {
 
 	private final Table table;
-	private final Object classColumnName;
 
-	public TableToInstancesConverter(
-			Table table, String classColumnName) {
+	public TableToInstancesConverter(Table table) {
 		this.table = table;
-		this.classColumnName = classColumnName;
 	}
 
 	public Instances convert() {
+		FastVector attrInfo = getAttrInfo();
+		Instances instances = new Instances(null, attrInfo, table.getColumnCount());
+		for (int row = 0; row < table.getRowCount(); row++) {
+			Instance instance = new Instance(attrInfo.size());
+			for (int col = 0; col < table.getColumnCount(); col++) {
+				Attribute attribute = (Attribute)attrInfo.elementAt(col);
+				Object value = table.getValueAt(row, col);
+				if (isValueEmpty(value)) {
+					instance.setMissing(attribute);
+				} else if (value instanceof Number) {
+					instance.setValue(attribute, ((Number)value).doubleValue());
+				} else {
+					instance.setValue(attribute, value.toString());
+				}
+			}
+			instances.add(instance);
+		}
+		return instances;
+	}
+
+	private FastVector getAttrInfo() {
 		FastVector attrInfo = new FastVector();
 		for (int col = 0; col < table.getColumnCount(); col++) {
 			FastVector possibleAttributeValues = new FastVector();
@@ -45,33 +63,10 @@ class TableToInstancesConverter {
 			}
 			attrInfo.addElement(attribute);
 		}
-		Instances data = new Instances(null, attrInfo, table.getColumnCount());
-		for (int row = 0; row < table.getRowCount(); row++) {
-			Instance instance = new Instance(attrInfo.size());
-			for (int col = 0; col < table.getColumnCount(); col++) {
-				Attribute attribute = (Attribute)attrInfo.elementAt(col);
-				Object value = table.getValueAt(row, col);
-				if (isValueEmpty(value)) {
-					instance.setMissing(attribute);
-				} else if (value instanceof Number) {
-					instance.setValue(attribute, ((Number)value).doubleValue());
-				} else {
-					instance.setValue(attribute, value.toString());
-				}
-			}
-			data.add(instance);
-		}
-		data.setClass(getClassAttribute(attrInfo));
-		return data;
+		return attrInfo;
 	}
 
 	private boolean isValueEmpty(Object value) {
 		return value == null || value.toString().length() == 0;
-	}
-
-	private Attribute getClassAttribute(FastVector attrInfo) {
-		int classIndex = table.getColumnNames().indexOf(classColumnName);
-		Attribute classAttribute = (Attribute)attrInfo.elementAt(classIndex);
-		return classAttribute;
 	}
 }

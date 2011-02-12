@@ -23,8 +23,9 @@ public class TableToInstancesConverterTest {
 		table.addRow("accountant", "black", "<50K");
 
 		TableToInstancesConverter converter =
-			new TableToInstancesConverter(table, "income");
+			new TableToInstancesConverter(table);
 		Instances data = converter.convert();
+		data.setClassIndex(table.getColumnNames().indexOf("income"));
 
 		Enumeration<Attribute> attributes = data.enumerateAttributes();
 

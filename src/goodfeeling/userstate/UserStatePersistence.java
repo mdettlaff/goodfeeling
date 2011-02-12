@@ -24,8 +24,8 @@ public class UserStatePersistence {
 			int pictureTestScore = computePictureTestScore(pictureTestResults);
 			int balloonsTestScore = computeBalloonsTestScore(balloonTestResults);
 			Record record = dbHandler.getRecord(Calendar.getInstance());
-			record.moodRates.add(new TestResult(pictureTestScore + "%"));
-			record.mentalRates.add(new TestResult(balloonsTestScore + "%"));
+			record.moodRates.add(new TestResult("" + pictureTestScore));
+			record.mentalRates.add(new TestResult("" + balloonsTestScore));
 			dbHandler.addOrUpdateRecord(record);
 		} catch (Exception e) {
 			throw new RuntimeException("Cannot write user state to the database", e);
@@ -34,12 +34,12 @@ public class UserStatePersistence {
 
 	public CharSequence getCurrentMood() {
 		Record record = dbHandler.getRecord(Calendar.getInstance());
-		return record.getLastMoodRate();
+		return record.getLastMoodRate() + "%";
 	}
 
 	public CharSequence getCurrentMentalPerformance() {
 		Record record = dbHandler.getRecord(Calendar.getInstance());
-		return record.getLastMentalRate();
+		return record.getLastMentalRate() + "%";
 	}
 
 	private static int computePictureTestScore(
