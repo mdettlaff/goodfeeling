@@ -1,5 +1,4 @@
 package goodfeeling.db;
-
 /**
 * Food eaten packaging class
 * part of data contained in Record class
@@ -21,7 +20,7 @@ public class RecordFood {
 	public String unit = "";
 	
 	/**
-	 * Static values declared in gui, such as: before 11 / between 11-17 / after 17
+	 * Hour in hh format, such as: 12,21,7
 	 */
 	public String timeConsumed;
 }
