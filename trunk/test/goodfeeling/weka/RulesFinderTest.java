@@ -6,10 +6,7 @@ import goodfeeling.common.Table;
 import goodfeeling.db.DbHandler;
 import goodfeeling.db.InMemoryIO;
 import goodfeeling.db.InputOutput;
-import goodfeeling.gui.RuleTranslator;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,19 +17,6 @@ import java.util.List;
 import org.junit.Test;
 
 public class RulesFinderTest {
-
-	@Test
-	public void testFindHumanReadableRulesInSampleXMLFileUsingDecisionTree()
-	throws Exception {
-		List<Rule> rules = findRulesInSampleXMLFileUsingDecisionTree();
-
-		assertTrue("Not enough rules found.", rules.size() > 5);
-		final String actualRule1 = RuleTranslator.humanReadable(rules.get(0));
-		final String expectedRule1 =
-			"It seems likely that your physicalrate is suberb (2.63/0.63) " +
-			"when your food is = Watermelon and your activity is = High.";
-		assertEquals(expectedRule1, actualRule1);
-	}
 
 	@Test
 	public void testFindRulesInSampleXMLFileUsingDecisionTree()
@@ -47,15 +31,9 @@ public class RulesFinderTest {
 		assertEquals(expectedRule1, actualRule1);
 	}
 
-	private List<Rule> findRulesInSampleXMLFileUsingDecisionTree()
+	public static List<Rule> findRulesInSampleXMLFileUsingDecisionTree()
 			throws FileNotFoundException, IOException, Exception {
-		String filename = "2010_2.xml";
-		File xml = new File("test/goodfeeling/weka/" + filename);
-		InputOutput io = new InMemoryIO();
-		InputStream in = new FileInputStream(xml);
-		OutputStream out = io.getOutputStream(filename);
-		flow(in, out);
-		DbHandler dbHandler = new DbHandler(io);
+		DbHandler dbHandler = getDbHandlerWithSampleXMLData();
 
 		Table data = dbHandler.generateDataTable();
 
@@ -63,6 +41,17 @@ public class RulesFinderTest {
 		rulesFinder.setConcreteRulesFinder(new DecisionTreeRulesFinder());
 		List<Rule> rules = rulesFinder.findRules();
 		return rules;
+	}
+
+	private static DbHandler getDbHandlerWithSampleXMLData()
+			throws FileNotFoundException, IOException {
+		InputOutput io = new InMemoryIO();
+		String xmlFilename = "2010_2.xml";
+		InputStream in = RulesFinderTest.class.getResourceAsStream(xmlFilename);
+		OutputStream out = io.getOutputStream(xmlFilename);
+		flow(in, out);
+		DbHandler dbHandler = new DbHandler(io);
+		return dbHandler;
 	}
 
 	private static void flow(InputStream in, OutputStream out)
@@ -117,6 +106,7 @@ public class RulesFinderTest {
 
 		RulesFinder rulesFinder = new RulesFinder(data);
 		rulesFinder.setConcreteRulesFinder(new DecisionTreeRulesFinder());
+		rulesFinder.setDiscretizeBinsCount(2);
 		List<Rule> actual = rulesFinder.findRules();
 
 		List<Rule> expected = getExpectedRulesForNumericAttributes();
@@ -127,7 +117,7 @@ public class RulesFinderTest {
 		List<Rule> rules = new ArrayList<Rule>();
 		{
 			RulePredicate antecedent = new RulePredicate();
-			antecedent.putAttribute("race", "<= 1");
+			antecedent.putAttribute("race", "= '(-inf-1.5]'");
 			RulePredicate consequent = new RulePredicate();
 			consequent.putAttribute("income", ">50K (2.0)");
 			Rule rule = new Rule(antecedent, consequent, 1);
@@ -135,9 +125,47 @@ public class RulesFinderTest {
 		}
 		{
 			RulePredicate antecedent = new RulePredicate();
-			antecedent.putAttribute("race", "> 1");
+			antecedent.putAttribute("race", "= '(1.5-inf)'");
 			RulePredicate consequent = new RulePredicate();
 			consequent.putAttribute("income", "<50K (2.0)");
+			Rule rule = new Rule(antecedent, consequent, 1);
+			rules.add(rule);
+		}
+		return rules;
+	}
+
+	@Test
+	public void testFindRulesUsingDecisionTreeWithNumericClassAttributes() {
+		Table data = new Table("occupation", "race", "income");
+		data.addRow("programmer", "white", 70.0);
+		data.addRow("accountant", "white", 60.0);
+		data.addRow("accountant", "black", 30.0);
+		data.addRow("doctor", "black", 40.0);
+
+		RulesFinder rulesFinder = new RulesFinder(data);
+		rulesFinder.setConcreteRulesFinder(new DecisionTreeRulesFinder());
+		rulesFinder.setDiscretizeBinsCount(2);
+		List<Rule> actual = rulesFinder.findRules();
+
+		List<Rule> expected = getExpectedRulesForDiscretizedClass();
+		assertEquals(expected, actual);
+	}
+
+	private static List<Rule> getExpectedRulesForDiscretizedClass() {
+		List<Rule> rules = new ArrayList<Rule>();
+		{
+			RulePredicate antecedent = new RulePredicate();
+			antecedent.putAttribute("race", "= white");
+			RulePredicate consequent = new RulePredicate();
+			consequent.putAttribute("income", "'(50-inf)' (2.0)");
+			Rule rule = new Rule(antecedent, consequent, 1);
+			rules.add(rule);
+		}
+		{
+			RulePredicate antecedent = new RulePredicate();
+			antecedent.putAttribute("race", "= black");
+			RulePredicate consequent = new RulePredicate();
+			consequent.putAttribute("income", "'(-inf-50]' (2.0)");
 			Rule rule = new Rule(antecedent, consequent, 1);
 			rules.add(rule);
 		}
