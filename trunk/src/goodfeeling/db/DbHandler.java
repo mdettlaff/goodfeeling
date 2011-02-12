@@ -176,32 +176,145 @@ public class DbHandler {
 		}
 	}
 	/** Generates Table object for all records in database
+	 * @param resultsType one of strings: "mentalrate","moodrate" or "physicalrate"
 	 */		
-	public Table generateDataTable() throws Exception {
+	public Table generateDataTable(String resultsType) throws Exception {
 		Table table = new Table();
 		ArrayList<Record> records = new  ArrayList<Record>();
-
+		ArrayList<Record> wekaReadyRecords = new  ArrayList<Record>();
 		
 		records = getRecordsListFromDb(2010);
-		table = convertRecordsToTable(records);
+		
+		wekaReadyRecords = repositionRecordsData(records,resultsType);
+		records = new  ArrayList<Record>(); //clear unused data
+		table = convertRecordsToTable(wekaReadyRecords,resultsType);
 	
 		return table;
 	    			
 	}	
 	/** Generates CSV file based on all records in database for testing only
+	 * @param resultsType one of strings: "mentalrate","moodrate" or "physicalrate"
 	 */	
-	public void generateCSV() throws Exception {
+	public void generateCSV(String resultsType) throws Exception {
 		ArrayList<Record> records = new  ArrayList<Record>();
+		ArrayList<Record> wekaReadyRecords = new  ArrayList<Record>();
 		records = getRecordsListFromDb(2010);
-		saveCSVDocument(csvFilename,records); 			
+		
+		wekaReadyRecords = repositionRecordsData(records,resultsType);
+		
+		saveCSVDocument(csvFilename,wekaReadyRecords,resultsType); 			
 	}	
 	////////////////////////////////////////////////////////////////////
 	//Private //////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////
 	
-	private Table convertRecordsToTable(ArrayList<Record> records){
+	private ArrayList<Record> repositionRecordsData(ArrayList<Record> records,String resultsType){
+		ArrayList<Record> wekaReadyRecords = new  ArrayList<Record>();
 		
-		int rowSize = (numberOfActivities*4)+(numberOfFood*3)+(numberOfFoodSums*2)+4;
+		for(int i = 0; i < records.size(); i++){
+			Record tempRecord = new Record();
+			tempRecord.date = records.get(i).date;
+			tempRecord.mentalRates = records.get(i).mentalRates;
+			tempRecord.moodRates = records.get(i).moodRates;
+			tempRecord.physicalRates = records.get(i).physicalRates;
+			
+			int timeEnd = 0;
+			if(resultsType.equals("mentalrate")){
+				if(records.get(i).mentalRates.size() > 0){
+					timeEnd = records.get(i).mentalRates.get(records.get(i).mentalRates.size()-1).hour;
+				}
+			}	
+			if(resultsType.equals("moodrate")){
+				if(records.get(i).moodRates.size() > 0){
+					timeEnd = records.get(i).moodRates.get(records.get(i).moodRates.size()-1).hour;
+				}
+			}
+			if(resultsType.equals("physicalrate")){
+				if(records.get(i).physicalRates.size() > 0){
+					timeEnd = records.get(i).physicalRates.get(records.get(i).physicalRates.size()-1).hour;
+				}
+			}			
+			
+			for(int j = 0; j < records.get(i).eatenFood.size(); j++){
+				if(Integer.parseInt(records.get(i).eatenFood.get(j).timeConsumed) <= timeEnd){
+					tempRecord.eatenFood.add(records.get(i).eatenFood.get(j));
+				}
+			}
+			for(int j = 0; j < records.get(i).activitiesDone.size(); j++){
+				if(records.get(i).activitiesDone.get(j).startHour <= timeEnd){
+					tempRecord.activitiesDone.add(records.get(i).activitiesDone.get(j));
+				}
+			}
+			if(i > 0){
+				int timeStart = 0;
+				if(resultsType.equals("mentalrate")){
+					if(records.get(i-1).mentalRates.size() > 0){
+						timeStart = records.get(i-1).mentalRates.get(records.get(i-1).mentalRates.size()-1).hour;
+					}
+				}
+				if(resultsType.equals("moodrate")){
+					if(records.get(i-1).moodRates.size() > 0){
+						timeStart = records.get(i-1).moodRates.get(records.get(i-1).moodRates.size()-1).hour;
+					}
+				}
+				if(resultsType.equals("physicalrate")){
+					if(records.get(i-1).physicalRates.size() > 0){
+						timeStart = records.get(i-1).physicalRates.get(records.get(i-1).physicalRates.size()-1).hour;
+					}
+				}				
+				for(int j = 0; j < records.get(i-1).eatenFood.size(); j++){
+					if(Integer.parseInt(records.get(i-1).eatenFood.get(j).timeConsumed) >= timeStart){
+						tempRecord.eatenFood.add(records.get(i-1).eatenFood.get(j));
+					}
+				}
+				for(int j = 0; j < records.get(i-1).activitiesDone.size(); j++){
+					if(records.get(i-1).activitiesDone.get(j).startHour >= timeStart){
+						tempRecord.activitiesDone.add(records.get(i-1).activitiesDone.get(j));
+					}
+				}
+			}
+			
+			for(int ii = 0; ii < tempRecord.eatenFood.size(); ii++){
+				boolean found = false;
+				int foundIndex = 0;
+				for(int jj = 0; jj < tempRecord.eatenFoodSum.size(); jj++){
+					if(tempRecord.eatenFood.get(ii).name.equals(tempRecord.eatenFoodSum.get(jj).name)){
+						found = true;
+						foundIndex = jj;
+					}
+				}
+				if(!found){
+					RecordFood f1 = new RecordFood();
+					f1.name = tempRecord.eatenFood.get(ii).name;
+					f1.amount = tempRecord.eatenFood.get(ii).amount;
+					tempRecord.eatenFoodSum.add(f1);
+				}else{
+					tempRecord.eatenFoodSum.get(foundIndex).amount = tempRecord.eatenFoodSum.get(foundIndex).amount + tempRecord.eatenFood.get(ii).amount;
+				}
+			}	
+			
+			wekaReadyRecords.add(tempRecord);
+			
+			if(numberOfFood < tempRecord.eatenFood.size()){
+				numberOfFood = tempRecord.eatenFood.size();
+			}
+			if(numberOfActivities < tempRecord.activitiesDone.size()){
+				numberOfActivities = tempRecord.activitiesDone.size();
+			}
+			if(numberOfFoodSums < tempRecord.eatenFoodSum.size()){
+				numberOfFoodSums = tempRecord.eatenFoodSum.size();
+			}			
+			
+			
+			
+		}
+		
+		return wekaReadyRecords;
+	}
+	
+	private Table convertRecordsToTable(ArrayList<Record> records,String resultsType){
+		
+		int rowSize = (numberOfActivities*4)+(numberOfFood*3)+(numberOfFoodSums*2)+2;
     	String[] columnNames = new String[rowSize];
     	columnNames[0] = "date";
     	int columnI = 1;
@@ -229,11 +342,16 @@ public class DbHandler {
     		columnNames[columnI] = "foodsum"+j+"amount";
     		columnI++;
     	}  
-    	columnNames[columnI] ="mentalrate";
-    	columnI++;
-    	columnNames[columnI] ="moodrate";
-    	columnI++;
-    	columnNames[columnI] ="physicalrate";
+    	
+		if(resultsType.equals("mentalrate")){
+			columnNames[columnI] ="mentalrate";
+		}
+		if(resultsType.equals("moodrate")){
+			columnNames[columnI] ="moodrate";
+		}
+		if(resultsType.equals("physicalrate")){
+			columnNames[columnI] ="physicalrate";
+		}	   	
 
     	Table table = new Table(columnNames);
     	
@@ -263,7 +381,7 @@ public class DbHandler {
         		if(j<records.get(i).eatenFood.size()){
         			row[rcolumnI] = records.get(i).eatenFood.get(j).name; rcolumnI++;
         			row[rcolumnI] = records.get(i).eatenFood.get(j).amount; rcolumnI++;
-        			row[rcolumnI] = records.get(i).eatenFood.get(j).timeConsumed; rcolumnI++;
+        			row[rcolumnI] = Integer.parseInt(records.get(i).eatenFood.get(j).timeConsumed); rcolumnI++;
         		}else{
         			row[rcolumnI] =""; rcolumnI++;
         			row[rcolumnI] =""; rcolumnI++;
@@ -280,9 +398,17 @@ public class DbHandler {
         			row[rcolumnI] =""; rcolumnI++;
         		}            		
         	}             	
-        	row[rcolumnI] = records.get(i).getLastMentalRate(); rcolumnI++;
-        	row[rcolumnI] = records.get(i).getLastMoodRate(); rcolumnI++;
-        	row[rcolumnI] = records.get(i).getLastPhysicalRate(); rcolumnI++;
+        	
+    		if(resultsType.equals("mentalrate")){
+    			row[rcolumnI] = Integer.parseInt(records.get(i).getLastMentalRate());
+    		}
+    		if(resultsType.equals("moodrate")){
+    			row[rcolumnI] = Integer.parseInt(records.get(i).getLastMoodRate()); 
+    		}
+    		if(resultsType.equals("physicalrate")){
+    			row[rcolumnI] = Integer.parseInt(records.get(i).getLastPhysicalRate());
+    		}	         	
+        	
         	table.addRow(row);
     	}
 		return table;
@@ -300,36 +426,7 @@ public class DbHandler {
 			tempCal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
 			tempRecord = getRecord(tempCal);
 			if(tempRecord.eatenFood.size() > 0 || tempRecord.activitiesDone.size() > 0 || !tempRecord.getLastMentalRate().equals("")|| !tempRecord.getLastMoodRate().equals("")|| !tempRecord.getLastPhysicalRate().equals("")){
-				
-				for(int ii = 0; ii < tempRecord.eatenFood.size(); ii++){
-					boolean found = false;
-					int foundIndex = 0;
-					for(int jj = 0; jj < tempRecord.eatenFoodSum.size(); jj++){
-						if(tempRecord.eatenFood.get(ii).name.equals(tempRecord.eatenFoodSum.get(jj).name)){
-							found = true;
-							foundIndex = jj;
-						}
-					}
-					if(!found){
-						RecordFood f1 = new RecordFood();
-						f1.name = tempRecord.eatenFood.get(ii).name;
-						f1.amount = tempRecord.eatenFood.get(ii).amount;
-						tempRecord.eatenFoodSum.add(f1);
-					}else{
-						tempRecord.eatenFoodSum.get(foundIndex).amount = tempRecord.eatenFoodSum.get(foundIndex).amount + tempRecord.eatenFood.get(ii).amount;
-					}
-				}
-				
 				records.add(tempRecord);
-				if(numberOfFood < tempRecord.eatenFood.size()){
-					numberOfFood = tempRecord.eatenFood.size();
-				}
-				if(numberOfActivities < tempRecord.activitiesDone.size()){
-					numberOfActivities = tempRecord.activitiesDone.size();
-				}
-				if(numberOfFoodSums < tempRecord.eatenFoodSum.size()){
-					numberOfFoodSums = tempRecord.eatenFoodSum.size();
-				}
 			}
 			cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE)+1);
 		}
@@ -1064,7 +1161,7 @@ public class DbHandler {
         //System.out.println("XML file parsed");
         return doc;
     }
-    private boolean saveCSVDocument(String fileName, ArrayList<Record> records) {
+    private boolean saveCSVDocument(String fileName, ArrayList<Record> records,String resultsType) {
         System.out.println("Saving CSV file... " + fileName);
         // open output stream where CSV Document will be saved
         OutputStream os;
@@ -1080,7 +1177,7 @@ public class DbHandler {
         	for(int j = 0; j < numberOfFoodSums; j++){
         		source = source + ",foodsum"+j+"name,foodsum"+j+"amount";
         	}          	
-        	source = source + ",mentalrate,moodrate,physicalrate";
+        	source = source + ","+resultsType;
         	source = source + "\r\n";
         	
         	for(int i = 0; i < records.size(); i++){
@@ -1119,11 +1216,16 @@ public class DbHandler {
             			source = source + ",,";
             		}            		
             	}            
-            	
-                source = source+","+records.get(i).getLastMentalRate()+
-                ","+records.get(i).getLastMoodRate()+
-                ","+records.get(i).getLastPhysicalRate()+
-                "\r\n";
+        		if(resultsType.equals("mentalrate")){
+        			source = source+","+records.get(i).getLastMentalRate()+"\r\n";
+        		}
+        		if(resultsType.equals("moodrate")){
+        			source = source+","+records.get(i).getLastMoodRate()+"\r\n";
+        		}
+        		if(resultsType.equals("physicalrate")){
+        			source = source+","+records.get(i).getLastPhysicalRate()+"\r\n";
+        		}           	
+                
 
             	byte buf[] = source.getBytes();
   	
