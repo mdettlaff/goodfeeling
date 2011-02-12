@@ -29,11 +29,23 @@ public class RuleTranslator {
 			String attributeValue = entry.getValue();
 			message.append("your ");
 			message.append(humanReadableAttributeName(attribute));
-			message.append(" is ");
+			message.append(" ");
 			message.append(attributeValue);
 			message.append(" and ");
 		}
-		return message.toString().replaceFirst("and $", "");
+		String postprocessedMessage = message.toString();
+		postprocessedMessage = postprocessMessage(postprocessedMessage);
+		return postprocessedMessage;
+	}
+
+	private static String postprocessMessage(final String in) {
+		String out = in;
+		out = out.replaceFirst("and $", "");
+		out = out.replace(" = ", " is ");
+		out = out.replaceAll("'\\(-inf.*?'", "is low");
+		out = out.replaceAll("'.*?inf\\)'", "is high");
+		out = out.replaceAll("'\\(\\d.*?'", "is medium");
+		return out;
 	}
 
 	private static String humanReadableConfidence(double confidence) {
@@ -45,6 +57,6 @@ public class RuleTranslator {
 	}
 
 	private static String humanReadableAttributeName(String attributeName) {
-		return attributeName.replaceFirst("\\d+.*$", "");
+		return attributeName.replaceAll("\\d", " ");
 	}
 }
