@@ -4,9 +4,7 @@
 
 == TODO ==
 
-  * Dostarczanie z bazy danych tabeli z danymi potrzebnymi do znajdowania reguł.
   * Wyświetlanie znalezionych reguł w GUI.
-  * Dyskretyzacja atrybutów liczbowych.
   * Filtrowanie/sortowanie znalezionych reguł.
 
 
@@ -14,20 +12,18 @@
 
 Użycie wyszukiwacza reguł Weki z poziomu GUI może wyglądać tak:
 {{{
-// tabela z danymi jest dostarczana przez zespół bazodanowy
-// atrybut będący klasą (mood, mentalRate, physicalRate) powinien być w ostatniej kolumnie
-// zawartość tabeli jest analogiczna do zawartości pliku *.arff
-Table data = ...;
+// 'this' to aktualne Activity w Androidzie
+DbHandler dbHandler = new DbHandler(new AndroidFileIO(this));
+Table data = dbHandler.generateDataTable("mentalrate");
 
 RulesFinder finder = new RulesFinder(data);
-List<Rule> rules = finder.findRules();
+Iterator<Rule> rulesIter = finder.findRules().iterator();
 
-StringBuilder message = new StringBuilder("Some interesting rules that were found:\n");
-for (Rule rule : rules) {
-	message.append(RuleTranslator.humanReadable(rule) + "\n");
-}
-// wyświetlamy message.toString() użytkownikowi
+String message = RuleTranslator.humanReadable(rulesIter.next());
+// wyświetlamy message użytkownikowi
+// czekamy na kliknięcie, po czym wyświetlamy RuleTranslator.humanReadable(rulesIter.next()) itd.
 }}}
+Ten przykład był dla mentalrate, przypadki dla moodrate i physicalrate są analogiczne.
 
 Użytkownikowi powinniśmy wyświetlać chyba raczej sugestie niż surowe reguły, więc można zmodyfikować RuleTranslator żeby wyświetlał sugestie w formie:
 
@@ -35,7 +31,10 @@ Użytkownikowi powinniśmy wyświetlać chyba raczej sugestie niż surowe reguł
 
 albo coś w tym stylu.
 
-//Drużyna baz danych
+
+== Struktura tabeli z danymi dla Weki ==
+
+*UWAGA: Struktura danych się zmieniła, niech bazodanowcy uzupełnią...*
 
 przykładowa struktura tabeli do analizy uzgodniona z wykładowcą:
 {{{
