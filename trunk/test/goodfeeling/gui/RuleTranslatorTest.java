@@ -7,6 +7,7 @@ import goodfeeling.weka.Rule;
 import goodfeeling.weka.RulePredicate;
 import goodfeeling.weka.RulesFinderTest;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Test;
@@ -18,21 +19,31 @@ public class RuleTranslatorTest {
 	throws Exception {
 		List<Rule> rules = RulesFinderTest.findRulesInSampleXMLFileUsingDecisionTree();
 
+		Iterator<Rule> rulesIter = rules.iterator();
 		assertTrue("Not enough rules found.", rules.size() > 5);
-		final String actualRule1 = RuleTranslator.humanReadable(rules.get(0));
-		final String expectedRule1 =
-			"It seems likely that your physicalrate is suberb (2.63/0.63) " +
-			"when your food is = Watermelon and your activity is = High.";
-		assertEquals(expectedRule1, actualRule1);
+		{
+			final String actualRule = RuleTranslator.humanReadable(rulesIter.next());
+			final String expectedRule =
+				"It seems likely that your physicalrate is low (2.07/1.0) " +
+				"when your food name is Hot dog.";
+			assertEquals(expectedRule, actualRule);
+		}
+		{
+			final String actualRule = RuleTranslator.humanReadable(rulesIter.next());
+			final String expectedRule =
+				"It seems likely that your physicalrate is medium (3.1/1.1) " +
+				"when your food name is Fish meat.";
+			assertEquals(expectedRule, actualRule);
+		}
 	}
 
 	@Test
 	public void testHumanReadableRule() {
 		RulePredicate antecedent = new RulePredicate();
-		antecedent.putAttribute("activity intensity", "medium");
-		antecedent.putAttribute("food eaten", "apple");
+		antecedent.putAttribute("activity intensity", "= medium");
+		antecedent.putAttribute("food eaten", "= apple");
 		RulePredicate consequent = new RulePredicate();
-		consequent.putAttribute("mood", "good");
+		consequent.putAttribute("mood", "= good");
 		Rule rule = new Rule(antecedent, consequent, 0.9);
 
 		final String expected =

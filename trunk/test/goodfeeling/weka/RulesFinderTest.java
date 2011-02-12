@@ -18,24 +18,27 @@ import org.junit.Test;
 
 public class RulesFinderTest {
 
+	private static final String XML_FILENAME = "2010_1.xml";
+
 	@Test
 	public void testFindRulesInSampleXMLFileUsingDecisionTree()
 	throws Exception {
 		List<Rule> rules = findRulesInSampleXMLFileUsingDecisionTree();
 
 		assertTrue("Not enough rules found.", rules.size() > 5);
-		final String actualRule1 = rules.get(0).toString();
-		final String expectedRule1 =
-			"food2name== Watermelon activity0intensivity== High ==> " +
-			"physicalrate=suberb (2.63/0.63)";
-		assertEquals(expectedRule1, actualRule1);
+		{
+			final String actualRule = rules.get(0).toString();
+			final String expectedRule =
+				"food1name== Hot dog ==> physicalrate='(-inf-34]' (2.07/1.0)";
+			assertEquals(expectedRule, actualRule);
+		}
 	}
 
 	public static List<Rule> findRulesInSampleXMLFileUsingDecisionTree()
 			throws FileNotFoundException, IOException, Exception {
 		DbHandler dbHandler = getDbHandlerWithSampleXMLData();
 
-		Table data = dbHandler.generateDataTable();
+		Table data = dbHandler.generateDataTable("physicalrate");
 
 		RulesFinder rulesFinder = new RulesFinder(data);
 		rulesFinder.setConcreteRulesFinder(new DecisionTreeRulesFinder());
@@ -46,9 +49,8 @@ public class RulesFinderTest {
 	private static DbHandler getDbHandlerWithSampleXMLData()
 			throws FileNotFoundException, IOException {
 		InputOutput io = new InMemoryIO();
-		String xmlFilename = "2010_2.xml";
-		InputStream in = RulesFinderTest.class.getResourceAsStream(xmlFilename);
-		OutputStream out = io.getOutputStream(xmlFilename);
+		InputStream in = RulesFinderTest.class.getResourceAsStream(XML_FILENAME);
+		OutputStream out = io.getOutputStream(XML_FILENAME);
 		flow(in, out);
 		DbHandler dbHandler = new DbHandler(io);
 		return dbHandler;
