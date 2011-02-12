@@ -10,7 +10,7 @@
 
 == Integracja z GUI i bazą danych ==
 
-Użycie wyszukiwacza reguł Weki z poziomu GUI może wyglądać tak:
+Przykład użycia wyszukiwacza reguł Weki z poziomu GUI:
 {{{
 // 'this' to aktualne Activity w Androidzie
 DbHandler dbHandler = new DbHandler(new AndroidFileIO(this));
@@ -19,9 +19,11 @@ Table data = dbHandler.generateDataTable("mentalrate");
 RulesFinder finder = new RulesFinder(data);
 Iterator<Rule> rulesIter = finder.findRules().iterator();
 
-String message = RuleTranslator.humanReadable(rulesIter.next());
-// wyświetlamy message użytkownikowi
-// czekamy na kliknięcie, po czym wyświetlamy RuleTranslator.humanReadable(rulesIter.next()) itd.
+while (rulesIter.hasNext()) {
+    String message = RuleTranslator.humanReadable(rulesIter.next());
+    // wyświetlamy message użytkownikowi
+    // czekamy na kliknięcie...
+}
 }}}
 Ten przykład był dla mentalrate, przypadki dla moodrate i physicalrate są analogiczne.
 
