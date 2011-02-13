@@ -24,16 +24,22 @@ public class RuleTranslatorTest {
 		{
 			final String actualRule = RuleTranslator.humanReadable(rulesIter.next());
 			final String expectedRule =
-				"It seems likely that your physicalrate is low (2.07/1.0) " +
-				"when your food name is Hot dog.";
+				"It seems likely that your physicalrate is low when your " +
+				"food name is Apple and your food amount is is low.";
 			assertEquals(expectedRule, actualRule);
 		}
 		{
 			final String actualRule = RuleTranslator.humanReadable(rulesIter.next());
 			final String expectedRule =
-				"It seems likely that your physicalrate is medium (3.1/1.1) " +
-				"when your food name is Fish meat.";
+				"It seems likely that your physicalrate is high when your " +
+				"food name is Chicken meat.";
 			assertEquals(expectedRule, actualRule);
+		}
+		for (int i = 0; i < rules.size() - 1; i++) {
+			Rule current = rules.get(i);
+			Rule next = rules.get(i + 1);
+			assertTrue("Rules are not sorted correctly.",
+					current.getConfidence() >= next.getConfidence());
 		}
 	}
 

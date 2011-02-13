@@ -1,6 +1,6 @@
 package goodfeeling.weka;
 
-public class Rule {
+public class Rule implements Comparable<Rule> {
 
 	private final RulePredicate antecedent;
 	private final RulePredicate consequent;
@@ -57,8 +57,7 @@ public class Rule {
 				return false;
 		} else if (!antecedent.equals(other.antecedent))
 			return false;
-		if (Double.doubleToLongBits(confidence) != Double
-				.doubleToLongBits(other.confidence))
+		if (Math.abs(confidence - other.confidence) > 0.001)
 			return false;
 		if (consequent == null) {
 			if (other.consequent != null)
@@ -69,7 +68,19 @@ public class Rule {
 	}
 
 	@Override
+	public int compareTo(Rule other) {
+		if (getConfidence() > other.getConfidence()) {
+			return 1;
+		} else if (getConfidence() < other.getConfidence()) {
+			return -1;
+		}
+		return 0;
+	}
+
+	@Override
 	public String toString() {
-		return antecedent + " ==> " + consequent;
+		String formattedConfidence = String.format("%.3f", confidence);
+		return antecedent + " ==> " + consequent +
+		" (conf: " + formattedConfidence + ")";
 	}
 }

@@ -29,7 +29,8 @@ public class RulesFinderTest {
 		{
 			final String actualRule = rules.get(0).toString();
 			final String expectedRule =
-				"food1name== Hot dog ==> physicalrate='(-inf-34]' (2.07/1.0)";
+				"food1name = Apple, food3amount = '(-inf-4.666667]' ==> " +
+				"physicalrate '(-inf-34]' (conf: 1,000)";
 			assertEquals(expectedRule, actualRule);
 		}
 	}
@@ -121,7 +122,7 @@ public class RulesFinderTest {
 			RulePredicate antecedent = new RulePredicate();
 			antecedent.putAttribute("race", "= '(-inf-1.5]'");
 			RulePredicate consequent = new RulePredicate();
-			consequent.putAttribute("income", ">50K (2.0)");
+			consequent.putAttribute("income", ">50K");
 			Rule rule = new Rule(antecedent, consequent, 1);
 			rules.add(rule);
 		}
@@ -129,7 +130,7 @@ public class RulesFinderTest {
 			RulePredicate antecedent = new RulePredicate();
 			antecedent.putAttribute("race", "= '(1.5-inf)'");
 			RulePredicate consequent = new RulePredicate();
-			consequent.putAttribute("income", "<50K (2.0)");
+			consequent.putAttribute("income", "<50K");
 			Rule rule = new Rule(antecedent, consequent, 1);
 			rules.add(rule);
 		}
@@ -159,7 +160,7 @@ public class RulesFinderTest {
 			RulePredicate antecedent = new RulePredicate();
 			antecedent.putAttribute("race", "= white");
 			RulePredicate consequent = new RulePredicate();
-			consequent.putAttribute("income", "'(50-inf)' (2.0)");
+			consequent.putAttribute("income", "'(50-inf)'");
 			Rule rule = new Rule(antecedent, consequent, 1);
 			rules.add(rule);
 		}
@@ -167,7 +168,7 @@ public class RulesFinderTest {
 			RulePredicate antecedent = new RulePredicate();
 			antecedent.putAttribute("race", "= black");
 			RulePredicate consequent = new RulePredicate();
-			consequent.putAttribute("income", "'(-inf-50]' (2.0)");
+			consequent.putAttribute("income", "'(-inf-50]'");
 			Rule rule = new Rule(antecedent, consequent, 1);
 			rules.add(rule);
 		}
