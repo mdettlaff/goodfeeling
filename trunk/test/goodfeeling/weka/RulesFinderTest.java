@@ -2,6 +2,7 @@ package goodfeeling.weka;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import goodfeeling.common.IOUtils;
 import goodfeeling.common.Table;
 import goodfeeling.db.DbHandler;
 import goodfeeling.db.InMemoryIO;
@@ -35,6 +36,28 @@ public class RulesFinderTest {
 		}
 	}
 
+	@Test
+	public void testFindNoRulesWhenEmptyData() throws Exception {
+		DbHandler dbHandler = getDbHandlerWithSampleXMLData();
+		Table data = dbHandler.generateDataTable("physicalrate");
+		Table truncated = data.truncated(0);
+		assertEquals(0, truncated.getRowCount());
+		RulesFinder finder = new RulesFinder(truncated);
+		List<Rule> rules = finder.findRules();
+		assertEquals(0, rules.size());
+	}
+
+	@Test
+	public void testFindNoRulesWhenUnaryClass() throws Exception {
+		DbHandler dbHandler = getDbHandlerWithSampleXMLData();
+		Table data = dbHandler.generateDataTable("mentalrate");
+		Table truncated = data.truncated(1);
+		assertEquals(1, truncated.getRowCount());
+		RulesFinder finder = new RulesFinder(truncated);
+		List<Rule> rules = finder.findRules();
+		assertEquals(0, rules.size());
+	}
+
 	public static List<Rule> findRulesInSampleXMLFileUsingDecisionTree()
 			throws FileNotFoundException, IOException, Exception {
 		DbHandler dbHandler = getDbHandlerWithSampleXMLData();
@@ -52,19 +75,9 @@ public class RulesFinderTest {
 		InputOutput io = new InMemoryIO();
 		InputStream in = RulesFinderTest.class.getResourceAsStream(XML_FILENAME);
 		OutputStream out = io.getOutputStream(XML_FILENAME);
-		flow(in, out);
+		IOUtils.pipe(in, out);
 		DbHandler dbHandler = new DbHandler(io);
 		return dbHandler;
-	}
-
-	private static void flow(InputStream in, OutputStream out)
-	throws IOException {
-		final int BUFFER_SIZE = 1024;
-		byte[] buffer = new byte[BUFFER_SIZE];
-		int bytesReadCount;
-		while ((bytesReadCount = in.read(buffer)) >= 0) {
-			out.write(buffer, 0, bytesReadCount);
-		}
 	}
 
 	@Test
