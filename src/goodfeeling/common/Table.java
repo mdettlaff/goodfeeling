@@ -14,25 +14,25 @@ public class Table {
 	private List<List<Object>> rows;
 
 	public Table(List<String> columnNames) {
-		this(columnNames.toArray(new String[] {}));
-	}
-
-	public Table(String... columnNames) {
-		this.columnNames = Arrays.asList(columnNames);
+		this.columnNames = new ArrayList<String>(columnNames);
 		rows = new ArrayList<List<Object>>();
 	}
 
+	public Table(String... columnNames) {
+		this(Arrays.asList(columnNames));
+	}
+
 	public void addRow(List<?> row) {
-		addRow(row.toArray());
+		if (columnNames.size() != row.size()) {
+			throw new IllegalArgumentException("Cannot add a row with " +
+					row.size() + " elements to a table with " +
+					columnNames.size() + " columns.");
+		}
+		rows.add(new ArrayList<Object>(row));
 	}
 
 	public void addRow(Object... row) {
-		if (columnNames.size() != row.length) {
-			throw new IllegalArgumentException("Cannot add a row with " +
-					row.length + " elements to a table with " +
-					columnNames.size() + " columns.");
-		}
-		rows.add(Arrays.asList(row));
+		addRow(Arrays.asList(row));
 	}
 
 	public List<String> getColumnNames() {
@@ -49,6 +49,14 @@ public class Table {
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		return rows.get(rowIndex).get(columnIndex);
+	}
+
+	public Table truncated(int size) {
+		Table truncated = new Table(columnNames);
+		for (int i = 0; i < size && i < getRowCount(); i++) {
+			truncated.addRow(rows.get(i));
+		}
+		return truncated;
 	}
 
 	@Override

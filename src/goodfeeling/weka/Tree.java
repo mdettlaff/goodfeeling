@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Tree {
+class Tree {
 
 	private static final String GRAPH_EDGE_REGEX =
 		"\\s*(\\w+)\\s*->\\s*(\\w+).*";

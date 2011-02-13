@@ -69,6 +69,23 @@ public class TableTest {
 		assertEquals(expected, actual);
 	}
 
+	@Test
+	public void testTruncated() {
+		Table table = getSimpleTable();
+		Table truncated = table.truncated(1);
+		final Table expected = new Table("foo", "bar");
+		expected.addRow("a", "b");
+		assertEquals(expected, truncated);
+	}
+
+	@Test
+	public void testTruncatedToBiggerSize() {
+		Table table = getSimpleTable();
+		Table truncated = table.truncated(5);
+		final Table expected = getSimpleTable();
+		assertEquals(expected, truncated);
+	}
+
 	private static void assertSimpleTableIsAsExpected(Table table) {
 		assertEquals(2, table.getRowCount());
 		assertEquals(2, table.getColumnCount());

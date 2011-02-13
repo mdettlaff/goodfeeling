@@ -4,7 +4,7 @@ import weka.core.Instance;
 import weka.core.Instances;
 import weka.filters.Filter;
 
-public class WekaUtils {
+class WekaUtils {
 
 	private WekaUtils() {
 	}

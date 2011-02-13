@@ -39,18 +39,28 @@ public class RulesFinder {
 
 	public List<Rule> findRules() {
 		try {
-			TableToInstancesConverter converter =
-				new TableToInstancesConverter(dataTable);
-			Instances instances = converter.convert();
-			instances = discretize(instances);
-			instances.setClassIndex(classColumnIndex);
-			List<Rule> rules = internalRulesFinder.findRules(instances);
-			rules = filterRulesWithTooSmallConfidence(rules);
-			sortRulesByDescendingConfidence(rules);
+			Instances instances = preprocessData();
+			List<Rule> rules;
+			if (isDataSufficient(instances)) {
+				rules = internalRulesFinder.findRules(instances);
+				rules = filterRulesWithTooSmallConfidence(rules);
+				sortRulesByDescendingConfidence(rules);
+			} else {
+				rules = new ArrayList<Rule>();
+			}
 			return rules;
 		} catch (Exception e) {
 			throw new RuntimeException("Finding rules using Weka failed.", e);
 		}
+	}
+
+	private Instances preprocessData() throws Exception {
+		TableToInstancesConverter converter =
+			new TableToInstancesConverter(dataTable);
+		Instances instances = converter.convert();
+		instances = discretize(instances);
+		instances.setClassIndex(classColumnIndex);
+		return instances;
 	}
 
 	void setConcreteRulesFinder(IRulesFinder rulesFinder) {
@@ -63,6 +73,14 @@ public class RulesFinder {
 
 	private void sortRulesByDescendingConfidence(List<Rule> rules) {
 		Collections.sort(rules, Collections.reverseOrder());
+	}
+
+	private boolean isDataSufficient(Instances instances) {
+		return instances.numInstances() > 0 && !isUnaryClass(instances);
+	}
+
+	private boolean isUnaryClass(Instances instances) {
+		return instances.numDistinctValues(instances.classAttribute()) == 1;
 	}
 
 	private List<Rule> filterRulesWithTooSmallConfidence(List<Rule> rules) {
