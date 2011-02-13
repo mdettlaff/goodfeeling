@@ -5,7 +5,6 @@
 == TODO ==
 
   * Wyświetlanie znalezionych reguł w GUI.
-  * Filtrowanie/sortowanie znalezionych reguł.
 
 
 == Integracja z GUI i bazą danych ==
