@@ -16,10 +16,41 @@ import weka.core.Instances;
 public class DecisionTreeRulesFinderTest {
 
 	@Test
+	public void testParsePriority() {
+		{
+			double priority =
+				DecisionTreeRulesFinder.parsePriority("foo (4.5/2.0)");
+			assertEquals(4.5, priority, 0.001);
+		}
+		{
+			double priority =
+				DecisionTreeRulesFinder.parsePriority("foo (4.5)");
+			assertEquals(4.5, priority, 0.001);
+		}
+		{
+			double priority =
+				DecisionTreeRulesFinder.parsePriority("foo (4)");
+			assertEquals(4, priority, 0.001);
+		}
+		{
+			double priority =
+				DecisionTreeRulesFinder.parsePriority("foo (3) (4)");
+			assertEquals(4, priority, 0.001);
+		}
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testParsePriorityException() {
+		double priority =
+			DecisionTreeRulesFinder.parsePriority("foo");
+		assertEquals(0, priority, 0.001);
+	}
+
+	@Test
 	public void testGetRulesFromDecisionTreeWithOneRule() {
 		DecisionTreeRulesFinder finder = new DecisionTreeRulesFinder();
 		Tree decisionTree = new Tree("occupation");
-		Tree income = new Tree(">50K");
+		Tree income = new Tree(">50K (7.0)");
 		decisionTree.addChild(income, "programmer");
 		List<Rule> actual = finder.getRulesFromDecisionTree(decisionTree, "income");
 
@@ -47,7 +78,7 @@ public class DecisionTreeRulesFinderTest {
 			RulePredicate antecedent = new RulePredicate();
 			antecedent.putAttribute("race", "= white");
 			RulePredicate consequent = new RulePredicate();
-			consequent.putAttribute("income", ">50K (2.0)");
+			consequent.putAttribute("income", ">50K");
 			Rule rule = new Rule(antecedent, consequent, 1);
 			rules.add(rule);
 		}
@@ -55,7 +86,7 @@ public class DecisionTreeRulesFinderTest {
 			RulePredicate antecedent = new RulePredicate();
 			antecedent.putAttribute("race", "= black");
 			RulePredicate consequent = new RulePredicate();
-			consequent.putAttribute("income", "<50K (2.0)");
+			consequent.putAttribute("income", "<50K");
 			Rule rule = new Rule(antecedent, consequent, 1);
 			rules.add(rule);
 		}

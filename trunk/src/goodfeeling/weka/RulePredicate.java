@@ -52,13 +52,14 @@ public class RulePredicate {
 
 	@Override
 	public String toString() {
+		final String SEPARATOR = ", ";
 		StringBuilder sb = new StringBuilder();
 		for (Map.Entry<String, String> entry : attributes.entrySet()) {
 			String attributeName = entry.getKey();
 			String attributeValue = entry.getValue();
-			sb.append(attributeName + "=" + attributeValue);
-			sb.append(" ");
+			sb.append(attributeName + " " + attributeValue);
+			sb.append(SEPARATOR);
 		}
-		return sb.toString().replaceFirst(" $", "");
+		return sb.toString().replaceFirst(SEPARATOR + "$", "");
 	}
 }

@@ -49,7 +49,7 @@ public class RuleTranslator {
 	}
 
 	private static String humanReadableConfidence(double confidence) {
-		if (confidence >= 0.8) {
+		if (confidence >= 0.6) {
 			return "It seems likely that ";
 		} else {
 			return "It might be that ";
