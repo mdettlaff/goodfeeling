@@ -2,15 +2,4 @@
 
 = Współpraca zespołów =
 
-== API zespołu bazodanowego (drużyna A) dla zespołu D ==
-
-Przykład użycia API zespołu bazodanowego przez zespół D:
-
-{{{
-// 'this' to aktualne Activity Androida
-DbHandler dbHandler = new DbHandler(new AndroidFileIO(this));
-Record record = dbHandler.getRecord(Calendar.getInstance());
-record.moodRates.add(new TestResult(pictureTestScore + "%"));
-record.mentalRates.add(new TestResult(balloonsTestScore + "%"));
-dbHandler.addOrUpdateRecord(record);
-}}}
+Komentarze do tej strony są dobrym miejscem na dyskusje między zespołami.
