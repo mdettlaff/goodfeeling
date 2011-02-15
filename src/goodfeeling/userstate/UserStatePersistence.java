@@ -4,6 +4,7 @@ import goodfeeling.db.DbHandler;
 import goodfeeling.db.Record;
 import goodfeeling.db.TestResult;
 import goodfeeling.userstate.balloon.BalloonResult;
+import goodfeeling.userstate.exercises.ExercisesResult;
 import goodfeeling.userstate.picture_test.PictureTestResult;
 
 import java.util.Calendar;
@@ -19,17 +20,32 @@ public class UserStatePersistence {
 
 	public void persistResults(
 			List<PictureTestResult> pictureTestResults,
-			List<BalloonResult> balloonTestResults) {
+			List<BalloonResult> balloonTestResults,
+			List<ExercisesResult> exercisesTestResults) {
 		try {
 			int pictureTestScore = computePictureTestScore(pictureTestResults);
 			int balloonsTestScore = computeBalloonsTestScore(balloonTestResults);
+			int exercisesTestScore = computeExercisesTestScore(exercisesTestResults);
+			
+			
 			Record record = dbHandler.getRecord(Calendar.getInstance());
 			record.moodRates.add(new TestResult("" + pictureTestScore));
 			record.mentalRates.add(new TestResult("" + balloonsTestScore));
+			record.physicalRates.add(new TestResult("" + exercisesTestScore));
 			dbHandler.addOrUpdateRecord(record);
 		} catch (Exception e) {
 			throw new RuntimeException("Cannot write user state to the database", e);
 		}
+	}
+
+	private int computeExercisesTestScore(List<ExercisesResult> exercisesTestResults) {
+		int sumAll = 0;
+		int sumBest = 0;
+		for (ExercisesResult result : exercisesTestResults) {
+			sumBest += result.getBestCount();
+			sumAll += result.getCount();
+		}
+		return getPercentageScore(sumAll, sumBest);
 	}
 
 	public CharSequence getCurrentMood() {

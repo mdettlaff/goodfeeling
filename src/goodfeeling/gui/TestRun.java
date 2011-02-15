@@ -2,6 +2,7 @@ package goodfeeling.gui;
 
 import java.util.ArrayList;
 import java.util.List;
+import goodfeeling.gui.R;
 
 import goodfeeling.common.AndroidFileIO;
 import goodfeeling.db.DbHandler;
@@ -9,6 +10,9 @@ import goodfeeling.userstate.UserStatePersistence;
 import goodfeeling.userstate.balloon.Balloon;
 import goodfeeling.userstate.balloon.BalloonResult;
 import goodfeeling.userstate.balloon.BalloonResultException;
+import goodfeeling.userstate.exercises.Exercises;
+import goodfeeling.userstate.exercises.ExercisesResult;
+import goodfeeling.userstate.exercises.ExercisesResultException;
 import goodfeeling.userstate.picture_test.PictureTest;
 import goodfeeling.userstate.picture_test.PictureTestResult;
 import goodfeeling.userstate.picture_test.PictureTestResultException;
@@ -24,8 +28,9 @@ public class TestRun extends Activity implements OnClickListener {
     
 	private final int TEST_PICTURE_TEST = 0;
 	private final int TEST_BALLOON = 1;
+	private final int TEST_EXERCISES = 2;
 	
-	private final int TEST_NUM = 4;
+	private final int TEST_NUM = 6;
 	
 	private TextView[] text;
 	private TextView summaryText;
@@ -38,6 +43,7 @@ public class TestRun extends Activity implements OnClickListener {
 
 	private List<PictureTestResult> pictureTestResults;
 	private List<BalloonResult> balloonTestResults;
+	private List<ExercisesResult> exercisesTestResults;
 	private boolean isWholeTestFinished;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -60,8 +66,11 @@ public class TestRun extends Activity implements OnClickListener {
 
         test = new int[TEST_NUM];
         for (int i = 0; i < test.length; i++) {
-        	boolean isEven = i % 2 == 0;
-        	test[i] = isEven ? TEST_PICTURE_TEST : TEST_BALLOON;
+        	switch (i%3){
+	        	case 0: test[i] = TEST_PICTURE_TEST; break;
+	        	case 1: test[i] = TEST_BALLOON; break;
+	        	case 2: test[i] = TEST_EXERCISES; break;
+        	}
         }
         this.testStep = 0;
         
@@ -70,6 +79,7 @@ public class TestRun extends Activity implements OnClickListener {
 
     	pictureTestResults = new ArrayList<PictureTestResult>();
     	balloonTestResults = new ArrayList<BalloonResult>();
+    	exercisesTestResults = new ArrayList<ExercisesResult>();
     	isWholeTestFinished = false;
     }
 
@@ -118,6 +128,20 @@ public class TestRun extends Activity implements OnClickListener {
     					System.out.println(">>> 'TEST_BALLOON' unknown resultCode");
     			}
     			break;
+    		case TEST_EXERCISES:
+    			switch(resultCode) {
+    				case RESULT_OK:
+    					try {
+    						ExercisesResult result = new ExercisesResult(data);
+    						exercisesTestResults.add(result);
+    					} catch(ExercisesResultException e) {}
+    					break;
+    				case RESULT_CANCELED:
+    					break;
+    				default:
+    					System.out.println(">>> 'TEST_Exercises' unknown resultCode");
+    			}
+    			break;	
     		default:
     			System.out.println(">>> onActivityResult unknown activity");
     	}
@@ -148,6 +172,9 @@ public class TestRun extends Activity implements OnClickListener {
 			case TEST_BALLOON:
 				intent = new Intent(this, Balloon.class);
 				break;
+			case TEST_EXERCISES:
+				intent = new Intent(this, Exercises.class);
+				break;
 			default:
 				return;
 		}
@@ -158,7 +185,7 @@ public class TestRun extends Activity implements OnClickListener {
 	private void onWholeTestFinished() {
 		UserStatePersistence persistence = new UserStatePersistence(
 				new DbHandler(new AndroidFileIO(this)));
-		persistence.persistResults(pictureTestResults, balloonTestResults);
+		persistence.persistResults(pictureTestResults, balloonTestResults, exercisesTestResults);
 		summaryText.setText(String.format("Summary: mood rate = %s, mental rate = %s",
 				persistence.getCurrentMood(),
 				persistence.getCurrentMentalPerformance()));

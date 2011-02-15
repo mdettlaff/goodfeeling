@@ -18,5 +18,6 @@
         <activity android:name=".TestRun" />
 		<activity android:name="goodfeeling.userstate.balloon.Balloon" />
 		<activity android:name="goodfeeling.userstate.picture_test.PictureTest" />
+		<activity android:name="goodfeeling.userstate.exercises.Exercises" />
     </application>
 </manifest> 
