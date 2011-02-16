@@ -5,6 +5,7 @@ import goodfeeling.db.DbHandler;
 import goodfeeling.db.Record;
 import goodfeeling.db.RecordActivity;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.app.Activity;
@@ -18,9 +19,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 public class Activities extends Activity {
-	String[] activities = { "spacer", "ryby", "rower", "basen", "łyżwy",
-			"rolki", "narty" };
-
 	AutoCompleteTextView activityName;
 	TimePicker fromTimePicker, untilTimePicker;
 
@@ -44,12 +42,10 @@ public class Activities extends Activity {
 					DisplayToast("Please fill all fields.");
 			}
 		});
-
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_dropdown_item_1line, activities);
+		
 		activityName = (AutoCompleteTextView) findViewById(R.id.activityName);
 		activityName.setThreshold(1);
-		activityName.setAdapter(adapter);
+		updateAutocomplete();
 
 		fromTimePicker = (TimePicker) findViewById(R.id.fromTimePicker);
 		fromTimePicker.setIs24HourView(true);
@@ -63,33 +59,63 @@ public class Activities extends Activity {
 	}
 
 	private boolean save() {
-		String activityNameString = activityName.getText().toString(); 
+		String activityNameString = activityName.getText().toString();
 		System.out.println(activityNameString);
 		if (activityNameString.equals("")) return false;
 		
-		// TODO jeśli druga godzina jest mniejsza to jest fail
+		// cichaczem pomijamy sytuację gdy fromTime > untilTime
 		int duration = (untilTimePicker.getCurrentHour() - fromTimePicker
 				.getCurrentHour()) * 60	+ (untilTimePicker.getCurrentMinute()
 						- fromTimePicker.getCurrentMinute());
 		System.out.println(duration);
-		if (duration==0) return false;
-		
-		DbHandler dbHandler = new DbHandler(new AndroidFileIO(this));
-		try {
-			RecordActivity activity = new RecordActivity();
-			activity.name = activityNameString;
-			activity.startHour = fromTimePicker.getCurrentHour();
-			activity.duration = duration;
-			activity.intensivity = "Medium"; // ??
+		if (duration<=0) return false;
 
+		RecordActivity activity = new RecordActivity();
+		activity.name = activityNameString;
+		activity.startHour = fromTimePicker.getCurrentHour();
+		activity.duration = duration;
+		activity.intensivity = "Medium"; // ??
+		
+		try {
+			DbHandler dbHandler = new DbHandler(new AndroidFileIO(this));
 			Record today = dbHandler.getRecord(Calendar.getInstance());
 			today.addActivity(activity);
 			dbHandler.addOrUpdateRecord(today);
-
+			      
+            dbHandler.addToActivityDictionary(
+            		new goodfeeling.db.Activity(activityNameString));
+            
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
+		
+		activityName.setText("");
+		activityName.requestFocus();
+		updateAutocomplete();
 		return true;
+	}
+	
+	private String[] getActivitiesDict() {
+		ArrayList<String> activities = new ArrayList<String>();
+		try {
+			DbHandler dbHandler = new DbHandler(new AndroidFileIO(this));
+			ArrayList<goodfeeling.db.Activity> dbActivities = dbHandler.getActivitiesDictionaryList();
+	        for(int i = 0; i < dbActivities.size(); i++){
+	        	activities.add( dbActivities.get(i).name );
+	        }
+            
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String tmp[] = new String[activities.size()];
+		tmp = activities.toArray(tmp);
+		return tmp;
+	}
+	
+	private void updateAutocomplete() {
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_dropdown_item_1line, getActivitiesDict());
+		activityName.setAdapter(adapter);
 	}
 }
