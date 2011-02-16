@@ -23,7 +23,11 @@ public class GoodFeeling extends Activity {
 		};
 		
 		ImageButton suggestions = (ImageButton) findViewById(R.id.check_suggestions_btn);
-		suggestions.setOnClickListener(notImplemented);
+		suggestions.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				startActivity(new Intent(v.getContext(), Suggestions.class));
+			}
+		});
 		
 		ImageButton diary = (ImageButton) findViewById(R.id.fill_diary_btn);
 		diary.setOnClickListener(new View.OnClickListener() {
