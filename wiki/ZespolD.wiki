@@ -85,56 +85,17 @@ testów oraz dopracowaniem pytań i interpretacji.
 
 == Sprawność fizyczna ==
 
-Nowe:
-Po ustaleniach z dnia 04.01.10 test sprawności zostanie wykonany tylko i wyłącznie przy użyciu Akcelerometru. Test będzie polegał na 5 kolejnych zamachach na które użytkownik będzie miał określoną ilość czasu, w ich trakcie pobierana będzie seria wartości z których będzie ostatecznie będzie wybierana mediana. Wynik testu będzie jedną wartością zwracaną do bazy danych.
+Comment by daboo.g...@gmail.com, Jan 16, 2011
 
-Stare:
-W tym projekcie ważne jest aby użytkownik mógł zbadać sprawność fizyczną jak najmniejszym wysiłkiem. Dokonywanie pomiarów nie powinno pochłaniać wiele czasu i wymagać od badanego specjalnych umiejętności. Przez wysiłek rozumiemy tu:
-  * dodatkowe przeliczenia (w formie pisemnej bądź "w myślach")
-  * używaniu dodatkowych narzędzi
-  * pomoc osoby trzeciej podczas ustalania sprawności fizycznej
+Ćwiczenie I: Przysiady Ograniczenie czasowe: 30 sek Wynik: użytkownik wprowadza ilość zrobionych przysiadów w wyznaczonym czasie. Zalety: test wytrzymałości nóg, pleców, gibkości. Minusy: nie sprawdza sprawności górnych kończyn.
 
-Idealne rozwiązanie polegało by na uruchomieniu swojego rodzaju analizatora, który w bliżej jeszcze nieokreślony sposób dokonywał potrzebnych pomiarów i bez dodatkowych czynności ze strony użytkownika, był wstanie określić (po przez wartość liczbową) aktualną formę fizyczną.
+W przypadku braku możliwości wykonywania przysiadów, będzie do wyboru dwa ćwiczenia zastępcze.
 
-Każdy dobry test do oceny sprawności fizycznej powinien być trafny i rzetelny. Pod pojęciem trafności testu rozumie się, czy test zmierzył to, co chcieliśmy zbadać. Rzetelnością natomiast nazywamy zgodność wyników uzyskanych przez tych samych badanych w testowaniu dokonanym w różnym czasie. Co do rzetelności, wyniki możemy spróbować porównać z danymi statystycznymi zaimplementowanymi w naszym programie jako dane startowe.
+Ćwiczenie II: Brzuszki Ograniczenie czasowe: 30 sek Wynik: użytkownik wprowadza ilość zrobionych przysiadów w wyznaczonym czasie. Zalety: test wytrzymałości pleców, brzucha, gibkości. Minusy: niedobre ćwiczenie dla osób z chorobą pleców
 
-Jeśli natomiast mówimy o trafności to problem jest trochę bardziej złożony. W ostatnich latach dokonano klasyfikacji ogółu zdolności fizycznych dzieląc je na dwie podstawowe grupy, to jest na zdolności kondycyjne i zdolności koordynacyjne.
+Ćwiczenie III: Pompki przy ścianie stojąc. Osoba ćwicząca staje w odległości około 50 cm od ściany i wykonuje ruch ramion jak przy klasycznych pompkach. W razie bolów, zmiejszyć odległość od ściany. Ograniczenie czasowe: 30 sek Wynik: użytkownik wprowadza ilość zrobionych pompek w wyznaczonym czasie. Zalety: test wytrzymałości ramion, przy minimalnym obciążeniu pleców.
 
-Do grupy zdolności kondycyjnych zalicza się:
-  * siłę,
-  * szybkość,
-  * wytrzymałość,
-Do grupy zdolności koordynacyjnych zalicza się:
-  * zwinność,
-  * zdolność orientacji,
-  * szybkość reakcji,
-  * zdolność różnicowania ruchu,
-  * równowagę,
-  * poczucie rytmu,
-  * zdolność łączenia ruchu,
-  * zdolność dostosowania i przestawienia ruchowego.
-
-Przykładem testu badającego większość cech podanych powyżej może być
-Międzynarodowy Test Sprawności Fizycznej, zalecany dla osób w wieku
-od 6 do 32 lat.
-Test zawiera 8 następujących prób:
-  # Bieg na dystansie 50m ze startu wysokiego
-  # Skok w dal z miejsca
-  # Bieg na dystansie:
-    * 600m - chłopcy i dziewczęta poniżej 12 lat
-    * 800m - dziewczęta w wieku 12 lat i powyżej
-    * 1000m - chłopcy w wieku 12 lat i powyżej
-  # Pomiar siły dłoni za pomocą dynamometru.
-  # Pomiar siły ramion
-    * podciąganie się na drążku: mężczyźni i chłopcy w wieku 12 lat i powyżej
-    * zwis na ugiętych ramionach: dziewczęta i chłopcy w wieku do 11 lat
-  # Bieg wahadłowy 4x10m
-  # Skłony tułowia w dół
-
-Jest zalecane aby próby 1, 2, 3 przeprowadzać w pierwszego dnia, pozostałe drugiego dnia.
-Użycie takiego testu w naszym projekcie jest kiepskim pomysłem w związku z wymogiem łatwości przeprowadzanego badania. Dlatego właśnie w tym miejscu kłócą się ze sobą zasady trafności i łatwości. Trafność wymagała by kilku testów, z kolei łatwość dąży do jak najmniejszej ich liczby.
-
-Rozsądnym podejściem może być wykonanie trzech prostych testów badających kolejno: siłę, szybkość i wytrzymałość. Pytanie o dokładny rodzaj testów otwiera szeroką dyskusję i wymaga więcej czasu na wczytanie się w fachową literaturę.
+Wszystkie ćwiczenia są ze sobą w miarę porównywalne więc równie dobrze można by każdego dnia wykonywać inne ćwiczenie.
 
 == Jak to działa ==
 http://goodfeeling.googlecode.com/svn/wiki/ZespolD/device1.png
