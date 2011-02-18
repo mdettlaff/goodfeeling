@@ -15,13 +15,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class Suggestions extends Activity {
 	TextView SuggestionsContent, SuggestionsNote, SuggestionsWait;
 	Button start;
 	public static String result = "";
-	
+	LinearLayout butony;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -29,13 +30,21 @@ public class Suggestions extends Activity {
 
 		SuggestionsNote = (TextView)findViewById(R.id.SuggestionsNote);
 		SuggestionsContent = (TextView)findViewById(R.id.SuggestionsContent);
+		butony = (LinearLayout)findViewById(R.id.butony);
 		
 		start = (Button) findViewById(R.id.start);
 		start.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				start.setVisibility(View.GONE);
+				butony.setVisibility(View.GONE);
 				SuggestionsNote.setVisibility(View.GONE);
                 showDialog(PROGRESS_DIALOG);
+			}
+		});
+		Button back = (Button) findViewById(R.id.back);
+		back.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				setResult(RESULT_OK);
+				finish();
 			}
 		});
 	}
