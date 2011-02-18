@@ -37,7 +37,12 @@ public class GoodFeeling extends Activity {
 		});
 
 		ImageButton test = (ImageButton) findViewById(R.id.make_test_btn);
-		test.setOnClickListener(notImplemented);
+		test.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				startActivity(new Intent(v.getContext(), TestRun.class));
+			}
+		});
+
 		/*
 		ImageButton back = (ImageButton) findViewById(R.id.back);
 		back.setOnClickListener(new View.OnClickListener() {
