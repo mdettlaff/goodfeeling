@@ -83,12 +83,16 @@ public class Suggestions extends Activity {
         public void handleMessage(Message msg) {
             int total = msg.getData().getInt("finished");
             if (total==1) {
-            	dismissDialog(PROGRESS_DIALOG);
-            	String res = progressThread.results;
-				if (res=="")
-					SuggestionsContent.setText("No suggestions found. Try to add more data.");
-				else
-					SuggestionsContent.setText(res);
+            	try{
+            		dismissDialog(PROGRESS_DIALOG);
+	            	String res = progressThread.results;
+					if (res=="")
+						SuggestionsContent.setText("No suggestions found. Try to add more data.");
+					else
+						SuggestionsContent.setText(res);
+            	} catch (IllegalArgumentException e) {
+            		// anulowano 
+            	}
             }
         }
     };
