@@ -12,20 +12,44 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 public class Activities extends Activity {
 	AutoCompleteTextView activityName;
 	TimePicker fromTimePicker, untilTimePicker;
+	Spinner spinner;
+	
+	String intensityValue = "Average";
+	String[] opts = { "Low", "Average", "High" };
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activities);
+
+		spinner = (Spinner) findViewById(R.id.spinner);
+		ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
+				this, android.R.layout.simple_spinner_item, opts);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(adapter);
+		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
+				intensityValue = opts[position];
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				intensityValue = opts[1];
+			}
+		});
 
 		Button back = (Button) findViewById(R.id.back);
 		back.setOnClickListener(new View.OnClickListener() {
@@ -42,7 +66,7 @@ public class Activities extends Activity {
 					DisplayToast("Please fill all fields.");
 			}
 		});
-		
+
 		activityName = (AutoCompleteTextView) findViewById(R.id.activityName);
 		activityName.setThreshold(1);
 		updateAutocomplete();
@@ -60,51 +84,55 @@ public class Activities extends Activity {
 
 	private boolean save() {
 		String activityNameString = activityName.getText().toString();
-		System.out.println(activityNameString);
-		if (activityNameString.equals("")) return false;
-		
+		if (activityNameString.equals(""))
+			return false;
+
 		// cichaczem pomijamy sytuację gdy fromTime > untilTime
 		int duration = (untilTimePicker.getCurrentHour() - fromTimePicker
-				.getCurrentHour()) * 60	+ (untilTimePicker.getCurrentMinute()
-						- fromTimePicker.getCurrentMinute());
-		System.out.println(duration);
-		if (duration<=0) return false;
+				.getCurrentHour())
+				* 60
+				+ (untilTimePicker.getCurrentMinute() - fromTimePicker
+						.getCurrentMinute());
+		
+		if (duration <= 0)
+			return false;
 
 		RecordActivity activity = new RecordActivity();
 		activity.name = activityNameString;
 		activity.startHour = fromTimePicker.getCurrentHour();
 		activity.duration = duration;
-		activity.intensivity = "Medium"; // ??
+		activity.intensivity = intensityValue;
 		
 		try {
 			DbHandler dbHandler = new DbHandler(new AndroidFileIO(this));
 			Record today = dbHandler.getRecord(Calendar.getInstance());
 			today.addActivity(activity);
 			dbHandler.addOrUpdateRecord(today);
-			      
-            dbHandler.addToActivityDictionary(
-            		new goodfeeling.db.Activity(activityNameString));
-            
+
+			dbHandler.addToActivityDictionary(new goodfeeling.db.Activity(
+					activityNameString));
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
-		
+
 		activityName.setText("");
 		activityName.requestFocus();
 		updateAutocomplete();
 		return true;
 	}
-	
+
 	private String[] getActivitiesDict() {
 		ArrayList<String> activities = new ArrayList<String>();
 		try {
 			DbHandler dbHandler = new DbHandler(new AndroidFileIO(this));
-			ArrayList<goodfeeling.db.Activity> dbActivities = dbHandler.getActivitiesDictionaryList();
-	        for(int i = 0; i < dbActivities.size(); i++){
-	        	activities.add( dbActivities.get(i).name );
-	        }
-            
+			ArrayList<goodfeeling.db.Activity> dbActivities = dbHandler
+					.getActivitiesDictionaryList();
+			for (int i = 0; i < dbActivities.size(); i++) {
+				activities.add(dbActivities.get(i).name);
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -112,10 +140,11 @@ public class Activities extends Activity {
 		tmp = activities.toArray(tmp);
 		return tmp;
 	}
-	
+
 	private void updateAutocomplete() {
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_dropdown_item_1line, getActivitiesDict());
+				android.R.layout.simple_dropdown_item_1line,
+				getActivitiesDict());
 		activityName.setAdapter(adapter);
 	}
 }
