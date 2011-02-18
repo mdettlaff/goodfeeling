@@ -9,7 +9,7 @@
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:textColor="#ffffff" android:paddingTop="10sp"
 			android:paddingLeft="10sp" />
-		<LinearLayout android:layout_weight="0.2"
+		<LinearLayout 
 			android:orientation="horizontal" android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:gravity="right">
 			<LinearLayout android:orientation="vertical"
@@ -34,16 +34,17 @@
 			</LinearLayout>
 		</LinearLayout>
 	</LinearLayout>
-	<TextView android:text="Click to generate suggestions. This may take few minutes."
-		android:id="@+id/SuggestionsNote" android:textSize="9pt"
-		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:textColor="#ffffff"></TextView>
-	<TextView android:text="Please wait..." android:id="@+id/SuggestionsWait"
-		android:visibility="invisible" android:textSize="9pt" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:textColor="#ffffff"></TextView>
-	<Button android:text="Save" android:id="@+id/start"
-		android:layout_width="100px" android:layout_height="wrap_content"></Button>
-	<TextView android:text="" android:id="@+id/SuggestionsContent"
-		android:textSize="9pt" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:textColor="#ffffff"></TextView>
+	<LinearLayout android:orientation="vertical" android:gravity="top"
+		android:paddingTop="10px" android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<TextView android:text="Click to generate suggestions. This may take few minutes."
+			android:id="@+id/SuggestionsNote" android:textSize="9pt"
+			android:paddingBottom="10px" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:textColor="#ffffff"></TextView>
+		<Button android:text="Start" android:id="@+id/start"
+			android:layout_width="100px" android:layout_height="wrap_content"></Button>
+		<TextView android:text="" android:id="@+id/SuggestionsContent"
+			android:textSize="9pt" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:textColor="#ffffff"></TextView>
+	</LinearLayout>
 </LinearLayout>
