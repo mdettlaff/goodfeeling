@@ -36,12 +36,12 @@ public class Diary extends Activity {
 			}
 		});
 
-		ImageButton sleep = (ImageButton) findViewById(R.id.sleep_btn);
+		/*ImageButton sleep = (ImageButton) findViewById(R.id.sleep_btn);
 		sleep.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				startActivity(new Intent(v.getContext(), Sleep.class));
 			}
-		});
+		});*/
 		
 
 		/*ImageButton work = (ImageButton) findViewById(R.id.work_btn);
