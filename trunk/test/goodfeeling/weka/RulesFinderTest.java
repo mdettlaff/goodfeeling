@@ -19,8 +19,6 @@ import org.junit.Test;
 
 public class RulesFinderTest {
 
-	private static final String XML_FILENAME = "2010_1.xml";
-
 	@Test
 	public void testFindRulesInSampleXMLFileUsingDecisionTree()
 	throws Exception {
@@ -73,11 +71,16 @@ public class RulesFinderTest {
 	private static DbHandler getDbHandlerWithSampleXMLData()
 			throws FileNotFoundException, IOException {
 		InputOutput io = new InMemoryIO();
-		InputStream in = RulesFinderTest.class.getResourceAsStream(XML_FILENAME);
-		OutputStream out = io.getOutputStream(XML_FILENAME);
-		IOUtils.pipe(in, out);
+		loadXMLFile(io, "2010_1.xml");
 		DbHandler dbHandler = new DbHandler(io);
 		return dbHandler;
+	}
+
+	private static void loadXMLFile(InputOutput io, String xmlFilename)
+	throws FileNotFoundException, IOException {
+		InputStream in = RulesFinderTest.class.getResourceAsStream(xmlFilename);
+		OutputStream out = io.getOutputStream(xmlFilename);
+		IOUtils.pipe(in, out);
 	}
 
 	@Test
