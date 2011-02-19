@@ -11,21 +11,19 @@ import java.util.Calendar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.Spinner;
+import android.widget.RatingBar;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 public class Activities extends Activity {
 	AutoCompleteTextView activityName;
 	TimePicker fromTimePicker, untilTimePicker;
-	Spinner spinner;
+	RatingBar intensity;
 	
-	String intensityValue = "Average";
+	String intensityValue = "";
 	String[] opts = { "Low", "Average", "High" };
 
 	@Override
@@ -33,22 +31,11 @@ public class Activities extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activities);
 
-		spinner = (Spinner) findViewById(R.id.spinner);
-		ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(
-				this, android.R.layout.simple_spinner_item, opts);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinner.setAdapter(adapter);
-		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int position, long arg3) {
-				intensityValue = opts[position];
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				intensityValue = opts[1];
-			}
+		intensity = (RatingBar) findViewById(R.id.intensity);
+		intensity.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+		    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+		    	intensityValue = opts[(int) (rating-1)];
+		    }
 		});
 
 		Button back = (Button) findViewById(R.id.back);
@@ -85,6 +72,9 @@ public class Activities extends Activity {
 	private boolean save() {
 		String activityNameString = activityName.getText().toString();
 		if (activityNameString.equals(""))
+			return false;
+		
+		if (intensityValue.equals(""))
 			return false;
 
 		// cichaczem pomijamy sytuację gdy fromTime > untilTime
