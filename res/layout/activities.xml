@@ -71,8 +71,9 @@
 			<TextView android:text="Intensity:" android:id="@+id/TextView02"
 				android:textSize="9pt" android:layout_width="fill_parent"
 				android:layout_height="wrap_content" android:textColor="#ffffff"></TextView>
-			<Spinner android:id="@+id/spinner" android:layout_width="fill_parent"
-				android:layout_height="wrap_content" />
+			<RatingBar android:id="@+id/intensity"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:numStars="3" android:stepSize="1.0" />
 		</LinearLayout>
 		<LinearLayout android:id="@+id/LinearLayout01"
 			android:layout_width="fill_parent"
