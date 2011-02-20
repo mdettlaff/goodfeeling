@@ -14,22 +14,22 @@ public class RuleTranslator {
 		StringBuilder message = new StringBuilder();
 		message.append(humanReadableConfidence(rule.getConfidence()));
 		RulePredicate consequent = rule.getConsequent();
-		message.append(humanReadable(consequent));
+		message.append(humanReadable(consequent, " is "));
 		message.append("when ");
 		RulePredicate antecedent = rule.getAntecedent();
-		message.append(humanReadable(antecedent));
+		message.append(humanReadable(antecedent, " "));
 		message.setCharAt(message.length() - 1, '.');
 		return message.toString();
 	}
 
-	private static String humanReadable(RulePredicate predicate) {
+	private static String humanReadable(RulePredicate predicate, String relation) {
 		StringBuilder message = new StringBuilder();
 		for (Map.Entry<String, String> entry : predicate.getAttributeMappings()) {
 			String attribute = entry.getKey();
 			String attributeValue = entry.getValue();
 			message.append("your ");
 			message.append(humanReadableAttributeName(attribute));
-			message.append(" ");
+			message.append(relation);
 			message.append(attributeValue);
 			message.append(" and ");
 		}
@@ -42,9 +42,9 @@ public class RuleTranslator {
 		String out = in;
 		out = out.replaceFirst("and $", "");
 		out = out.replace(" = ", " is ");
-		out = out.replaceAll("'\\(-inf.*?'", "is low");
-		out = out.replaceAll("'.*?inf\\)'", "is high");
-		out = out.replaceAll("'\\(\\d.*?'", "is medium");
+		out = out.replaceAll("'\\(-inf.*?'", "low");
+		out = out.replaceAll("'.*?inf\\)'", "high");
+		out = out.replaceAll("'\\(\\d.*?'", "medium");
 		return out;
 	}
 
