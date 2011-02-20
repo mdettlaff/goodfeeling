@@ -18,14 +18,28 @@ import android.widget.RatingBar;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+/**
+ * Activity view
+ * 
+ * Displays form for adding new activity to database. 
+ */
 public class Activities extends Activity {
 	AutoCompleteTextView activityName;
 	TimePicker fromTimePicker, untilTimePicker;
 	RatingBar intensity;
 	
+	/**
+	 * Current value of intensity
+	 */
 	String intensityValue = "";
+	/**
+	 * Values for intensity fields in database
+	 */
 	String[] opts = { "Low", "Average", "High" };
 
+	/**
+	 * Called when the activity is starting.
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -69,6 +83,13 @@ public class Activities extends Activity {
 		Toast.makeText(getBaseContext(), msg, Toast.LENGTH_SHORT).show();
 	}
 
+	/**
+	 * Save form data to database.
+	 * 
+	 * Before saving data is checked.
+	 * 
+	 * @return true if data was successfully saved
+	 */
 	private boolean save() {
 		String activityNameString = activityName.getText().toString();
 		if (activityNameString.equals(""))
@@ -113,6 +134,11 @@ public class Activities extends Activity {
 		return true;
 	}
 
+	/**
+	 * Get activities dictionary.
+	 * 
+	 * @return list of activities
+	 */
 	private String[] getActivitiesDict() {
 		ArrayList<String> activities = new ArrayList<String>();
 		try {
@@ -131,6 +157,9 @@ public class Activities extends Activity {
 		return tmp;
 	}
 
+	/**
+	 * Update autocomplete list of activity names.
+	 */
 	private void updateAutocomplete() {
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_dropdown_item_1line,

@@ -9,7 +9,13 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+/**
+ * Shows diary submenu.
+ */
 public class Diary extends Activity {
+	/**
+	 * Called when the activity is starting.
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
