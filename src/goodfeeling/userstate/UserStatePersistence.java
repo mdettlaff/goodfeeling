@@ -86,9 +86,9 @@ public class UserStatePersistence {
 	}
 
 	private static int computeSwingTestScore(
-			List<SwingTestResult> swingTestResults)) {
+			List<SwingTestResult> swingTestResults) {
 		float sum = 0.0f;
-		for (SwingTestResult result : balloonTestResults)
+		for (SwingTestResult result : swingTestResults)
 			sum += result.getResult();
 		return (int)(sum * 1000);
 	}
