@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project default="test">
+<project name="Good Feeling" default="test">
 
-	<property name="app.name" value="Good Feeling" />
 	<property name="build.dir" value="bin" />
 	<property name="doc.dir" value="doc" />
 
@@ -63,7 +62,7 @@
 			<fileset dir="${doc.dir}" includes="**/*"/>
 		</delete>
 		<javadoc sourcepath="src:gen" destdir="${doc.dir}" packagenames="*"
-			access="public" author="true" windowtitle="${app.name} Javadoc">
+			access="public" author="true" windowtitle="${ant.project.name} Javadoc">
 			<classpath refid="test.classpath" />
 		</javadoc>
 	</target>
