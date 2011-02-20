@@ -9,6 +9,9 @@ import java.util.List;
 import weka.core.Instances;
 import weka.filters.unsupervised.attribute.Discretize;
 
+/**
+ * Entry point of the Weka integration layer.
+ */
 public class RulesFinder {
 
 	private static final int DEFAULT_DISCRETIZE_BINS_COUNT = 3;
@@ -21,14 +24,16 @@ public class RulesFinder {
 	private int discretizeBinsCount = DEFAULT_DISCRETIZE_BINS_COUNT;
 
 	/**
-	 * The last column in the data table is used as a class attribute.
+	 * @param data Data table. The last column is used as a class attribute.
 	 */
 	public RulesFinder(Table data) {
 		this(data, data.getColumnNames().get(data.getColumnCount() - 1));
 	}
 
 	/**
-	 * @param classColumnName Name of the column used as a class attribute.
+	 * @param data            Data table.
+	 * @param classColumnName Name of the column in the data table
+	 *                        to be used as a class attribute.
 	 */
 	public RulesFinder(Table data, String classColumnName) {
 		this.dataTable = data;
@@ -37,6 +42,10 @@ public class RulesFinder {
 		internalRulesFinder = defaultInternalRulesFinder;
 	}
 
+	/**
+	 * Searches for regularities in the data table, and returns them
+	 * in the form of rules. J48 algorithm is used by default.
+	 */
 	public List<Rule> findRules() {
 		try {
 			Instances instances = preprocessData();

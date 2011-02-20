@@ -1,5 +1,11 @@
 package goodfeeling.weka;
 
+/**
+ * A logical rule deduced from data table. It has the form:
+ * <pre>
+ * p1 = q1 ^ p2 = q2 ^ ... =&gt; r = s
+ * </pre>
+ */
 public class Rule implements Comparable<Rule> {
 
 	private final RulePredicate antecedent;
@@ -25,6 +31,10 @@ public class Rule implements Comparable<Rule> {
 		return consequent;
 	}
 
+	/**
+	 * A value between 0 and 1 roughly corresponding the probability of
+	 * this rule being true.
+	 */
 	public double getConfidence() {
 		return confidence;
 	}
