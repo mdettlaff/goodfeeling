@@ -25,7 +25,7 @@ public class RuleTranslatorTest {
 			final String actualRule = RuleTranslator.humanReadable(rulesIter.next());
 			final String expectedRule =
 				"It seems likely that your physicalrate is low when your " +
-				"food name is Apple and your food amount is is low.";
+				"food name is Apple and your food amount is low.";
 			assertEquals(expectedRule, actualRule);
 		}
 		{
@@ -49,7 +49,7 @@ public class RuleTranslatorTest {
 		antecedent.putAttribute("activity intensity", "= medium");
 		antecedent.putAttribute("food eaten", "= apple");
 		RulePredicate consequent = new RulePredicate();
-		consequent.putAttribute("mood", "= good");
+		consequent.putAttribute("mood", "good");
 		Rule rule = new Rule(antecedent, consequent, 0.9);
 
 		final String expected =
