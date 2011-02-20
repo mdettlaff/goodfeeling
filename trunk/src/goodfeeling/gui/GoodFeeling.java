@@ -8,8 +8,13 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+/**
+ * Main menu.
+ */
 public class GoodFeeling extends Activity {
-	/** Called when the activity is first created. */
+	/**
+	 * Called when the activity is starting.
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

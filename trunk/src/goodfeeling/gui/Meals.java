@@ -20,17 +20,39 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
+/**
+ * Meals view
+ * 
+ * Displays form for adding new meal to database. 
+ */
 public class Meals extends Activity {
 
 	private Spinner unitSpinner, timeConsumedSpinner;
 	private EditText amountEditText;
 	private AutoCompleteTextView mealAutoCompleteTextView;
+	
+	/**
+	 * Values for unit selection spinner.
+	 */
 	private String[] unitsItems = { "g","ml","pieces" };
+	
+	/**
+	 * Values for timeConsumed spinner.
+	 */
 	private String[] timeConsumedItems = { "Before 11", "Between 11 - 17", "After 17" };
 	
+	/**
+	 * Current value of unit selection.
+	 */
 	private String unitValue = "pieces";
-	private String timeConsumedValue = "pieces";
+	/**
+	 * Current value of time selection.
+	 */
+	private String timeConsumedValue = "Before 11";
 
+	/**
+	 * Called when the activity is starting.
+	 */
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -94,6 +116,13 @@ public class Meals extends Activity {
 
 	}
 
+	/**
+	 * Save form data to database.
+	 * 
+	 * Before saving data is checked.
+	 * 
+	 * @return true if data was successfully saved
+	 */
 	private boolean save() {
 		String meal = mealAutoCompleteTextView.getText().toString();
 		if (meal.equals(""))
@@ -140,6 +169,11 @@ public class Meals extends Activity {
 		return true;
 	}
 
+	/**
+	 * Get food dictionary.
+	 * 
+	 * @return list of meals
+	 */
 	private String[] getFoodDict() {
 		ArrayList<String> activities = new ArrayList<String>();
 		try {
@@ -158,13 +192,16 @@ public class Meals extends Activity {
 		return tmp;
 	}
 
+	/**
+	 * Update autocomplete list of meal names.
+	 */
 	private void updateAutocomplete() {
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_dropdown_item_1line,
 				getFoodDict());
 		mealAutoCompleteTextView.setAdapter(adapter);
 	}
-	
+
 	private void DisplayToast(String msg) {
 		Toast.makeText(getBaseContext(), msg, Toast.LENGTH_SHORT).show();
 	}
