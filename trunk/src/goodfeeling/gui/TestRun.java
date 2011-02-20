@@ -3,179 +3,145 @@ package goodfeeling.gui;
 import java.util.ArrayList;
 import java.util.List;
 import goodfeeling.gui.R;
-
 import goodfeeling.common.AndroidFileIO;
 import goodfeeling.db.DbHandler;
 import goodfeeling.userstate.UserStatePersistence;
+import goodfeeling.userstate.ResultException;
 import goodfeeling.userstate.balloon.Balloon;
 import goodfeeling.userstate.balloon.BalloonResult;
-import goodfeeling.userstate.balloon.BalloonResultException;
 import goodfeeling.userstate.exercises.Exercises;
 import goodfeeling.userstate.exercises.ExercisesResult;
-import goodfeeling.userstate.exercises.ExercisesResultException;
 import goodfeeling.userstate.picture_test.PictureTest;
 import goodfeeling.userstate.picture_test.PictureTestResult;
-import goodfeeling.userstate.picture_test.PictureTestResultException;
+import goodfeeling.userstate.swing_test.SwingTest;
+import goodfeeling.userstate.swing_test.SwingTestResult;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.TextView;
 
-public class TestRun extends Activity implements OnClickListener {
-    
+public class TestRun extends Activity {
+
+	private final String errFormatException = ">>> GoodFeeling:TestRun:onActivityResult: %s";
+	private final String errFormatResultCode = ">>> GoodFeeling:TestRun:onActivityResult: %s unknown result code: %d";
+	private final String errFormatRequestCode = ">>> GoodFeeling:TestRun:onActivityResult: Unknown request code: %d";
+
 	private final int TEST_PICTURE_TEST = 0;
 	private final int TEST_BALLOON = 1;
 	private final int TEST_EXERCISES = 2;
-	
+	private final int TEST_SWING_TEST = 3;
+
 	private final int TEST_NUM = 6;
-	
-	private TextView[] text;
-	private TextView summaryText;
-	
-	private Button buttonRun;
-	
+
 	private int test[];
-	
+
 	private int testStep;
 
 	private List<PictureTestResult> pictureTestResults;
 	private List<BalloonResult> balloonTestResults;
 	private List<ExercisesResult> exercisesTestResults;
+	private List<SwingTestResult> swingTestResults;
+
 	private boolean isWholeTestFinished;
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.testrun);
-        
-        this.text = new TextView[11];
-        this.text[0] = (TextView)findViewById(R.id.testrun_text0);
-        this.text[1] = (TextView)findViewById(R.id.testrun_text1);
-        this.text[2] = (TextView)findViewById(R.id.testrun_text2);
-        this.text[3] = (TextView)findViewById(R.id.testrun_text3);
-        this.text[4] = (TextView)findViewById(R.id.testrun_text4);
-        this.text[5] = (TextView)findViewById(R.id.testrun_text5);
-        this.text[6] = (TextView)findViewById(R.id.testrun_text6);
-        this.text[7] = (TextView)findViewById(R.id.testrun_text7);
-        this.text[8] = (TextView)findViewById(R.id.testrun_text8);
-        this.text[9] = (TextView)findViewById(R.id.testrun_text9);
-        this.text[10] = (TextView)findViewById(R.id.testrun_text10);
-        summaryText = (TextView)findViewById(R.id.testrun_summary);
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-        test = new int[TEST_NUM];
-        for (int i = 0; i < test.length; i++) {
-        	switch (i%3){
-	        	case 0: test[i] = TEST_PICTURE_TEST; break;
-	        	case 1: test[i] = TEST_BALLOON; break;
-	        	case 2: test[i] = TEST_EXERCISES; break;
-        	}
-        }
-        this.testStep = 0;
-        
-        this.buttonRun = (Button)findViewById(R.id.testrun_buttonrun);
-        this.buttonRun.setOnClickListener(this);
+		test = new int[TEST_NUM];
+		test[0] = TEST_PICTURE_TEST;
+		test[1] = TEST_BALLOON;
+		test[2] = TEST_SWING_TEST;
+		test[3] = TEST_PICTURE_TEST;
+		test[4] = TEST_BALLOON;
+		test[5] = TEST_EXERCISES;
 
-    	pictureTestResults = new ArrayList<PictureTestResult>();
-    	balloonTestResults = new ArrayList<BalloonResult>();
-    	exercisesTestResults = new ArrayList<ExercisesResult>();
-    	isWholeTestFinished = false;
-    }
+		this.testStep = 0;
 
-    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
-    	switch(requestCode) {
-    		case TEST_PICTURE_TEST:
-    			switch(resultCode) {
-    				case RESULT_OK:
-    					try {
-    						PictureTestResult result = new PictureTestResult(data);
-    						for(int i = 0; i < result.getCategoryCount(); i++)
-    							this.text[i + 1].setText(String.format("PictureTest result: cat %d, positive %d, all %d",
-    								i,
-    								result.getAnswerPositive(i),
-    								result.getAnswer(i)));		
-    						pictureTestResults.add(result);
-    					} catch (PictureTestResultException e) {
-    						this.text[0].setText("PictureTest result: null");
-    					}
-    					break;
-    				case RESULT_CANCELED:
-    					this.text[0].setText("PictureTest result: RESULT_CANCELED");
-    					break;
-    				default:
-    					System.out.println(">>> 'TEST_PICTURE_TEST' unknown resultCode");
-    			}
-    			break;
-    		case TEST_BALLOON:
-    			switch(resultCode) {
-    				case RESULT_OK:
-    					try {
-    						BalloonResult result = new BalloonResult(data);
-    						this.text[0].setText(String.format("Balloon result: correct %d, incorrect %d, all %d.",
-    							result.getCorrect(),
-    							result.getIncorrect(),
-    							result.getAll()));
-    						balloonTestResults.add(result);
-    					} catch(BalloonResultException e) {
-    						this.text[0].setText("Balloon result: null");
-    					}
-    					break;
-    				case RESULT_CANCELED:
-    					this.text[0].setText("Balloon result: RESULT_CANCELED");
-    					break;
-    				default:
-    					System.out.println(">>> 'TEST_BALLOON' unknown resultCode");
-    			}
-    			break;
-    		case TEST_EXERCISES:
-    			switch(resultCode) {
-    				case RESULT_OK:
-    					try {
-    						ExercisesResult result = new ExercisesResult(data);
-    						exercisesTestResults.add(result);
-    					} catch(ExercisesResultException e) {}
-    					break;
-    				case RESULT_CANCELED:
-    					break;
-    				default:
-    					System.out.println(">>> 'TEST_Exercises' unknown resultCode");
-    			}
-    			break;	
-    		default:
-    			System.out.println(">>> onActivityResult unknown activity");
-    	}
-    	runNextTest();
-    }
+		pictureTestResults = new ArrayList<PictureTestResult>();
+		balloonTestResults = new ArrayList<BalloonResult>();
+		exercisesTestResults = new ArrayList<ExercisesResult>();
+		swingTestResults = new ArrayList<SwingTestResult>();
 
-    // OnClickListener implements
-    
-	public void onClick(View v) {
+		isWholeTestFinished = false;
+
+		runNextTest();
+	}
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		try {
+			switch(requestCode) {
+				case TEST_PICTURE_TEST:
+					switch(resultCode) {
+						case RESULT_OK:
+							pictureTestResults.add(new PictureTestResult(data));
+							break;
+						default:
+							System.err.printf(errFormatResultCode, "PictureTest", resultCode);
+					}
+					break;
+				case TEST_BALLOON:
+					switch(resultCode) {
+						case RESULT_OK:
+							balloonTestResults.add(new BalloonResult(data));
+							break;
+						default:
+							System.err.printf(errFormatResultCode, "Balloon", resultCode);
+					}
+					break;
+				case TEST_EXERCISES:
+					switch(resultCode) {
+						case RESULT_OK:
+							exercisesTestResults.add(new ExercisesResult(data));
+							break;
+						default:
+							System.err.printf(errFormatResultCode, "Exercises", resultCode);
+					}
+					break;
+				case TEST_SWING_TEST:
+					switch(resultCode) {
+						case RESULT_OK:
+							swingTestResults.add(new SwingTestResult(data));
+							break;
+						default:
+							System.err.printf(errFormatResultCode, "SwingTest", resultCode);
+					}
+					break;
+				default:
+					System.err.printf(errFormatRequestCode, requestCode);
+			}
+		} catch (ResultException e) {
+			System.err.printf(errFormatException, e.getClass().getSimpleName());
+		}
 		runNextTest();
 	}
 
 	// private
 
 	private void runNextTest() {
-		if (this.testStep >= test.length) {
-			if (!isWholeTestFinished) {
+		if(this.testStep >= test.length) {
+			if(!isWholeTestFinished) {
 				onWholeTestFinished();
 				isWholeTestFinished = true;
 			}
+			finish();
 			return;
 		}
 		Intent intent;
 		switch(this.test[this.testStep]) {
 			case TEST_PICTURE_TEST:
 				intent = new Intent(this, PictureTest.class);
-				break;
+			break;
 			case TEST_BALLOON:
 				intent = new Intent(this, Balloon.class);
-				break;
+			break;
 			case TEST_EXERCISES:
 				intent = new Intent(this, Exercises.class);
-				break;
+			break;
+			case TEST_SWING_TEST:
+				intent = new Intent(this, SwingTest.class);
+			break;
 			default:
+				this.testStep++;
+				runNextTest();
 				return;
 		}
 		startActivityForResult(intent, this.test[this.testStep]);
@@ -183,11 +149,7 @@ public class TestRun extends Activity implements OnClickListener {
 	}
 
 	private void onWholeTestFinished() {
-		UserStatePersistence persistence = new UserStatePersistence(
-				new DbHandler(new AndroidFileIO(this)));
-		persistence.persistResults(pictureTestResults, balloonTestResults, exercisesTestResults);
-		summaryText.setText(String.format("Summary: mood rate = %s, mental rate = %s",
-				persistence.getCurrentMood(),
-				persistence.getCurrentMentalPerformance()));
+		UserStatePersistence persistence = new UserStatePersistence(new DbHandler(new AndroidFileIO(this)));
+		persistence.persistResults(pictureTestResults, balloonTestResults, exercisesTestResults, swingTestResults);
 	}
 }

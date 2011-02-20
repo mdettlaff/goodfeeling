@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+	<TextView  
+	    android:id="@+id/swing_test_info"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+	    android:text="@string/swing_test_info"
+	    android:layout_marginTop="10dip" />
+	<TextView  
+	    android:id="@+id/swing_test_msg"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content"	   
+	    android:layout_below="@id/swing_test_info"
+	    android:layout_marginTop="10dip" /> 
+	<Button 
+		android:id="@+id/swing_test_button" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dip"
+		android:text="@string/swing_test_button_ready"
+    	android:layout_below="@id/swing_test_msg" />
+    <TextView  
+	    android:id="@+id/swing_test_msg_swing_it"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content"	   
+        android:layout_toRightOf="@id/swing_test_button"
+        android:layout_alignTop="@id/swing_test_button"
+        android:layout_marginTop="2dip"
+        android:layout_marginLeft="20dip"
+        android:textColor="#DA0E00"
+        android:textSize="30dip"
+	    android:text="@string/swing_test_msg_swing_it" /> 
+</RelativeLayout>

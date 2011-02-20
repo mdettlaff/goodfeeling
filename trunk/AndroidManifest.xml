@@ -15,10 +15,11 @@
         <activity android:name=".Diary" />
         <activity android:name=".Meals" />
         <activity android:name=".Sleep" />
-        <activity android:name=".TestRun" />
         <activity android:name=".Suggestions" />
+        <activity android:name=".TestRun" />
 		<activity android:name="goodfeeling.userstate.balloon.Balloon" />
 		<activity android:name="goodfeeling.userstate.picture_test.PictureTest" />
 		<activity android:name="goodfeeling.userstate.exercises.Exercises" />
+		<activity android:name="goodfeeling.userstate.swing_test.SwingTest" />
     </application>
 </manifest> 

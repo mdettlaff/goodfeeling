@@ -6,6 +6,7 @@ import goodfeeling.db.TestResult;
 import goodfeeling.userstate.balloon.BalloonResult;
 import goodfeeling.userstate.exercises.ExercisesResult;
 import goodfeeling.userstate.picture_test.PictureTestResult;
+import goodfeeling.userstate.swing_test.SwingTestResult;
 
 import java.util.Calendar;
 import java.util.List;
@@ -21,12 +22,13 @@ public class UserStatePersistence {
 	public void persistResults(
 			List<PictureTestResult> pictureTestResults,
 			List<BalloonResult> balloonTestResults,
-			List<ExercisesResult> exercisesTestResults) {
+			List<ExercisesResult> exercisesTestResults,
+			List<SwingTestResult> swingTestResults) {
 		try {
 			int pictureTestScore = computePictureTestScore(pictureTestResults);
 			int balloonsTestScore = computeBalloonsTestScore(balloonTestResults);
 			int exercisesTestScore = computeExercisesTestScore(exercisesTestResults);
-			
+			int swingTestScore = computeSwingTestScore(swingTestResults);			
 			
 			Record record = dbHandler.getRecord(Calendar.getInstance());
 			record.moodRates.add(new TestResult("" + pictureTestScore));
@@ -38,7 +40,8 @@ public class UserStatePersistence {
 		}
 	}
 
-	private int computeExercisesTestScore(List<ExercisesResult> exercisesTestResults) {
+	private int computeExercisesTestScore(
+			List<ExercisesResult> exercisesTestResults) {
 		int sumAll = 0;
 		int sumBest = 0;
 		for (ExercisesResult result : exercisesTestResults) {
@@ -80,6 +83,14 @@ public class UserStatePersistence {
 			sumAll += result.getAll();
 		}
 		return getPercentageScore(sumCorrect, sumAll);
+	}
+
+	private static int computeSwingTestScore(
+			List<SwingTestResult> swingTestResults)) {
+		float sum = 0.0f;
+		for (SwingTestResult result : balloonTestResults)
+			sum += result.getResult();
+		return (int)(sum * 1000);
 	}
 
 	private static int getPercentageScore(int correct, int all) {

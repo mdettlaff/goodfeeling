@@ -15,8 +15,9 @@ import android.widget.Toast;
  * which execute "test of pictures":<br>
  * - user is shown pair of pictures <br>
  * - can choose one of them or none <br>
- * - test counts questions and answers <br>
- * @author darek
+ * - test counts questions and answers <br><br>
+ * <i>author comment: my 1st activity made for android so it's not well written 
+ * and should be whole rewritten</i>
  */
 public class PictureTest extends Activity {
 	
@@ -329,14 +330,15 @@ public class PictureTest extends Activity {
     			getmImageIds()[getCat()][getP1_type()].length)));
     	setP2(((int)(Math.random() *
     			getmImageIds()[getCat()][getP2_type()].length)));
-    	//display info box
-    	Toast.makeText(PictureTest.this,
+    	
+    	//display info box - usefull only for test when NUM_ROUND is large number
+    	/*Toast.makeText(PictureTest.this,
     			"("
     			+ this.answers.getAnswerPositive(getStep())
     			+ ", "
     			+ this.answers.getAnswer(getStep())
     			+ ")",
-    			Toast.LENGTH_SHORT).show();
+    			Toast.LENGTH_SHORT).show();*/
     	
     	}
     }

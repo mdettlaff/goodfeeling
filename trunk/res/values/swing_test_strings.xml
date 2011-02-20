@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="swing_test_hello">aHello World, SwingTest!</string>
+	<string name="swing_test_app_name">aSwingTest</string>
+	<string name="swing_test_info">This test will check acceleration which you can
+		achieve by swinging your device in %s single attempts. Press button if
+		you are ready. You have 3 second after press to swing your device!
+		(Do not throw it somehow...)
+	</string>
+	<string name="swing_test_button_ready">Press when ready</string>
+	<string name="swing_test_button_attempt">Start test</string>
+	<string name="swing_test_button_finish">Test finished, press to exit</string>
+	<string name="swing_test_msg_attempt">Prepare to %s attempt and press the button</string>
+	<string name="swing_test_msg_best">Your result is %s m/s^2</string>
+	<string name="swing_test_msg_swing_it">Swing now!</string>
+</resources>

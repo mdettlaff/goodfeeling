@@ -1,5 +1,7 @@
 package goodfeeling.userstate.balloon;
 
-public class BalloonResultException extends Exception {
+import goodfeeling.userstate.ResultException;
+
+public class BalloonResultException extends ResultException {
 	static final long serialVersionUID = 1l;
 }
