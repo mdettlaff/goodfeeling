@@ -1,5 +1,7 @@
 package goodfeeling.userstate.picture_test;
 
-public class PictureTestResultException extends Exception {
+import goodfeeling.userstate.ResultException;
+
+public class PictureTestResultException extends ResultException {
 	private static final long serialVersionUID = 1l;
 }

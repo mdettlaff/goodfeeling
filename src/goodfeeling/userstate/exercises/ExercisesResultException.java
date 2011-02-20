@@ -1,5 +1,7 @@
 package goodfeeling.userstate.exercises;
 
-public class ExercisesResultException extends Exception {
+import goodfeeling.userstate.ResultException;
+
+public class ExercisesResultException extends ResultException {
 	private static final long serialVersionUID = 1l;
 }
