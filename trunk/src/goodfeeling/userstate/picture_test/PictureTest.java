@@ -492,8 +492,8 @@ public class PictureTest extends Activity {
      * Apply choosing none of pictures
      */
     void dont_choose(){
-    	Toast.makeText(PictureTest.this, "Nothing chosen...", 
-    			Toast.LENGTH_SHORT).show();
+    	//Toast.makeText(PictureTest.this, "Nothing chosen...", 
+    	//		Toast.LENGTH_SHORT).show();
     	
     	//nothing chosen so we don't increase count of given answers
     	test_init();
