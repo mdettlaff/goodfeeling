@@ -39,7 +39,7 @@ public class Meals extends Activity {
 	/**
 	 * Values for timeConsumed spinner.
 	 */
-	private String[] timeConsumedItems = { "Before 11", "Between 11 - 17", "After 17" };
+	private String[] timeConsumedItems = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24" };
 	
 	/**
 	 * Current value of unit selection.
