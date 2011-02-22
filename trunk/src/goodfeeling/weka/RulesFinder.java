@@ -24,14 +24,19 @@ public class RulesFinder {
 	private int discretizeBinsCount = DEFAULT_DISCRETIZE_BINS_COUNT;
 
 	/**
-	 * @param data Data table. The last column is used as a class attribute.
+	 * @param data Data table. Only <code>String</code> and <code>Number</code>
+	 *             values are allowed. <code>null</code> represents missing
+	 *             values.<br>
+	 *             The last column is used as a class attribute.
 	 */
 	public RulesFinder(Table data) {
 		this(data, data.getColumnNames().get(data.getColumnCount() - 1));
 	}
 
 	/**
-	 * @param data            Data table.
+	 * @param data Data table. Only <code>String</code> and <code>Number</code>
+	 *             values are allowed. <code>null</code> represents missing
+	 *             values.
 	 * @param classColumnName Name of the column in the data table
 	 *                        to be used as a class attribute.
 	 */
