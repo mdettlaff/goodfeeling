@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:background="#2e3436"
+	android:paddingTop="10sp">
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+		<TextView android:text="@string/gui_title" android:textSize="9pt"
+			android:textStyle="bold" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:textColor="#ffffff"
+			android:paddingTop="10sp" android:paddingLeft="10sp" />
+		<LinearLayout 
+			android:orientation="horizontal" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:gravity="right">
+			<LinearLayout android:orientation="vertical"
+				android:gravity="center_horizontal" android:layout_width="75sp"
+				android:layout_height="wrap_content">
+				<ImageButton android:id="@+id/help_btn" android:src="@drawable/help"
+					android:padding="0sp" android:adjustViewBounds="true"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"></ImageButton>
+				<TextView android:text="@string/gui_title_help"
+					android:gravity="center_horizontal" android:layout_width="50sp"
+					android:layout_height="wrap_content" android:textColor="#ffffff" />
+			</LinearLayout>
+			<LinearLayout android:orientation="vertical"
+				android:gravity="center_horizontal" android:layout_width="75sp"
+				android:layout_height="wrap_content">
+				<ImageButton android:id="@+id/manual_btn" android:src="@drawable/manual"
+					android:padding="0sp" android:adjustViewBounds="true"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"></ImageButton>
+				<TextView android:text="@string/gui_title_manual"
+					android:gravity="center_horizontal" android:layout_width="50sp"
+					android:layout_height="wrap_content" android:textColor="#ffffff" />
+			</LinearLayout>
+		</LinearLayout>
+	</LinearLayout>
+
+	<LinearLayout android:paddingTop="10sp" android:paddingBottom="10sp"
+		android:orientation="horizontal" android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<TextView android:text="@string/gui_title_hello"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:gravity="center_horizontal" android:textSize="8pt"
+			android:textColor="#ffffff" ></TextView>
+	</LinearLayout>
+
+	<LinearLayout 
+		android:orientation="horizontal" android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+
+		<LinearLayout android:orientation="vertical"
+			android:gravity="center_horizontal" android:layout_width="105sp"
+			android:layout_height="wrap_content">
+			<ImageButton android:id="@+id/check_suggestions_btn"
+				android:src="@drawable/check_suggestions" android:padding="0sp"
+				android:adjustViewBounds="true" android:layout_width="wrap_content"
+				android:layout_height="wrap_content"></ImageButton>
+			<TextView android:text="@string/gui_title_check_suggestions"
+				android:gravity="center_horizontal" android:layout_width="80sp"
+				android:layout_height="wrap_content" android:textColor="#ffffff" />
+		</LinearLayout>
+
+
+		<LinearLayout android:orientation="vertical"
+			android:gravity="center_horizontal" android:layout_width="105sp"
+			android:layout_height="wrap_content">
+			<ImageButton android:id="@+id/fill_diary_btn"
+				android:src="@drawable/fill_diary" android:padding="0sp"
+				android:adjustViewBounds="true" android:layout_width="wrap_content"
+				android:layout_height="wrap_content"></ImageButton>
+			<TextView android:text="@string/gui_title_fill_diary"
+				android:gravity="center_horizontal" android:layout_width="80sp"
+				android:layout_height="wrap_content" android:textColor="#ffffff" />
+		</LinearLayout>
+
+
+		<LinearLayout android:orientation="vertical"
+			android:gravity="center_horizontal" android:layout_width="105sp"
+			android:layout_height="wrap_content">
+			<ImageButton android:id="@+id/make_test_btn" android:src="@drawable/make_test"
+				android:padding="0sp" android:adjustViewBounds="true"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"></ImageButton>
+			<TextView android:text="@string/gui_title_make_test"
+				android:gravity="center_horizontal" android:layout_width="80sp"
+				android:layout_height="wrap_content" android:textColor="#ffffff" />
+		</LinearLayout>
+
+
+	</LinearLayout>
+</LinearLayout>
+<!-- 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical">
+	<TextView android:text="Good Feeling" android:textSize="12pt"
+		android:id="@+id/TextView01" android:layout_width="wrap_content"
+		android:layout_height="wrap_content"></TextView>
+	<Button android:text="Sprawdź sugestie" android:id="@+id/suggestions"
+		android:layout_width="match_parent" android:layout_height="wrap_content"></Button>
+	<Button android:text="Uzupełnij dziennik" android:id="@+id/diary"
+		android:layout_width="match_parent" android:layout_height="wrap_content"></Button>
+	<Button android:text="Wykonaj test" android:id="@+id/test"
+		android:layout_width="match_parent" android:layout_height="wrap_content"></Button>
+	<Button android:text="Wyjdź" android:id="@+id/back"
+		android:layout_width="100px" android:layout_height="wrap_content"></Button>
+</LinearLayout>
+-->

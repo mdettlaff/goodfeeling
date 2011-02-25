@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="picture_test_app_name">Picture_Test v0.77</string>    
+	<string name="picture_test_start_info">
+		Select One of pictures or a 
+		button below if you do 
+		not want to choose...
+	</string>
+	<string name="none_select">
+		None of above
+	</string>
+	<string name="picture_test_end_info">
+		Click to finish
+	</string>
+</resources>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:background="#2e3436" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:orientation="vertical"
+		android:paddingTop="10sp">
+		<LinearLayout android:orientation="horizontal" android:paddingBottom="10px"
+			android:layout_width="fill_parent" android:layout_height="wrap_content">
+			<TextView android:text="Meals" android:textSize="9pt"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:textColor="#ffffff"
+				android:paddingTop="10sp" android:paddingLeft="10sp" />
+			<LinearLayout android:orientation="horizontal"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:gravity="right">
+				<LinearLayout android:orientation="vertical"
+					android:gravity="center_horizontal" android:layout_width="75sp"
+					android:layout_height="wrap_content">
+					<ImageButton android:id="@+id/help_btn" android:src="@drawable/help"
+						android:padding="0sp" android:adjustViewBounds="true"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"></ImageButton>
+					<TextView android:text="@string/gui_title_help"
+						android:gravity="center_horizontal" android:layout_width="50sp"
+						android:layout_height="wrap_content" android:textColor="#ffffff" />
+				</LinearLayout>
+				<LinearLayout android:orientation="vertical"
+					android:gravity="center_horizontal" android:layout_width="75sp"
+					android:layout_height="wrap_content">
+					<ImageButton android:id="@+id/manual_btn" android:src="@drawable/manual"
+						android:padding="0sp" android:adjustViewBounds="true"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"></ImageButton>
+					<TextView android:text="@string/gui_title_manual"
+						android:gravity="center_horizontal" android:layout_width="50sp"
+						android:layout_height="wrap_content" android:textColor="#ffffff" />
+				</LinearLayout>
+			</LinearLayout>
+		</LinearLayout>
+		<AutoCompleteTextView android:id="@+id/meal"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"></AutoCompleteTextView>
+		<TextView android:text="Amount:" android:id="@+id/TextView022"
+			android:paddingTop="10px" android:textSize="9pt"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:textColor="#ffffff"></TextView>
+		<EditText android:id="@+id/amount" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" />
+		<TextView android:text="Unit:" android:id="@+id/TextView02"
+			android:textSize="9pt" android:layout_width="fill_parent"
+			android:paddingTop="10px" android:layout_height="wrap_content"
+			android:textColor="#ffffff"></TextView>
+		<Spinner android:id="@+id/unit" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" />
+		<TextView android:text="Time consumed:" android:id="@+id/TextView02"
+			android:textSize="9pt" android:layout_width="fill_parent"
+			android:paddingTop="10px" android:layout_height="wrap_content"
+			android:textColor="#ffffff"></TextView>
+		<Spinner android:id="@+id/timeConsumed" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" />
+		<LinearLayout android:id="@+id/LinearLayout01" android:paddingTop="10px"
+			android:layout_width="fill_parent" android:layout_height="wrap_content">
+			<Button android:text="Back" android:id="@+id/back"
+				android:layout_width="100px" android:layout_height="wrap_content"></Button>
+			<Button android:text="Save" android:id="@+id/save"
+				android:layout_width="100px" android:layout_height="wrap_content"></Button>
+		</LinearLayout>
+	</LinearLayout>
+</ScrollView>
